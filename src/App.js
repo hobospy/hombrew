@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import axios from 'axios';
+const API_URL = 'https://localhost:44363/';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    brews: []
+  }
+
+  componentDidMount() {
+    const url = `${API_URL}brew/summary`;
+    axios.get(url).then(response => response.data)
+    .then((data) => {
+      this.setState({ brews: data})
+      console.log(this.state.users)
+    })
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <div className="col-xs-8">
+          <h1>React Axios Example</h1>
+          {this.state.brews.map((brew) => (
+            <div className="card" style={{border: '0px'}}>
+              <div clasName="card-body">
+                <h5 className="card-title">{brew.name}</h5>
+              </div>
+            </div>
+          ))}
+          <p class="text-center"><i><small>Some closing text</small></i></p>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
