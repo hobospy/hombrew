@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+
+import BrewSummary from "./Components/BrewSummary";
+import './atomicStyling.css';
+
 const API_URL = 'https://localhost:44363/';
 
 class App extends Component {
-  state = {
-    brews: []
+  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      brews: []
+    };
   }
 
   componentDidMount() {
@@ -12,23 +21,16 @@ class App extends Component {
     axios.get(url).then(response => response.data)
     .then((data) => {
       this.setState({ brews: data})
-      console.log(this.state.users)
+      console.log(this.state.brews)
     })
   }
 
   render() {
     return (
-      <div className="container">
-        <div className="col-xs-8">
-          <h1>React Axios Example</h1>
-          {this.state.brews.map((brew) => (
-            <div className="card" style={{border: '0px'}}>
-              <div clasName="card-body">
-                <h5 className="card-title">{brew.name}</h5>
-              </div>
-            </div>
-          ))}
-          <p class="text-center"><i><small>Some closing text</small></i></p>
+      <div className="grid-page app-default-font">
+        <div className="grid-page-column">
+          <BrewSummary brewSummary={this.state.brews}/>
+          <p><i><small>Some closing text :-|</small></i></p>
         </div>
       </div>
     );

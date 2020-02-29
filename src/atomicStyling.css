@@ -1,0 +1,100 @@
+.grid-page {
+    display: grid;
+    width: 95%;
+    margin: auto;
+    grid-template-columns: repeat(1, 100%);
+}
+
+.grid-page-column {
+    padding: 5px;
+}
+
+.grid-brew-summary {
+    display: grid;
+    width: 100%;
+    margin: auto;
+}
+
+.grid-brew-summary-column {
+    padding: 5px;
+}
+
+.grid-brew-summary-title {
+    display: grid;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: repeat(3, 60% 30% 10%);
+}
+
+.grid-brew-summary-title-column {
+    padding: 5px;
+}
+
+.grid-brew-summary-detail {
+    display: grid;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: [col1-start] 200px [col2-start] auto [col2-end];
+    grid-template-rows: [row1-start] 100px [row2-start] 100px [row2-end];
+}
+
+.grid-brew-summary-detail-column {
+    padding: 5px;
+}
+
+.grid-brew-summary-image {
+    grid-column: col1-start / col2-start;
+    grid-row: row1-start / row2-end;
+}
+
+.grid-brew-summary-description-text {
+    grid-column: col2-start;
+    grid-row: row1-start;
+}
+
+.grid-brew-summary-tastingNotes-text {
+    grid-column: col2-start;
+    grid-row: row2-start;
+}
+
+.grid-brew-summary-detail-text-row {
+    padding: 5px;
+}
+
+.app-default-font {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.recipe-title-size {
+    font-size: 20px;
+}
+
+.recipe-title-colour {
+    color: black;
+}
+
+.recipe-summary-size {
+    font-size: 12px;
+}
+
+.recipe-summary-colour {
+    color: black;
+}
+
+.recipe-summary-image-size {
+    height: 200px;
+    width: 200px;
+}
+
+.recipe-summary-desc-height{
+    height: 90px;
+}
+
+.recipe-summary-notes-height{
+    height: 90px;
+}
+
+.recipe-summary-favourite-size {
+    height: 35px;
+    width: 35px;
+}
