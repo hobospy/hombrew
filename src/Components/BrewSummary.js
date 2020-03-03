@@ -2,6 +2,7 @@ import React from 'react';
 import dateFormat from 'dateformat';
 import thumbsDown from '../resources/Thumbs-Down-Circle.svg';
 import thumbsUp from '../resources/Thumbs-Up-Circle.svg';
+import blankBeerPhoto from '../resources/BeerPhotoUnloaded.png';
 
 function DisplayBrewFavourite(props) {
     const brewFavourite = props.brewFavourite;
@@ -29,13 +30,11 @@ function BrewSummary(props) {
                 </div>
             </div>
             <div className="grid-brew-summary-detail">
-                <div className="grid-brew-summary-image">Img</div>
-                {/* <div className="grid-brew-summary-detail-column">
-                    <div className="grid-brew-summary-detail-text"> */}
-                        <div className="grid-brew-summary-description-text recipe-summary-size recipe-summary-colour">{brew.recipe.description}</div>
-                        <div className="grid-brew-summary-tastingNotes-text recipe-summary-size recipe-summary-colour">{brew.tastingNotes}</div>
-                    {/* </div>
-                </div> */}
+                <div className="grid-brew-summary-image">
+                    <img className="recipe-summary-beer-image-size" src= {blankBeerPhoto} alt ="Capture that beer"/>
+                </div>
+                <div className="grid-brew-summary-description-text recipe-summary-size recipe-summary-colour">{brew.recipe.description}</div>
+                <div className="grid-brew-summary-tastingNotes-text recipe-summary-size recipe-summary-colour">{brew.tastingNotes}</div>
             </div>
         </div>
     ));

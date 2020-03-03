@@ -98,3 +98,10 @@
     height: 35px;
     width: 35px;
 }
+
+.recipe-summary-beer-image-size {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+}
