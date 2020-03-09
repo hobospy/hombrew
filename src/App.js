@@ -6,7 +6,8 @@ import BrewSummaryItem from "./Components/BrewSummaryItem";
 import BrewDetail from "./Components/BrewDetail";
 import './atomicStyling.css';
 
-const API_URL = 'https://localhost:44363/';
+//const API_URL = 'https://localhost:44363/';
+const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 
 class DebugRouter extends Router {
   constructor(props) {
