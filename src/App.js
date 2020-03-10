@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import axios from 'axios';
 
 import BrewSummaryItem from "./Components/BrewSummaryItem";
@@ -50,12 +50,14 @@ class App extends Component {
       </Link>
       )
     return (
-      <Router>
-        <div>
-          <Route path="/brew/:id" component={BrewDetail}/>
-          <Route exact={true} path="/" render={() => content}/>
-        </div>
-      </Router>
+      <div>
+        <Router>
+          <Switch>
+            <Route path="/brew/:id" component={BrewDetail}/>
+            <Route exact={true} path="/*" render={() => content}/>
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

@@ -24,7 +24,6 @@ function BrewSummaryItem(props) {
                 <div className="grid-brew-summary-description-text recipe-summary-size recipe-summary-colour">{brew.recipe.description}</div>
                 <div className="grid-brew-summary-tastingNotes-text recipe-summary-size recipe-summary-colour">{brew.tastingNotes}</div>
             </div>
-            <div>{brew.brewDate}</div>
         </div>
     );
 }
