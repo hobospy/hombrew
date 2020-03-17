@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Link, NavLink, Route, Switch} from 'react-router-dom';
 import axios from 'axios';
 
 import BrewSummaryItem from "./Components/BrewSummaryItem";
@@ -45,18 +45,18 @@ class App extends Component {
     let content;
 
     content = this.state.brews.map(b =>
-      <Link to={`/brew/${b.id}`}>
+      <NavLink to={`/brew/${b.id}`}>
         <BrewSummaryItem key={b.id} brew={b} />
-      </Link>
+      </NavLink>
       )
     return (
-      <div>
-        <Router>
+      <div className="grid-brew-summary-link-indicator">
+        <DebugRouter>
           <Switch>
             <Route path="/brew/:id" component={BrewDetail}/>
             <Route exact={true} path="/*" render={() => content}/>
           </Switch>
-        </Router>
+        </DebugRouter>
       </div>
     );
   }

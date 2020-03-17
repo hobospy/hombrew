@@ -4,7 +4,7 @@ class CollapsiblePanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: this.props.open
         }
         this.togglePanel = this.togglePanel.bind(this);
     }
