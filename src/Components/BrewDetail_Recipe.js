@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import FloatingLabelInput, {action} from 'react-floating-label-input';
 import CollapsiblePanel from '../Components/CollapsiblePanel';
+import BrewDetail_WaterProfile from '../Components/BrewDetail_WaterProfile';
+import BrewDetail_Ingredients from '../Components/BrewDetail_Ingredients';
 
 class BrewDetail_Recipe extends Component {
     constructor(props) {
@@ -16,7 +18,7 @@ class BrewDetail_Recipe extends Component {
     }
 
     changingItem () {
-        console.log("Output here");
+        console.log("Output here - recipe");
     };
 
     render() {
@@ -54,10 +56,10 @@ class BrewDetail_Recipe extends Component {
                     />
                 </div>
                 <div className="brewed-beer-recipe-ingredients">
-                    <CollapsiblePanel title="Ingredients" children={'Supposed to be a ingredients in here'} open={false}/>
+                    <CollapsiblePanel title="Ingredients" children={<BrewDetail_Ingredients ingredients={recipe.ingredients}/>} open={false}/>
                 </div>
                 <div className="brewed-beer-recipe-water-profile">
-                    <CollapsiblePanel title={'Water profile - NAME'} children={'Supposed to be a water profile in here'} open={false}/>
+                    <CollapsiblePanel title={'Water profile - ' + recipe.waterProfile.name} children={<BrewDetail_WaterProfile waterProfile={recipe.waterProfile}/>} open={false}/>
                 </div>
                 <div className="brewed-beer-recipe-steps">
                     <CollapsiblePanel title="Brewing steps" children={'Supposed to be brewing steps in here'} open={true}/>

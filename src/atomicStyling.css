@@ -156,9 +156,9 @@
 
 .grid-brewed-detail-edit {
     display: grid;
-    width: 100%;
+    width: auto;
     margin: auto;
-    grid-template-columns: 30% 65% 30px;
+    grid-template-columns: 200px auto 40px;
     grid-template-rows: 40px 100px 100px;
 }
 
@@ -169,14 +169,26 @@
 }
 
 .grid-brewed-detail-edit-favourite {
+    display:flex;
     grid-column: 3;
     grid-row: 1;
-    padding-top: 0.5em;
+    align-items: center;
+    justify-content: center;
 }
 
 .grid-brewed-detail-edit-images {
+    display: flex;
     grid-column: 1;
     grid-row: 2 / span 2;
+    overflow: hidden;
+    content: contain;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-brewed-detail-edit-images >img {
+    height: 200px;
+    width: auto;
 }
 
 .grid-brewed-detail-edit-type {
@@ -217,6 +229,8 @@
 .grid-brewed-detail-favourite-image {
     grid-column: col4-start / col4-end;
     grid-row: row1-start / row2-end;
+    overflow: hidden;
+    object-fit: contain;
 }
 
 .grid-brewed-detail-brewdate-text {
@@ -261,7 +275,7 @@
 .header {
     cursor: pointer;
     border: solid 1px #f2f2f2;
-    padding: 15px;
+    padding: 15px 5px;
     background-color: #0089CC;
     color: #FFF;
 }
@@ -272,7 +286,7 @@
     border-right: solid 1px #f2f2f2;
     border-bottom: solid 1px #f2f2f2;
     border-radius: 0 0 5px 5px;
-    padding: 15px;
+    padding: 5px;
     font-size: 14px;
 }
 
@@ -318,4 +332,16 @@
 .brewed-beer-recipe-steps {
     grid-column: 1 / span 2;
     grid-row: 4;
+}
+
+.brewed-beer-water-profile-column {
+    padding: 5px;
+}
+
+.brewed-beer-water-profile-item {
+    margin-top: 0.5em;
+}
+
+.brewed-beer-ingredient-item {
+    margin-top: 0.5em;
 }

@@ -41,7 +41,7 @@ class BrewDetail extends Component{
         return (
             <div className="grid-brewed-detail">
                 {this.state.hasLoaded ? (
-                <div>
+                <div className="grid-brewed-detail-column">
                     <div className="grid-brewed-detail-edit">
                         <div className="grid-brewed-detail-edit-name">
                         {/* https://css-tricks.com/float-labels-css/ */}
@@ -56,7 +56,7 @@ class BrewDetail extends Component{
                             <DisplayBrewFavourite brewFavourite={brew.brewFavourite} />
                         </div>
                         <div className="grid-brewed-detail-edit-images">
-                            <img className="grid-brewed-detail-image-size" src= {blankBeerPhoto} alt ="Capture that beer"/>
+                            <img src= {blankBeerPhoto} alt ="Capture that beer"/>
                         </div>
                         <div className="grid-brewed-detail-edit-type">
                             <FloatingLabelInput
