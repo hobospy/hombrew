@@ -76,7 +76,7 @@ class BrewDetail extends Component{
                         </div>
                     </div>
                     <CollapsiblePanel title={'Recipe - ' + brew.recipe.name} children={<BrewDetail_Recipe recipe={brew.recipe}/>} open={false}/>
-                    <CollapsiblePanel title={'Tasting notes'} children={brew.tastingNotes} open={true}/>
+                    <CollapsiblePanel title={'Tasting Notes'} children={brew.tastingNotes} open={true}/>
                 </div>
                 ) : (
                     <div>Still loading</div>
