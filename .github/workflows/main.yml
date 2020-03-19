@@ -14,4 +14,4 @@ jobs:
     - name: Build static site
       run: yarn install && npm run-script build
     - name: Deploy static site to S3 bucket
-      run: aws s3 sync ./dist/ s3://https://homebrew-react-app.s3-ap-southeast-2.amazonaws.com --delete
+      run: aws s3 sync ./ s3://https://homebrew-react-app.s3-ap-southeast-2.amazonaws.com --delete
