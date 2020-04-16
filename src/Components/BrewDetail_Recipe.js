@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FloatingLabelInput, {action} from 'react-floating-label-input';
 import CollapsiblePanel from '../Components/CollapsiblePanel';
+import DoubleCollapsiblePanel from '../Components/DoubleCollapsiblePanel';
 import BrewDetail_WaterProfile from '../Components/BrewDetail_WaterProfile';
 import BrewDetail_Ingredients from '../Components/BrewDetail_Ingredients';
 
@@ -55,11 +56,14 @@ class BrewDetail_Recipe extends Component {
                         value={String(recipe.rating)}
                     />
                 </div>
-                <div className="brewed-beer-recipe-ingredients">
-                    <CollapsiblePanel title="Ingredients" children={<BrewDetail_Ingredients ingredients={recipe.ingredients}/>} open={false}/>
-                </div>
-                <div className="brewed-beer-recipe-water-profile">
-                    <CollapsiblePanel title={'Water profile - ' + recipe.waterProfile.name} children={<BrewDetail_WaterProfile waterProfile={recipe.waterProfile}/>} open={false}/>
+                <div className='brewed-beer-recipe-ingredients-water-profile'>
+                    <DoubleCollapsiblePanel 
+                        leftTitle="Ingredients"
+                        leftChild={<BrewDetail_Ingredients ingredients={recipe.ingredients}/>}
+                        rightTitle={'Water profile - ' + recipe.waterProfile.name}
+                        rightChild={<BrewDetail_WaterProfile waterProfile={recipe.waterProfile}/>}
+                        open={false}
+                    />
                 </div>
                 <div className="brewed-beer-recipe-steps">
                     <CollapsiblePanel title="Brewing steps" children={'Supposed to be brewing steps in here'} open={true}/>

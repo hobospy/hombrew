@@ -6,8 +6,8 @@ import BrewSummaryItem from "./Components/BrewSummaryItem";
 import BrewDetail from "./Components/BrewDetail";
 import './atomicStyling.css';
 
-//const API_URL = 'https://localhost:44363/';
-const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
+const API_URL = 'https://localhost:44363/';
+//const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 
 class DebugRouter extends Router {
   constructor(props) {
@@ -53,7 +53,8 @@ class App extends Component {
       <div className="grid-brew-summary-link-indicator">
         <DebugRouter>
           <Switch>
-            <Route path="/brew/:id" component={BrewDetail}/>
+            {/* <Route path="/brew/:id" component={BrewDetail}/> */}
+            <Route path="/brew/:id" render={(props) => <BrewDetail {...props} baseUrl={API_URL}/>}/>
             <Route exact={true} path="/*" render={() => content}/>
           </Switch>
         </DebugRouter>

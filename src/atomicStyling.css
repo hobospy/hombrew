@@ -163,7 +163,7 @@
 }
 
 .grid-brewed-detail-edit-name {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
     grid-row: 1;
     padding-top: 0.5em;
 }
@@ -319,13 +319,8 @@
     margin-top: 0.5em;
 }
 
-.brewed-beer-recipe-ingredients {
-    grid-column: 1;
-    grid-row: 3;
-}
-
-.brewed-beer-recipe-water-profile {
-    grid-column: 2;
+.brewed-beer-recipe-ingredients-water-profile {
+    grid-column: 1 / span 2;
     grid-row: 3;
 }
 
@@ -344,4 +339,31 @@
 
 .brewed-beer-ingredient-item {
     margin-top: 0.5em;
+}
+
+.double-collapsible-panel {
+    display: grid;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: 50% 50%;
+}
+
+.double-collapsible-panel-left-column {
+    grid-column: 1;
+}
+
+.double-collapsible-panel-right-column {
+    grid-column: 2;
+}
+
+.fabStyling {
+    position: 'float';
+    bottom: 5px;
+    right: 5px;
+    height: 35;
+    width: 35;
+}
+
+.fabStyling:focus {
+    outline: none;
 }
