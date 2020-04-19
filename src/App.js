@@ -5,6 +5,7 @@ import axios from 'axios';
 import BrewSummaryItem from "./Components/BrewSummaryItem";
 import BrewDetail from "./Components/BrewDetail";
 import './atomicStyling.css';
+import GeneralMenu from './Components/GeneralMenu';
 
 const API_URL = 'https://localhost:44363/';
 //const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
@@ -50,6 +51,8 @@ class App extends Component {
       </NavLink>
       )
     return (
+      <div>
+      <GeneralMenu baseUrl="/"/>
       <div className="grid-brew-summary-link-indicator">
         <DebugRouter>
           <Switch>
@@ -58,6 +61,7 @@ class App extends Component {
             <Route exact={true} path="/*" render={() => content}/>
           </Switch>
         </DebugRouter>
+      </div>
       </div>
     );
   }

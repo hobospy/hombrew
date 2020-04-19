@@ -47,20 +47,54 @@ class BrewDetail extends Component{
             hasLoaded: false,
             editingBrew: false,
             brewDetail: '',
-            baseUrl: this.props.baseUrl,
+            url: `${this.props.baseUrl}brew/${this.props.match.params.id}`,
             id: this.props.match.params.id
         };
+
+        this.updateFavourite = this.updateFavourite.bind(this);
     }
 
     componentDidMount() {
-        const url = `${this.state.baseUrl}brew/${this.state.id}`;
-        console.log(url);
-        axios.get(url).then(response => response.data)
+        console.log(this.state.url);
+        axios.get(this.state.url).then(response => response.data)
         .then((data) => {
           this.setState({ brewDetail: data})
           this.setState({hasLoaded: true})
         })
     }
+
+    updateFavourite = async event => {
+        event.preventDefault();
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json-patch+json");
+        
+        var data = [ 
+            {
+                "op": "replace",
+                "path": "/BrewFavourite",
+                "value": !this.state.brewDetail.brewFavourite
+            }
+        ];
+        var raw = JSON.stringify(data);
+        
+        var requestOptions = {
+          method: 'PATCH',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        console.log(raw);
+        console.log(requestOptions);
+
+        fetch(this.state.url, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+            this.setState({
+                brewDetail: response
+            });
+        });
+    };
 
     changingItem () {
         console.log("Output here");
@@ -90,7 +124,7 @@ class BrewDetail extends Component{
                                         value={brew.name}
                                     />
                                 </div>
-                                <div className="grid-brewed-detail-edit-favourite">
+                                <div className="grid-brewed-detail-edit-favourite" onClick={this.updateFavourite}>
                                     <DisplayBrewFavourite brewFavourite={brew.brewFavourite}/>
                                 </div>
                                 <div className="grid-brewed-detail-edit-images">
