@@ -19,7 +19,7 @@ import EditSpeedDial from '../SupportFunctions/EditSpeedDial';
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#0089CC',
+            main: '#001A33',
         },
         secondary: {
             main: '#f66636',

@@ -7,10 +7,10 @@ function DisplayBrewFavourite(props) {
 
     if (brewFavourite === true)
     {
-        return <Favorite style={{ color: "#0089CC", fontSize: "26px", zIndex: 1}}/>
+        return <Favorite style={{ color: "#001A33", fontSize: "26px", zIndex: 1}}/>
     }
 
-    return <FavoriteBorder style={{ color: "#0089CC", fontSize: "26px", zIndex: 1 }}/>
+    return <FavoriteBorder style={{ color: "#001A33", fontSize: "26px", zIndex: 1 }}/>
 }
 
 export default DisplayBrewFavourite;

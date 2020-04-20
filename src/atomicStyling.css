@@ -1,8 +1,8 @@
 .grid-page {
     display: grid;
     width: 95%;
-    margin: auto;
-    grid-template-columns: repeat(1, 100%);
+    margin: 10px;
+    grid-template-columns: 100%;
 }
 
 .grid-page-column {
@@ -21,23 +21,25 @@
 .grid-brew-summary {
     display: grid;
     width: 100%;
-    margin: auto;
+    margin: 10px;
 }
 
 .grid-brew-summary-column {
     padding: 5px;
+    width: 100%;
 }
 
 .grid-brew-summary-title {
     display: grid;
     width: 100%;
     margin: auto;
-    grid-template-columns: repeat(3, 60% 30% 10%);
+    grid-template-columns: 60% 30% 10%;
     grid-template-rows: auto auto;
 }
 
 .grid-brew-summary-title-column {
     padding: 5px;
+    width: 100%;
 }
 
 .grid-brew-summary-title-beer-title {
@@ -59,14 +61,17 @@
 .grid-brew-summary-title-beer-favourite {
     grid-column: 3;
     grid-row: 1 / span 2;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .grid-brew-summary-detail {
     display: grid;
     width: 100%;
-    margin: auto;
-    grid-template-columns: [col1-start] 200px [col2-start] auto [col2-end];
-    grid-template-rows: [row1-start] 100px [row2-start] 100px [row2-end];
+    margin: 10px;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 100px 100px;
 }
 
 .grid-brew-summary-detail-column {
@@ -74,19 +79,19 @@
 }
 
 .grid-brew-summary-image {
-    grid-column: col1-start / col2-start;
-    grid-row: row1-start / row2-end;
+    grid-column: 1;
+    grid-row: 1 / span 2;
 }
 
 .grid-brew-summary-description-text {
-    grid-column: col2-start;
-    grid-row: row1-start;
+    grid-column: 2;
+    grid-row: 1;
     overflow: hidden;
 }
 
 .grid-brew-summary-tastingNotes-text {
-    grid-column: col2-start;
-    grid-row: row2-start;
+    grid-column: 2;
+    grid-row: 2;
     overflow: hidden;
 }
 
@@ -276,7 +281,8 @@
     cursor: pointer;
     border: solid 1px #f2f2f2;
     padding: 15px 5px;
-    background-color: #0089CC;
+    /* background-color: #0089CC; */
+    background-color: #001A33;
     color: #FFF;
 }
 
@@ -399,32 +405,20 @@
     grid-column: 4;
 }
 
-/* .main-menu-item-border {
-    display: grid;
-    width: 31px;
-    height: 31px;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #0089CC;
-    border-radius: 3px;
-} */
-
 .main-menu-button {
-    /* border: 2.5px solid #0089CC; */
     border: 2.5px solid white;
     border-radius: 3px;
-    /* color: #0089CC; */
     color: white;
-    padding: 3px;
 }
 
 .main-menu-button-background {
-    background-color: lightgray;
+    background-color: rgba(211, 211, 211, 0.4);
     display: flex;
     line-height: 40px;
-    opacity: 0.5;
+    padding: 3px;
 }
 
-.main-menu-button > a:hover {
-    border-color: lawngreen;
+.main-menu-button:hover {
+    border-color: #001A33;
+    color: #001A33;
 }
