@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MenuBookOutlined from '@material-ui/icons/MenuBookOutlined';
 import InvertColorsOutlinedIcon from '@material-ui/icons/InvertColorsOutlined';
 import LocalDrinkOutlinedIcon from '@material-ui/icons/LocalDrinkOutlined';
+import BackgroundImage from '../resources/grain.jpg';
 
 class NavBarMenu extends Component{
     constructor(props) {
@@ -14,7 +15,7 @@ class NavBarMenu extends Component{
 
     render() {
         return (
-            <div className="main-menu">
+            <div className="main-menu" style={{backgroundImage: "url(" + BackgroundImage + ")"}}>
                 <div className="main-menu-brews">
                     <a href="/" className="main-menu-button">
                         <div className="main-menu-button-background">
