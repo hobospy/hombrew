@@ -380,7 +380,7 @@
     grid-template-rows: 75px;
     margin: auto;
     width: 100%;
-    /* background-image: url(./resources/grain.jpg); */
+    background-image: url(./resources/grain.jpg);
     background-size: 50%;
     background-position: 0px 20%;
     /* opacity: 75%; */
