@@ -23,7 +23,7 @@ class NavBarMenu extends Component{
                     </a>
                 </div>
                 <div className="main-menu-recipes">
-                    <a href="/" className="main-menu-button">
+                    <a href="/recipe/summary" className="main-menu-button">
                         <div className="main-menu-button-background">
                             <MenuBookOutlined fontSize='inherit' color='inherit'/>
                         </div>
