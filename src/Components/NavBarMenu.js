@@ -16,7 +16,7 @@ class NavBarMenu extends Component{
     render() {
         return (
             <div className="main-menu" style={{backgroundImage: `url(${BackgroundImage})`}}>
-                <img src={BackgroundImage} />
+                <img src={BackgroundImage} height={100}/>
                 <div className="main-menu-brews">
                     <a href="/" className="main-menu-button">
                         <div className="main-menu-button-background">
