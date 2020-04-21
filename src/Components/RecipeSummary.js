@@ -29,12 +29,12 @@ class RecipeSummary extends Component{
         let content;
 
         content = this.state.recipes.map(r =>
-            <NavLink to={'/recipe/${r.id}'}>
+            <NavLink to={`/recipe/${r.id}`}>
                 <RecipeSummaryItem key={r.id} recipe={r} />
             </NavLink>)
 
         return (
-            <div>
+            <div className="grid-brew-summary-link-indicator">
                 {content}
             </div>
         )

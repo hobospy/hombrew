@@ -26,17 +26,13 @@ class BrewSummary extends Component{
         let content;
 
         content = this.state.brews.map(b =>
-            <NavLink to={'/brew/${b.id}'}>
+            <NavLink to={`/brew/${b.id}`} >
                 <BrewSummaryItem key={b.id} brew={b} />
             </NavLink>)
 
         return (
-            <div className="testContainer">
-            <div className="test">
-            <div className="grid-brew-summary-link-indicator">
+            <div className="grid-brew-summary-link-indicator" >
                 {content}
-            </div>
-            </div>
             </div>
         )
     }

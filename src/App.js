@@ -11,8 +11,8 @@ import NavBarMenu from './Components/NavBarMenu';
 import AppBar from '@material-ui/core/AppBar';
 import BrewSummary from './Components/BrewSummary';
 
-const API_URL = 'https://localhost:44363/';
-//const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
+//const API_URL = 'https://localhost:44363/';
+const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 
 class DebugRouter extends Router {
   constructor(props) {
@@ -52,7 +52,7 @@ class App extends Component {
         <AppBar position="fixed">
           <NavBarMenu baseUrl="/"/>
         </AppBar>
-        <div style={{paddingLeft: "30px", paddingRight: "30px"}}>
+        <div className="testMainPage">
           <DebugRouter>
             <Switch>
               <Route path="/brew/:id" render={(props) => <BrewDetail {...props} baseUrl={API_URL}/>}/>

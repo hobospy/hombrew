@@ -423,10 +423,38 @@
     color: #001A33;
 }
 
-.testContainer{
-    height: 100vh;
+.testMainPage {
+    margin-top: 75px;
+    padding-left: 35px;
+    padding-right: 35px;
+    height: calc(100vh - 75px);
+    overflow-y: scroll;
 }
 
-.text {
-    overflow-y: scroll;
+.recipe-summary-container {
+    display: grid;
+    grid-template-columns: 60% 30% 10%;
+    grid-template-rows: 75px 100px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.recipe-summary-name {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.recipe-summary-type {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.recipe-summary-rating {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.recipe-summary-description {
+    grid-column: 1 / span 3;
+    grid-row: 2;
 }
