@@ -10,7 +10,7 @@
 }
 
 .grid-brew-summary-link-indicator > a {
-    display: inline-block;
+    display: block;
     text-decoration: none;
 }
 
