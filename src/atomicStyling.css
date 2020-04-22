@@ -382,7 +382,7 @@
     width: 100%;
     background-image: url(./resources/grain.jpg);
     background-size: 50%;
-    background-position: 0px 20%;
+    background-position: 0px 35%;
     /* opacity: 75%; */
 }
 
@@ -425,8 +425,8 @@
 
 .testMainPage {
     margin-top: 75px;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding-left: 2%;
+    padding-right: 2%;
     height: calc(100vh - 75px);
     overflow-y: scroll;
 }

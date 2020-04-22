@@ -48,20 +48,19 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <DebugRouter>
         <AppBar position="fixed">
           <NavBarMenu baseUrl="/"/>
         </AppBar>
         <div className="testMainPage">
-          <DebugRouter>
             <Switch>
+              <Route exact={true} path="/brew/summary/" render={(props) => <BrewSummary {...props} baseUrl={API_URL}/>}/>
               <Route path="/brew/:id" render={(props) => <BrewDetail {...props} baseUrl={API_URL}/>}/>
               <Route exact={true} path="/recipe/summary/" render={(props) => <RecipeSummary {...props} baseUrl={API_URL}/>}/>
               <Route exact={true} path="/*" render={(props) => <BrewSummary {...props} baseUrl={API_URL}/>}/>
             </Switch>
-          </DebugRouter>
         </div>
-      </div>
+      </DebugRouter>
     );
   }
 }
