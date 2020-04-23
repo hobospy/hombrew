@@ -1,460 +1,502 @@
 .grid-page {
-    display: grid;
-    width: 95%;
-    margin: 10px;
-    grid-template-columns: 100%;
+  display: grid;
+  width: 95%;
+  margin: 10px;
+  grid-template-columns: 100%;
 }
 
 .grid-page-column {
-    padding: 5px;
+  padding: 5px;
 }
 
 .grid-brew-summary-link-indicator > a {
-    display: block;
-    text-decoration: none;
+  display: block;
+  text-decoration: none;
 }
 
 .grid-brew-summary-link-indicator > a:hover {
-    background-color: rgb(245, 250, 250);
+  background-color: rgb(245, 250, 250);
 }
 
 .grid-brew-summary {
-    display: grid;
-    width: 100%;
-    margin: 10px;
+  display: grid;
+  width: 100%;
+  margin: 10px;
 }
 
 .grid-brew-summary-column {
-    padding: 5px;
-    width: 100%;
+  padding: 5px;
+  width: 100%;
 }
 
 .grid-brew-summary-title {
-    display: grid;
-    width: 100%;
-    margin: auto;
-    grid-template-columns: 60% 30% 10%;
-    grid-template-rows: auto auto;
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: 60% 30% 10%;
+  grid-template-rows: auto auto;
 }
 
 .grid-brew-summary-title-column {
-    padding: 5px;
-    width: 100%;
+  padding: 5px;
+  width: 100%;
 }
 
 .grid-brew-summary-title-beer-title {
-    grid-column: 1;
-    grid-row: 1;
-    margin: 0px;
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0px;
 }
 
 .grid-brew-summary-title-beer-brewdate {
-    grid-column: 1;
-    grid-row: 2;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .grid-brew-summary-title-beer-type {
-    grid-column: 2;
-    grid-row: 1 / span 2;
+  grid-column: 2;
+  grid-row: 1 / span 2;
 }
 
 .grid-brew-summary-title-beer-favourite {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    display:flex;
-    align-items: center;
-    justify-content: center;
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .grid-brew-summary-detail {
-    display: grid;
-    width: 100%;
-    margin: 10px;
-    grid-template-columns: 200px 1fr;
-    grid-template-rows: 100px 100px;
+  display: grid;
+  width: 100%;
+  margin: 10px;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 100px 100px;
 }
 
 .grid-brew-summary-detail-column {
-    padding: 5px;
+  padding: 5px;
 }
 
 .grid-brew-summary-image {
-    grid-column: 1;
-    grid-row: 1 / span 2;
+  grid-column: 1;
+  grid-row: 1 / span 2;
 }
 
 .grid-brew-summary-description-text {
-    grid-column: 2;
-    grid-row: 1;
-    overflow: hidden;
+  grid-column: 2;
+  grid-row: 1;
+  overflow: hidden;
 }
 
 .grid-brew-summary-tastingNotes-text {
-    grid-column: 2;
-    grid-row: 2;
-    overflow: hidden;
+  grid-column: 2;
+  grid-row: 2;
+  overflow: hidden;
 }
 
 .grid-brew-summary-detail-text-row {
-    padding: 5px;
+  padding: 5px;
 }
 
 .app-default-font {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .recipe-title-size {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .recipe-summary-date {
-    font-size: 8px;
-    color: darkgrey;
+  font-size: 8px;
+  color: darkgrey;
 }
 
 .recipe-title-colour {
-    color: black;
+  color: black;
 }
 
 .recipe-summary-size {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .recipe-summary-colour {
-    color: black;
+  color: black;
 }
 
 .recipe-summary-image-size {
-    height: 200px;
-    width: 200px;
+  height: 200px;
+  width: 200px;
 }
 
-.recipe-summary-desc-height{
-    height: 90px;
+.recipe-summary-desc-height {
+  height: 90px;
 }
 
-.recipe-summary-notes-height{
-    height: 90px;
+.recipe-summary-notes-height {
+  height: 90px;
 }
 
 .recipe-summary-favourite-size {
-    height: 35px;
-    width: 35px;
+  height: 35px;
+  width: 35px;
 }
 
 .recipe-summary-beer-image-size {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    height: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
 }
 
 .grid-brewed-detail {
-    display: grid;
-    width: 100%;
-    margin: auto;
+  display: grid;
+  width: 100%;
+  margin: auto;
 }
 
 .grid-brewed-detail-column {
-    padding: 5px;
+  padding: 5px;
 }
 
 .grid-brewed-detail-edit {
-    display: grid;
-    width: auto;
-    margin: auto;
-    grid-template-columns: 200px auto 40px;
-    grid-template-rows: 40px 100px 100px;
+  display: grid;
+  width: auto;
+  margin: auto;
+  grid-template-columns: 200px auto 300px;
+  grid-template-rows: 40px 100px 100px;
 }
 
 .grid-brewed-detail-edit-name {
-    grid-column: 1 / span 3;
-    grid-row: 1;
-    padding-top: 0.5em;
+  grid-column: 1 / span 3;
+  grid-row: 1;
+  padding-top: 0.5em;
 }
 
-.grid-brewed-detail-edit-favourite {
-    display:flex;
-    grid-column: 3;
-    grid-row: 1;
-    align-items: center;
-    justify-content: center;
+.grid-brewed-detail-edit-rating {
+  display: flex;
+  grid-column: 3;
+  grid-row: 1;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .grid-brewed-detail-edit-images {
-    display: flex;
-    grid-column: 1;
-    grid-row: 2 / span 2;
-    overflow: hidden;
-    content: contain;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  overflow: hidden;
+  content: contain;
+  align-items: center;
+  justify-content: center;
 }
 
-.grid-brewed-detail-edit-images >img {
-    height: 200px;
-    width: auto;
+.grid-brewed-detail-edit-images > img {
+  height: 200px;
+  width: auto;
 }
 
 .grid-brewed-detail-edit-type {
-    grid-column: 2 / span 2;
-    grid-row: 2;
-    padding-top: 2em;
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  padding-top: 2em;
 }
 
 .grid-brewed-detail-edit-abv {
-    grid-column: 2 / span 2;
-    grid-row: 3;
-    padding-top: 2em;
+  grid-column: 2 / span 2;
+  grid-row: 3;
+  padding-top: 2em;
 }
 
 .grid-brewed-detail-title {
-    display: grid;
-    width: 100%;
-    margin: auto;
-    grid-template-columns: [col1-start] auto [col2-start] auto [col3-start] auto [col4-start] 40px [col4-end];
-    grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: [col1-start] auto [col2-start] auto [col3-start] auto [col4-start] 40px [col4-end];
+  grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
 }
 
 .grid-brewed-detail-title-text {
-    grid-column: col1-start / col2-start;
-    grid-row: row1-start;
+  grid-column: col1-start / col2-start;
+  grid-row: row1-start;
 }
 
 .grid-brewed-detail-type-text {
-    grid-column: col2-start / col3-start;
-    grid-row: row1-start;
+  grid-column: col2-start / col3-start;
+  grid-row: row1-start;
 }
 
 .grid-brewed-detail-ABV-text {
-    grid-column: col3-start / col4-start;
-    grid-row: row1-start;
+  grid-column: col3-start / col4-start;
+  grid-row: row1-start;
 }
 
 .grid-brewed-detail-favourite-image {
-    grid-column: col4-start / col4-end;
-    grid-row: row1-start / row2-end;
-    overflow: hidden;
-    object-fit: contain;
+  grid-column: col4-start / col4-end;
+  grid-row: row1-start / row2-end;
+  overflow: hidden;
+  object-fit: contain;
 }
 
 .grid-brewed-detail-brewdate-text {
-    grid-column: col1-start / col3-start;
-    grid-row: row2-start;
+  grid-column: col1-start / col3-start;
+  grid-row: row2-start;
 }
 
 .grid-brewed-detail-description {
-    display: grid;
-    width: 100%;
-    margin: auto;
-    grid-template-columns: [col1-start] 100px [col2-start] calc(100% - 100px) [col2-end];
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: [col1-start] 100px [col2-start] calc(100% - 100px) [col2-end];
 }
 
 .grid-brewed-detail-image {
-    grid-column: col1-start / col2-start;
+  grid-column: col1-start / col2-start;
 }
 
 .grid-brewed-detail-image-size {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100px;
 }
 
 .grid-brewed-detail-description-text {
-    grid-column: col2-start;
-    text-align: justify;
+  grid-column: col2-start;
+  text-align: justify;
 }
 
 .grid-brewed-detail-recipe {
-    display: grid;
-    width: 100%;
-    margin: auto;
+  display: grid;
+  width: 100%;
+  margin: auto;
 }
 
 .grid-brewed-detail-tasting {
-    display: grid;
-    width: 100%;
-    margin: auto;
+  display: grid;
+  width: 100%;
+  margin: auto;
 }
 
 .header {
-    cursor: pointer;
-    border: solid 1px #f2f2f2;
-    padding: 15px 5px;
-    /* background-color: #0089CC; */
-    background-color: #001A33;
-    color: #FFF;
+  cursor: pointer;
+  border: solid 1px #f2f2f2;
+  padding: 15px 5px;
+  /* background-color: #0089CC; */
+  background-color: #001a33;
+  color: #fff;
 }
 
 .content {
-    cursor: pointer;
-    border-left: solid 1px #f2f2f2;
-    border-right: solid 1px #f2f2f2;
-    border-bottom: solid 1px #f2f2f2;
-    border-radius: 0 0 5px 5px;
-    padding: 5px;
-    font-size: 14px;
+  cursor: pointer;
+  border-left: solid 1px #f2f2f2;
+  border-right: solid 1px #f2f2f2;
+  border-bottom: solid 1px #f2f2f2;
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
+  font-size: 14px;
 }
 
 .brewed-beer-recipe-column {
-    padding: 5px;
+  padding: 5px;
 }
 
 .brewed-beer-recipe {
-    display: grid;
-    width: 100%;
-    margin: auto;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto auto auto auto;
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto auto auto auto;
 }
 
 .brewed-beer-recipe-description {
-    grid-column: 1 / span 2;
-    grid-row: 1;
+  grid-column: 1 / span 2;
+  grid-row: 1;
 }
 
 .brewed-beer-recipe-type {
-    grid-column: 1;
-    grid-row: 2;
-    margin-top: 0.5em;
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 0.5em;
 }
 
 .brewed-beer-recipe-rating {
-    grid-column: 2;
-    grid-row: 2;
-    margin-top: 0.5em;
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: 0.5em;
 }
 
 .brewed-beer-recipe-ingredients-water-profile {
-    grid-column: 1 / span 2;
-    grid-row: 3;
+  grid-column: 1 / span 2;
+  grid-row: 3;
 }
 
 .brewed-beer-recipe-steps {
-    grid-column: 1 / span 2;
-    grid-row: 4;
+  grid-column: 1 / span 2;
+  grid-row: 4;
 }
 
 .brewed-beer-water-profile-column {
-    padding: 5px;
+  padding: 5px;
 }
 
 .brewed-beer-water-profile-item {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
 .brewed-beer-ingredient-item {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
 .double-collapsible-panel {
-    display: grid;
-    width: 100%;
-    margin: auto;
-    grid-template-columns: 50% 50%;
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: 50% 50%;
 }
 
 .double-collapsible-panel-left-column {
-    grid-column: 1;
+  grid-column: 1;
 }
 
 .double-collapsible-panel-right-column {
-    grid-column: 2;
+  grid-column: 2;
 }
 
 .fabStyling {
-    position: 'float';
-    bottom: 5px;
-    right: 5px;
-    height: 35;
-    width: 35;
+  position: 'float';
+  bottom: 5px;
+  right: 5px;
+  height: 35;
+  width: 35;
 }
 
 .fabStyling:focus {
-    outline: none;
+  outline: none;
 }
 
 .main-menu {
-    display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 75px;
-    margin: auto;
-    width: 100%;
-    background-image: url(./resources/grain.jpg);
-    background-size: 50%;
-    background-position: 0px 35%;
-    /* opacity: 75%; */
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 75px;
+  margin: auto;
+  width: 100%;
+  background-image: url(./resources/grain.jpg);
+  background-size: 50%;
+  background-position: 0px 35%;
+  /* opacity: 75%; */
 }
 
 .main-menu > div {
-    display: flex;
-    font-size: 35px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  font-size: 35px;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-menu-brews {
-    grid-column: 2;
+  grid-column: 2;
 }
 
 .main-menu-recipes {
-    grid-column: 3;
+  grid-column: 3;
 }
 
 .main-menu-water {
-    grid-column: 4;
+  grid-column: 4;
 }
 
 .main-menu-button {
-    border: 2.5px solid white;
-    border-radius: 3px;
-    color: white;
+  border: 2.5px solid white;
+  border-radius: 3px;
+  color: white;
 }
 
 .main-menu-button-background {
-    background-color: rgba(211, 211, 211, 0.4);
-    display: flex;
-    line-height: 40px;
-    padding: 3px;
+  background-color: rgba(211, 211, 211, 0.4);
+  display: flex;
+  line-height: 40px;
+  padding: 3px;
 }
 
 .main-menu-button:hover {
-    border-color: #001A33;
-    color: #001A33;
+  border-color: #001a33;
+  color: #001a33;
 }
 
 .testMainPage {
-    margin-top: 75px;
-    padding-left: 2%;
-    padding-right: 2%;
-    height: calc(100vh - 75px);
-    overflow-y: scroll;
+  margin-top: 75px;
+  padding-left: 2%;
+  padding-right: 2%;
+  height: calc(100vh - 75px);
+  overflow-y: scroll;
 }
 
 .recipe-summary-container {
-    display: grid;
-    grid-template-columns: 60% 30% 10%;
-    grid-template-rows: 75px 100px;
-    margin-top: 10px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 60% 30% 10%;
+  grid-template-rows: 75px 100px;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .recipe-summary-name {
-    grid-column: 1;
-    grid-row: 1;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .recipe-summary-type {
-    grid-column: 2;
-    grid-row: 1;
+  grid-column: 2;
+  grid-row: 1;
 }
 
-.recipe-summary-rating {
-    grid-column: 3;
-    grid-row: 1;
+.recipe-summary-favourite {
+  text-align: right;
+  grid-column: 3;
+  grid-row: 1;
+  padding-right: 5px;
 }
 
 .recipe-summary-description {
-    grid-column: 1 / span 3;
-    grid-row: 2;
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  overflow: hidden;
+}
+
+.water-profile-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 1rem;
+}
+
+.water-profile-container > div::before {
+  content: '';
+  padding-bottom: 15%;
+  display: block;
+}
+
+.recipe-detail {
+  padding-top: 15px;
+}
+
+.expander-top-right {
+  float: right;
+}
+
+.recipe-detail-title-container {
+  display: grid;
+  grid-template-columns: 85% 15%;
+  width: 100%;
+}
+
+.recipe-detail-title {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.recipe-detail-favourite {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: right;
+  padding-right: 5px;
+  z-index: 1;
 }
