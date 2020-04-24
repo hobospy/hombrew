@@ -55,11 +55,15 @@ class BrewDetail extends Component {
     super(props);
     this.state = {
       hasLoaded: false,
-      editingBrew: false,
+      editMenuDisplayed: false,
       brewDetail: '',
       url: `${this.props.baseUrl}brew/${this.props.match.params.id}`,
       id: this.props.match.params.id,
     };
+
+    this.editItem = this.editItem.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -77,8 +81,20 @@ class BrewDetail extends Component {
     console.log('Output here');
   }
 
-  editItem = () => {
-    return this.setState({ editingBrew: !this.state.editingBrew });
+  editItem() {
+    console.log('Editing item from the amazing menu item');
+  }
+
+  addItem() {
+    console.log('Adding item from the amazing menu item');
+  }
+
+  deleteItem() {
+    console.log('Deleting item from the amazing menu item');
+  }
+
+  displayEditMenu = () => {
+    return this.setState({ editMenuDisplayed: !this.state.editMenuDisplayed });
   };
 
   render() {
@@ -112,11 +128,14 @@ class BrewDetail extends Component {
               <CollapsiblePanel title={'Recipe - ' + brew.recipe.name} children={<BrewDetail_Recipe recipe={brew.recipe} detailsExpanded={false} />} open={false} />
               <CollapsiblePanel title={'Tasting notes'} children={brew.tastingNotes} open={true} />
             </div>
-            <MuiThemeProvider theme={theme}>
-              <Fab aria-label="edit" color="primary" className={classes.fab} onClick={this.editItem} style={{}}>
+            {/* <MuiThemeProvider theme={theme}>
+              <Fab aria-label="edit" color="primary" className={classes.fab} onClick={this.displayEditMenu} style={{}}>
                 {this.state.editingBrew ? <SaveIcon fontSize="small" /> : <EditIcon fontSize="small" />}
               </Fab>
-            </MuiThemeProvider>
+            </MuiThemeProvider> */}
+            <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(2) }}>
+              <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
+            </div>
           </div>
         ) : (
           <div>Still loading</div>

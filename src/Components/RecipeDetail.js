@@ -4,6 +4,8 @@ import FloatingLabelInput, { action } from 'react-floating-label-input';
 import Favourite from '../SupportFunctions/Favourite';
 
 import BrewDetail_Recipe from './BrewDetail_Recipe';
+import EditSpeedDial from '../SupportFunctions/EditSpeedDial';
+import ModalForm from '../SupportFunctions/ModalForm';
 
 class RecipeDetail extends Component {
   constructor(props) {
@@ -13,9 +15,13 @@ class RecipeDetail extends Component {
       recipeDetail: '',
       url: `${this.props.baseUrl}recipe/${this.props.match.params.id}`,
       id: this.props.match.params.id,
+      modalShown: false,
     };
 
     this.updateFavourite = this.updateFavourite.bind(this);
+    this.editItem = this.editItem.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +68,47 @@ class RecipeDetail extends Component {
       });
   };
 
+  showModal = () => {
+    this.setState({ modalShown: true }, () => {
+      this.closeButton.focus();
+    });
+
+    this.toggleScrollLock();
+  };
+
+  closeModal = () => {
+    this.setState({ modalShown: false });
+    this.toggleScrollLock();
+  };
+
+  onKeyDown = (event) => {
+    if (event.keyCode === 27) {
+      this.closeModal();
+    }
+  };
+
+  onClickOutside = (event) => {
+    if (this.modal && this.modal.contains(event.target)) return;
+    this.closeModal();
+  };
+
+  toggleScrollLock = () => {
+    document.querySelector('html').classList.toggle('scroll-lock');
+  };
+
+  editItem() {
+    console.log('Editing item from the amazing menu item');
+    this.showModal();
+  }
+
+  addItem() {
+    console.log('Adding item from the amazing menu item');
+  }
+
+  deleteItem() {
+    console.log('Deleting item from the amazing menu item');
+  }
+
   render() {
     const recipe = this.state.recipeDetail;
     console.log(recipe);
@@ -69,17 +116,23 @@ class RecipeDetail extends Component {
     return (
       <div className="recipe-detail">
         {this.state.hasLoaded ? (
-          <div>
-            <div className="recipe-detail-title-container">
-              <div className="recipe-detail-title">
-                <FloatingLabelInput id="recipe-name" label="Name" value={recipe.name} />
+          <React.Fragment>
+            <div>
+              <div className="recipe-detail-title-container">
+                <div className="recipe-detail-title">
+                  <FloatingLabelInput id="recipe-name" label="Name" value={recipe.name} />
+                </div>
+                <div className="recipe-detail-favourite">
+                  <Favourite favourite={recipe.favourite} onClick={this.updateFavourite} />
+                </div>
               </div>
-              <div className="recipe-detail-favourite">
-                <Favourite favourite={recipe.favourite} onClick={this.updateFavourite} />
+              <BrewDetail_Recipe recipe={recipe} detailsExpanded={true} />
+              <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
+                <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
               </div>
             </div>
-            <BrewDetail_Recipe recipe={recipe} detailsExpanded={true} />
-          </div>
+            {this.state.modalShown ? <ModalForm modalRef={(n) => (this.ModalForm = n)} buttonRef={(n) => (this.closeButton = n)} onSubmit={this.props.onSubmit} closeModal={this.closeModal} onKeyDown={this.onKeyDown} onClickOutside={this.onClickOutside} /> : null}
+          </React.Fragment>
         ) : (
           <div>Still loading</div>
         )}

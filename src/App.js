@@ -13,8 +13,6 @@ import WaterProfileSummary from './Components/WaterProfileSummary';
 import RecipeDetail from './Components/RecipeDetail';
 import BrewDetail_Recipe from './Components/BrewDetail_Recipe';
 
-// const API_URL = 'https://localhost:44363/';
-//const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 const API_URL = process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
 
 class DebugRouter extends Router {
@@ -62,6 +60,7 @@ class App extends Component {
             <Route exact={true} path="/recipe/summary/" render={(props) => <RecipeSummary {...props} baseUrl={API_URL} />} />
             <Route path="/recipe/:id" render={(props) => <RecipeDetail {...props} baseUrl={API_URL} />} />
             <Route exact={true} path="/waterprofile/summary/" render={(props) => <WaterProfileSummary {...props} baseUrl={API_URL} />} />
+            {/* <Route path="/waterprofile/:id" render={(props) => <WaterProfileDetail {...props} baseUrl={API_URL} />} /> */}
             <Route exact={true} path="/*" render={(props) => <BrewSummary {...props} baseUrl={API_URL} />} />
           </Switch>
         </div>
