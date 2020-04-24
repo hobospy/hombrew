@@ -134,7 +134,9 @@ class BrewDetail extends Component {
               </Fab>
             </MuiThemeProvider> */}
             <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(2) }}>
-              <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
+              <MuiThemeProvider theme={theme}>
+                <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
+              </MuiThemeProvider>
             </div>
           </div>
         ) : (

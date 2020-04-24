@@ -1,16 +1,14 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { pink } from '@material-ui/core/colors';
 
-const useStyles = makeStyles((theme) => ({
+const editSpeedDialStyles = makeStyles((theme) => ({
   root: {
     transform: 'translateZ(0px)',
     flexGrow: 1,
@@ -18,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   radioGroup: {
     margin: theme.spacing(1, 0),
   },
-  speedDial: {
+  speedDialStyle: {
     // position: 'fixed',
     // bottom: theme.spacing(2),
     // right: theme.spacing(2),
@@ -35,7 +33,8 @@ const actions = [
 ];
 
 export default function EditSpeedDial(props) {
-  const classes = useStyles();
+  // function EditSpeedDialItem(props) {
+  const classes = editSpeedDialStyles();
   const [direction, setDirection] = React.useState('up');
   const [open, setOpen] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
@@ -65,7 +64,7 @@ export default function EditSpeedDial(props) {
 
   return (
     <div className={classes.root}>
-      <SpeedDial ariaLabel="SpeedDial example" FabProps={{ size: 'small', style: { backgroundColor: '#001a33' } }} className={classes.speedDial} hidden={hidden} icon={<MoreHorizIcon openIcon={<MoreVertIcon />} />} onClose={handleClose} onOpen={handleOpen} open={open} direction={direction}>
+      <SpeedDial ariaLabel="SpeedDial example" FabProps={{ size: 'small', style: { backgroundColor: '#001a33' } }} className={classes.speedDialStyle} hidden={hidden} icon={<MoreHorizIcon openIcon={<MoreVertIcon />} />} onClose={handleClose} onOpen={handleOpen} open={open} direction={direction}>
         {actions.map((action) => (
           <SpeedDialAction key={action.name} icon={action.icon} FabProps={{ style: { backgroundColor: 'lightgray' } }} tooltipTitle={action.name} tooltipOpen onClick={action.action} />
         ))}
@@ -73,3 +72,8 @@ export default function EditSpeedDial(props) {
     </div>
   );
 }
+
+// const EditSpeedDial = withStyles(editSpeedDialStyles, { withTheme: true })(EditSpeedDialItem);
+// export default EditSpeedDial;
+
+// export default withStyles(editSpeedDialStyles)(EditSpeedDial);
