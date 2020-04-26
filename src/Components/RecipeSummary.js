@@ -1,8 +1,35 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { makeStyles, withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import RecipeSummaryItem from './RecipeSummaryItem';
+
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#001A33',
+      },
+      secondary: {
+        main: '#f66636',
+      },
+    },
+  });
+  
+  const styles = (theme) => ({
+    fab: {
+      position: 'fixed',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+      height: 35,
+      width: 35,
+      '&:hover, &:focus': {
+        outline: 'none',
+      },
+    },
+  });
 
 class RecipeSummary extends Component{
     constructor(props) {
@@ -21,6 +48,7 @@ class RecipeSummary extends Component{
         .then((data) => {
             console.log("DATA: " + data)
             this.setState({ recipes: data})
+            this.setState({ hasLoaded: true})
             console.log(this.state.recipes)
         })
     }
@@ -36,9 +64,18 @@ class RecipeSummary extends Component{
         return (
             <div className="grid-brew-summary-link-indicator">
                 {content}
+                <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(3) }}>
+                            <MuiThemeProvider theme={theme}>
+              <Fab aria-label="add" color="primary" className={styles.fab}>
+                <AddIcon fontSize="small" />
+              </Fab>
+            </MuiThemeProvider>
+            </div>
             </div>
         )
     }
 }
 
-export default RecipeSummary;
+export default withStyles(styles, {withTheme: true}) (RecipeSummary);
+
+//export default withStyles(styles, { withTheme: true })(BrewDetail);

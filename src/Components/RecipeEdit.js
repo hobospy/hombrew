@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 import RecipeEdit_Step1 from './RecipeEdit_Step1';
 import RecipeEdit_Step2 from './RecipeEdit_Step2';
@@ -53,7 +55,11 @@ class RecipeEdit extends Component {
       );
     }
 
-    return null;
+    return (
+      <Button variant="outlined" onClick={this._prev} style={{ visibility: 'hidden'}} >
+        Previous
+      </Button>
+    );
   }
 
   get nextButton() {
@@ -94,9 +100,24 @@ class RecipeEdit extends Component {
           <RecipeEdit_Step1 currentStep={this.state.currentStep} handleChange={this.handleChange} name={this.state.name} description={this.state.description} abv={this.state.abv} />
           <RecipeEdit_Step2 currentStep={this.state.currentStep} handleChange={this.handleChange} />
           <RecipeEdit_Step3 currentStep={this.state.currentStep} handleChange={this.handleChange} />
+          <div style={{ display:'flex', justifyContent: 'space-between'}}>
           {this.previousButton}
           {this.nextButton}
-          <div>Current step: {this.state.currentStep}</div>
+          </div>
+          <div className="edit-page-indicator-container">
+          <div className="edit-page-indicator-page1">
+            <RadioButtonCheckedIcon style={{ display: this.state.currentStep === 1 ? 'inline' : 'none' }} />
+            <RadioButtonUncheckedIcon style={{ display: this.state.currentStep === 1 ? 'none' : 'inline' }} />
+          </div>
+          <div className="edit-page-indicator-page2">
+            <RadioButtonCheckedIcon style={{ display: this.state.currentStep === 2 ? 'inline' : 'none' }} />
+            <RadioButtonUncheckedIcon style={{ display: this.state.currentStep === 2 ? 'none' : 'inline' }} />
+          </div>
+          <div className="edit-page-indicator-page3">
+            <RadioButtonCheckedIcon style={{ display: this.state.currentStep === 3 ? 'inline' : 'none' }} />
+            <RadioButtonUncheckedIcon style={{ display: this.state.currentStep === 3 ? 'none' : 'inline' }} />
+          </div>
+        </div>
         </form>
       </React.Fragment>
     );

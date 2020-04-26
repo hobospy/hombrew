@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FloatingLabelInput from 'react-floating-label-input';
 
 class RecipeEdit_Step2 extends Component {
   render() {
@@ -8,8 +9,12 @@ class RecipeEdit_Step2 extends Component {
 
     return (
       <div>
-        <label>Ingredients</label>
-        <label>Water profile</label>
+        <div className="edit-page-container-item">
+          <FloatingLabelInput id="name" label="Ingredients" onChange={this.props.handleChange} value={this.props.name} />
+        </div>
+        <div className="edit-page-container-item">
+          <FloatingLabelInput id="name" label="Water profile" onChange={this.props.handleChange} value={this.props.name} />
+        </div>
       </div>
     );
   }

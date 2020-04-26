@@ -28,7 +28,7 @@ const editSpeedDialStyles = makeStyles((theme) => ({
 
 const actions = [
   { icon: <EditIcon />, name: 'Edit', action: null },
-  { icon: <AddIcon />, name: 'New', action: null },
+  // { icon: <AddIcon />, name: 'New', action: null },
   { icon: <DeleteIcon />, name: 'Delete', action: null },
 ];
 
@@ -52,12 +52,12 @@ export default function EditSpeedDial(props) {
     props.editItemAction();
   };
 
-  actions[1].action = () => {
-    setOpen(false);
-    props.addItemAction();
-  };
+  // actions[1].action = () => {
+  //   setOpen(false);
+  //   props.addItemAction();
+  // };
 
-  actions[2].action = () => {
+  actions[1].action = () => {
     setOpen(false);
     props.deleteItemAction();
   };
