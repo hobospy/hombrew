@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EditNavigation from './EditNavigation';
 
 class RecipeEdit_Step1 extends Component {
   render() {
@@ -23,6 +24,7 @@ class RecipeEdit_Step1 extends Component {
         <input id="description" type="text" placeholder="Recipe description" value={this.props.description} onChange={this.props.handleChange} />
         <label>ABV</label>
         <input id="expectedABV" type="number" placeholder="Expected ABV" value={this.props.abv} onChange={this.props.handleChange} />
+        <EditNavigation page={1} previousDisabled={true} saveVisible={false} />
       </div>
     );
   }

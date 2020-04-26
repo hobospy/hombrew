@@ -585,3 +585,23 @@
   overflow: hidden;
   margin-right: 17px;
 }
+
+.edit-page-indicator-container {
+  display: grid;
+  grid-template-columns: 1fr 20px 20px 20px 1fr;
+  column-gap: 3px;
+  width: 100%;
+  color: #001a33;
+}
+
+.edit-page-indicator-page1 {
+  grid-column: 2;
+}
+
+.edit-page-indicator-page2 {
+  grid-column: 3;
+}
+
+.edit-page-indicator-page3 {
+  grid-column: 4;
+}

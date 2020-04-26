@@ -88,7 +88,11 @@ class RecipeDetail extends Component {
   };
 
   onClickOutside = (event) => {
+    if (this.modal.contains(event.target)) console.log('Event raised externally');
+    else console.log('Event raised internally');
+
     if (this.modal && this.modal.contains(event.target)) return;
+
     this.closeModal();
   };
 
