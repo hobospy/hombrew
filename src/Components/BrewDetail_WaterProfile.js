@@ -1,4 +1,4 @@
-import React, { Compoent, Component } from 'react';
+import React, { Component } from 'react';
 import FloatingLabelInput, { action } from 'react-floating-label-input';
 
 class BrewDetail_WaterProfile extends Component {
@@ -22,58 +22,15 @@ class BrewDetail_WaterProfile extends Component {
     const waterProfile = this.state.waterProfile;
     console.log(waterProfile);
 
-    return (
-      <div className="water-profile-container">
-        <div className="brewed-beer-water-profile-item">
-          <FloatingLabelInput
-            id="wp-lacticAcid"
-            label="Lactic acid"
-            onChange={this.changingItem}
-            value={String(waterProfile.lacticAcid)}
-          />
-        </div>
-        <div className="brewed-beer-water-profile-item">
-          <FloatingLabelInput
-            id="wp-gypsum"
-            label="Gypsum"
-            onChange={this.changingItem}
-            value={String(waterProfile.gypsum)}
-          />
-        </div>
-        <div className="brewed-beer-water-profile-item">
-          <FloatingLabelInput
-            id="wp-calciumChloride"
-            label="CalciumChloride"
-            onChange={this.changingItem}
-            value={String(waterProfile.calciumChloride)}
-          />
-        </div>
-        <div className="brewed-beer-water-profile-item">
-          <FloatingLabelInput
-            id="wp-epsomSalt"
-            label="Epsom salt"
-            onChange={this.changingItem}
-            value={String(waterProfile.epsomSalt)}
-          />
-        </div>
-        <div className="brewed-beer-water-profile-item">
-          <FloatingLabelInput
-            id="wp-nonIodizedSalt"
-            label="NonIodizedSalt"
-            onChange={this.changingItem}
-            value={String(waterProfile.nonIodizedSalt)}
-          />
-        </div>
-        <div className="brewed-beer-water-profile-item">
-          <FloatingLabelInput
-            id="wp-bakingSoda"
-            label="Baking soda"
-            onChange={this.changingItem}
-            value={String(waterProfile.bakingSoda)}
-          />
-        </div>
+    let content;
+
+    content = this.state.waterProfile.additions.map((a) => (
+      <div className="brewed-beer-water-profile-item">
+        <FloatingLabelInput id={a.id} label={a.name} onChange={this.changingItem} value={String(a.amount) + a.unit} />
       </div>
-    );
+    ));
+
+    return <div className="water-profile-container">{content}</div>;
   }
 }
 

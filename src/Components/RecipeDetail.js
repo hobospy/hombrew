@@ -88,9 +88,13 @@ class RecipeDetail extends Component {
   };
 
   onClickOutside = (event) => {
-    if (this.ModalForm && this.ModalForm.contains(event.target)) return;
-
-    this.closeModal();
+    console.log('Registered click event1');
+    if (this.ModalForm && this.ModalForm.contains(event.target)) {
+      console.log('Registered click event2');
+      // return;
+    } else {
+      this.closeModal();
+    }
   };
 
   toggleScrollLock = () => {
@@ -132,7 +136,18 @@ class RecipeDetail extends Component {
                 <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
               </div>
             </div>
-            {this.state.modalShown ? <ModalForm modalRef={(n) => (this.ModalForm = n)} buttonRef={(n) => (this.closeButton = n)} onSubmit={this.props.onSubmit} closeModal={this.closeModal} onKeyDown={this.onKeyDown} onClickOutside={this.onClickOutside} /> : null}
+            {this.state.modalShown ? (
+              <ModalForm
+                modalRef={(n) => (this.ModalForm = n)}
+                buttonRef={(n) => (this.closeButton = n)}
+                onSubmit={this.props.onSubmit}
+                closeModal={this.closeModal}
+                onKeyDown={this.onKeyDown}
+                // onClickOutside={this.onClickOutside}
+                recipe={this.state.recipeDetail}
+                baseUrl={this.props.baseUrl}
+              />
+            ) : null}
           </React.Fragment>
         ) : (
           <div>Still loading</div>
