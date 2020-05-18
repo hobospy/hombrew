@@ -611,5 +611,18 @@
   margin: 10px 0px 10px 0px;
 }
 .edit-page-container-item {
-  margin: inherit;
+  margin: 15px 0px 10px 0px;
+}
+.edit-page-recipe-item-container {
+  width: 100%;
+  position: relative;
+}
+
+.cancel-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  cursor: pointer;
+  z-index: -1;
 }

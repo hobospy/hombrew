@@ -17,6 +17,7 @@ class RecipeEdit extends Component {
 
     this.state = {
       currentStep: 1,
+      hasLoaded: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -93,6 +94,10 @@ class RecipeEdit extends Component {
     ABV: ${abv}`);
   };
 
+  componentDidMount() {
+    this.setState({ hasLoaded: true });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -103,15 +108,11 @@ class RecipeEdit extends Component {
             handleChange={this.handleChange}
             name={this.props.recipe.name}
             description={this.props.recipe.description}
-            abv={this.props.recipe.abv}
-          />
-          <RecipeEdit_Step2
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            ingredients={this.props.recipe.ingredients}
             waterProfiles={this.props.waterProfiles}
             currentWaterProfile={this.props.recipe.waterProfile}
+            abv={this.props.recipe.abv}
           />
+          <RecipeEdit_Step2 currentStep={this.state.currentStep} handleChange={this.handleChange} ingredients={this.props.recipe.ingredients} />
           <RecipeEdit_Step3 currentStep={this.state.currentStep} handleChange={this.handleChange} />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {this.previousButton}

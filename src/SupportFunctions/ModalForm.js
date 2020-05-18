@@ -20,9 +20,9 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
         .get(baseUrl + 'waterprofile/summary')
         .then((response) => response.data)
         .then((data) => {
-          console.log(data);
           setHasLoaded(true);
           setWaterProfileList(data);
+          console.log(data);
         });
     }
   });
@@ -44,7 +44,11 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
               </svg>
             </button>
             <div className="modal-body">
-              {hasLoaded ? <RecipeEdit onSubmit={onSubmit} recipe={recipe} waterProfiles={waterProfileList} /> : <div>Still loading</div>}
+              {waterProfileList !== null ? (
+                <RecipeEdit onSubmit={onSubmit} recipe={recipe} waterProfiles={waterProfileList} />
+              ) : (
+                <div>Still loading</div>
+              )}
             </div>
           </div>
         </aside>
