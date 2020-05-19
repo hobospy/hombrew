@@ -28,7 +28,18 @@ class RecipeEdit_Step2 extends Component {
     super(props);
     this.state = {
       name: '',
+      ingredients: null,
+      hasLoaded: false,
     };
+
+    this.addItemToIngredientList = this.addItemToIngredientList.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ingredients: this.props.ingredients});
+    this.setState({hasLoaded: true});
+
+    console.log(this.state.ingredients);
   }
 
   changingItem() {
@@ -39,37 +50,51 @@ class RecipeEdit_Step2 extends Component {
     console.log('Changed drop down list, new value');
   }
 
+  addItemToIngredientList() {
+    const newIngredient = {'id':7007, 'type':"Grains", 'name':"Dark crystal", 'amount':"0.1", unit: "kg"};
+    this.setState({ingredients: this.state.ingredients.concat(newIngredient)});
+  }
+
+  // addItemToIngredientList = e => {
+  //   const {target} = e;
+  //   const newIngredient = {'id':7007, 'type':"Grains", 'name':"Dark crystal", 'amount':"0.1", unit: "kg"};
+  //   this.setState({ingredients: this.state.ingredients.concat(newIngredient)});
+  // }
+
   render() {
     if (this.props.currentStep !== 2) {
       return null;
     }
 
-    let content;
-
-    content = this.props.ingredients.map((i) => (
-      <div className="edit-page-recipe-ingredient-container">
-        {/* </div><div className="brewed-beer-water-profile-item"> */}
-        <div className="edit-page-recipe-ingredient">
-          <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} />
-        </div>
-        <div className="cancel-button">
-          <CancelIcon />
-        </div>
-      </div>
-    ));
-
     return (
+      <div>
+      {this.state.hasLoaded ? (
       <div>
         <div className="edit-page-container-item, useStyles.root">
           <FloatingLabelInput id="name" label="Ingredients" />
-          <div style={{ marginTop: 15, marginLeft: 10, marginBottom: 15 }}>{content}</div>
+          <div style={{ marginTop: 15, marginLeft: 10, marginBottom: 15 }}>
+            {this.state.ingredients.map((i) => (
+              <div className="edit-page-recipe-ingredient-container">
+                <div className="edit-page-recipe-ingredient">
+                  <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} />
+                </div>
+                <div className="cancel-button">
+                  <CancelIcon />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="edit-page-recipe-ingredient-container">
           <div className="new-ingredient">
             <FloatingLabelInput id="newIngredient" label="New ingredient" onChange={this.changingItem} />
           </div>
-          <Button className="add-button">Add</Button>
+          <Button className="add-button" onClick={this.addItemToIngredientList}>Add</Button>
         </div>
+      </div>
+      ) : (
+        <div>Still loading</div>
+      )}
       </div>
     );
   }
