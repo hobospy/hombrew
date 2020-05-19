@@ -1,5 +1,5 @@
 import React from 'react';
-import Favourite from '../SupportFunctions/Favourite';
+import Favourite from '../../SupportFunctions/Favourite';
 
 function RecipeSummaryItem(props) {
   const recipe = props.recipe;

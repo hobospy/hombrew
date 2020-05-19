@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import RecipeEdit from '../Components/RecipeEdit';
-import FocusTrap from 'focus-trap-react';
+import RecipeEdit from '../Components/Edit/RecipeEdit';
 import axios from 'axios';
-
-import InputLabel from '@material-ui/core/InputLabel';
-import { Select } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
 import FocusLock from 'react-focus-lock';
 
-export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, recipe, baseUrl }) => {
+export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, recipe, baseUrl, title }) => {
   const [waterProfileList, setWaterProfileList] = React.useState(null);
   const [hasLoaded, setHasLoaded] = React.useState(false);
 
@@ -28,21 +23,21 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
   });
 
   return ReactDOM.createPortal(
-    // <div>
-    //   {hasLoaded ? (
     <div>
-      {/* <FocusTrap> */}
       <FocusLock>
         <aside tag="aside" role="dialog" tabIndex="-1" aria-modal="true" className="modal-cover" onClick={onClickOutside} onKeyDown={onKeyDown}>
           <div className="modal-area" ref={modalRef}>
-            <button ref={buttonRef} aria-label="Close Modal" aria-labelledby="close-modal" className="_modal-close" onClick={closeModal}>
-              <span id="close-modal" className="_hide-visual">
-                Close
-              </span>
-              <svg className="_modal-close-icon" viewBox="0 0 40 40">
-                <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
-              </svg>
-            </button>
+            <div className="_modal-titlebar-container">
+              <h1 className="_modal-title">Recipe definition</h1>
+              <button ref={buttonRef} aria-label="Close Modal" aria-labelledby="close-modal" className="_modal-close" onClick={closeModal}>
+                <span id="close-modal" className="_hide-visual">
+                  Close
+                </span>
+                <svg className="_modal-close-icon" viewBox="0 0 40 40">
+                  <path d="M 10,10 L 30,30 M 30,10 L 10,30" />
+                </svg>
+              </button>
+            </div>
             <div className="modal-body">
               {waterProfileList !== null ? (
                 <RecipeEdit onSubmit={onSubmit} recipe={recipe} waterProfiles={waterProfileList} />
@@ -52,13 +47,8 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
             </div>
           </div>
         </aside>
-        {/* </FocusTrap> */}
       </FocusLock>
     </div>,
-    //   ) : (
-    //     <div>Still loading</div>
-    //   )}
-    // </div>,
     document.body
   );
 };

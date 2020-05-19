@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditNavigation from './EditNavigation';
+import EditNavigation from '../EditNavigation';
 import FloatingLabelInput from 'react-floating-label-input';
 import { Select, Zoom } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';

@@ -5,6 +5,7 @@ import { Select, Zoom } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Button from '@material-ui/core/Button';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -46,10 +47,14 @@ class RecipeEdit_Step2 extends Component {
     let content;
 
     content = this.props.ingredients.map((i) => (
-      <div className="edit-page-recipe-item-container">
+      <div className="edit-page-recipe-ingredient-container">
         {/* </div><div className="brewed-beer-water-profile-item"> */}
-        {/* <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} /> */}
-        <CancelIcon className="cancel-button" />
+        <div className="edit-page-recipe-ingredient">
+          <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} />
+        </div>
+        <div className="cancel-button">
+          <CancelIcon />
+        </div>
       </div>
     ));
 
@@ -58,6 +63,12 @@ class RecipeEdit_Step2 extends Component {
         <div className="edit-page-container-item, useStyles.root">
           <FloatingLabelInput id="name" label="Ingredients" />
           <div style={{ marginTop: 15, marginLeft: 10, marginBottom: 15 }}>{content}</div>
+        </div>
+        <div className="edit-page-recipe-ingredient-container">
+          <div className="new-ingredient">
+            <FloatingLabelInput id="newIngredient" label="New ingredient" onChange={this.changingItem} />
+          </div>
+          <Button className="add-button">Add</Button>
         </div>
       </div>
     );

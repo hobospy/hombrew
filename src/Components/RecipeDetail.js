@@ -143,9 +143,9 @@ class RecipeDetail extends Component {
                 onSubmit={this.props.onSubmit}
                 closeModal={this.closeModal}
                 onKeyDown={this.onKeyDown}
-                // onClickOutside={this.onClickOutside}
                 recipe={this.state.recipeDetail}
                 baseUrl={this.props.baseUrl}
+                title="Recipe definition"
               />
             ) : null}
           </React.Fragment>

@@ -101,7 +101,6 @@ class RecipeEdit extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Recipe definition</h1>
         <form onSubmit={this.handleSubmit}>
           <RecipeEdit_Step1
             currentStep={this.state.currentStep}

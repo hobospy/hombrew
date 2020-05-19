@@ -3,17 +3,18 @@ import { BrowserRouter as Router, NavLink, Route, Switch } from 'react-router-do
 import axios from 'axios';
 
 import BrewDetail from './Components/BrewDetail';
-import RecipeSummary from './Components/RecipeSummary';
+import RecipeSummary from './Components/Summary/RecipeSummary';
 import './atomicStyling.css';
 import NavBarMenu from './Components/NavBarMenu';
 
 import AppBar from '@material-ui/core/AppBar';
-import BrewSummary from './Components/BrewSummary';
-import WaterProfileSummary from './Components/WaterProfileSummary';
+import BrewSummary from './Components/Summary/BrewSummary';
+import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 import RecipeDetail from './Components/RecipeDetail';
 import BrewDetail_Recipe from './Components/BrewDetail_Recipe';
 
-const API_URL = process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
+const API_URL =
+  process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
 
 class DebugRouter extends Router {
   constructor(props) {
