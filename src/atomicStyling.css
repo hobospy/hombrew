@@ -655,3 +655,45 @@
   grid-column: 2;
   grid-row: 1;
 }
+
+.new-ingredient-container {
+  display: grid;
+  grid-template-columns: 5% 1fr 1fr 5%;
+  grid-template-rows: auto auto auto auto;
+  margin-bottom: 10px;
+}
+
+.new-ingredient-title {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+}
+
+.new-ingredient-name {
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: 10px;
+}
+
+.new-ingredient-type {
+  grid-column: 3;
+  grid-row: 2;
+  margin-top: 10px;
+}
+
+.new-ingredient-volume {
+  grid-column: 2;
+  grid-row: 3;
+  margin-top: 10px;
+}
+
+.new-ingredient-unit {
+  grid-column: 3;
+  grid-row: 3;
+  margin-top: 10px;
+}
+
+.new-ingredient-add {
+  grid-column: 3 / span 2;
+  grid-row: 4;
+  text-align: right;
+}

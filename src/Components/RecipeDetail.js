@@ -22,6 +22,8 @@ class RecipeDetail extends Component {
     this.editItem = this.editItem.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -87,6 +89,10 @@ class RecipeDetail extends Component {
     }
   };
 
+  onSubmit = (event) => {
+    console.log('Update the recipe');
+  };
+
   onClickOutside = (event) => {
     console.log('Registered click event1');
     if (this.ModalForm && this.ModalForm.contains(event.target)) {
@@ -140,7 +146,7 @@ class RecipeDetail extends Component {
               <ModalForm
                 modalRef={(n) => (this.ModalForm = n)}
                 buttonRef={(n) => (this.closeButton = n)}
-                onSubmit={this.props.onSubmit}
+                onSubmit={this.onSubmit}
                 closeModal={this.closeModal}
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeDetail}

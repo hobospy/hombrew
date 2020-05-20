@@ -21,6 +21,7 @@ class RecipeEdit extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
@@ -78,6 +79,20 @@ class RecipeEdit extends Component {
     return null;
   }
 
+  get submitButton() {
+    let currentStep = this.state.currentStep;
+
+    if (currentStep === 3) {
+      return (
+        <Button variant="outlined" onClick={this.props.onSubmit}>
+          Submit
+        </Button>
+      );
+    }
+
+    return null;
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({
@@ -87,11 +102,12 @@ class RecipeEdit extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { name, description, abv } = this.state;
-    alert(`Form details:\n
-    Name: ${name}\n
-    Description: ${description}\n
-    ABV: ${abv}`);
+    // this.props.handleSubmit;
+    // const { name, description, abv } = this.state;
+    // alert(`Form details:\n
+    // Name: ${name}\n
+    // Description: ${description}\n
+    // ABV: ${abv}`);
   };
 
   componentDidMount() {
@@ -111,11 +127,18 @@ class RecipeEdit extends Component {
             currentWaterProfile={this.props.recipe.waterProfile}
             abv={this.props.recipe.abv}
           />
-          <RecipeEdit_Step2 currentStep={this.state.currentStep} handleChange={this.handleChange} ingredients={this.props.recipe.ingredients} />
+          <RecipeEdit_Step2
+            currentStep={this.state.currentStep}
+            handleChange={this.handleChange}
+            ingredients={this.props.recipe.ingredients}
+            ingredientTypes={this.props.ingredientTypes}
+            unitTypes={this.props.unitTypes}
+          />
           <RecipeEdit_Step3 currentStep={this.state.currentStep} handleChange={this.handleChange} />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {this.previousButton}
             {this.nextButton}
+            {this.submitButton}
           </div>
           <div className="edit-page-indicator-container">
             <div className="edit-page-indicator-page1">

@@ -1,12 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import RecipeEdit from '../Components/Edit/RecipeEdit';
 import axios from 'axios';
 import FocusLock from 'react-focus-lock';
 
 export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, recipe, baseUrl, title }) => {
-  const [waterProfileList, setWaterProfileList] = React.useState(null);
-  const [hasLoaded, setHasLoaded] = React.useState(false);
+  const [waterProfileList, setWaterProfileList] = useState(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [ingredientTypes, dispatchIngredientTypes] = useReducer(
+    (ingredientTypes, { type, value }) => {
+      switch (type) {
+        case 'add':
+          return [...ingredientTypes, value];
+        case 'remove':
+          return ingredientTypes.filter((_, index) => index !== value);
+        default:
+          return ingredientTypes;
+      }
+    },
+    ['Grains', 'Hops', 'Adjuncts']
+  );
+  const [unitTypes, dispatchUnitTypes] = useReducer(
+    (unitTypes, { type, value }) => {
+      switch (type) {
+        case 'add':
+          return [...unitTypes, value];
+        case 'remove':
+          return unitTypes.filter((_, index) => index !== value);
+        default:
+          return unitTypes;
+      }
+    },
+    ['kg', 'g', 'l', 'ml']
+  );
 
   useEffect(() => {
     if (hasLoaded !== true) {
@@ -28,7 +54,7 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
         <aside tag="aside" role="dialog" tabIndex="-1" aria-modal="true" className="modal-cover" onClick={onClickOutside} onKeyDown={onKeyDown}>
           <div className="modal-area" ref={modalRef}>
             <div className="_modal-titlebar-container">
-              <h1 className="_modal-title">Recipe definition</h1>
+              <h1 className="_modal-title">{title}</h1>
               <button ref={buttonRef} aria-label="Close Modal" aria-labelledby="close-modal" className="_modal-close" onClick={closeModal}>
                 <span id="close-modal" className="_hide-visual">
                   Close
@@ -40,7 +66,13 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
             </div>
             <div className="modal-body">
               {waterProfileList !== null ? (
-                <RecipeEdit onSubmit={onSubmit} recipe={recipe} waterProfiles={waterProfileList} />
+                <RecipeEdit
+                  onSubmit={onSubmit}
+                  recipe={recipe}
+                  waterProfiles={waterProfileList}
+                  ingredientTypes={ingredientTypes}
+                  unitTypes={unitTypes}
+                />
               ) : (
                 <div>Still loading</div>
               )}
