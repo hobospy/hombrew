@@ -53,10 +53,10 @@ class RecipeEdit_Step1 extends Component {
         {this.state.hasLoaded ? (
           <div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput id="name" label="Name" onChange={this.props.handleChange} value={this.props.name} />
+              <FloatingLabelInput id="name" label="Name" name="name" onChange={this.props.handleChange} value={this.props.name} />
             </div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput id="description" label="Description" onChange={this.props.handleChange} value={this.props.description} />
+              <FloatingLabelInput id="description" label="Description" name="description" onChange={this.props.handleChange} value={this.props.description} />
             </div>
             <div className="edit-page-container-item">
               <FloatingLabelInput id="abv" label="Expected ABV" onChange={this.props.handleChange} value={String(this.props.abv)} />

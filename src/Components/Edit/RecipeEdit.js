@@ -18,6 +18,8 @@ class RecipeEdit extends Component {
     this.state = {
       currentStep: 1,
       hasLoaded: false,
+      recipeDetail: this.props.recipe,
+      recipeDetailName: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -94,10 +96,18 @@ class RecipeEdit extends Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
+
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+
+    console.log(name + " - " + value);
+
+    this.setState(prevState => ({
+      recipeDetail: {
+        ...prevState.recipeDetail,
+        [name]: value
+      }
+    }));
   }
 
   handleSubmit = (event) => {
@@ -121,16 +131,16 @@ class RecipeEdit extends Component {
           <RecipeEdit_Step1
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            name={this.props.recipe.name}
-            description={this.props.recipe.description}
+            name={this.state.recipeDetail.name}
+            description={this.state.recipeDetail.description}
             waterProfiles={this.props.waterProfiles}
-            currentWaterProfile={this.props.recipe.waterProfile}
-            abv={this.props.recipe.abv}
+            currentWaterProfile={this.state.recipeDetail.waterProfile}
+            abv={this.state.recipeDetail.abv}
           />
           <RecipeEdit_Step2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            ingredients={this.props.recipe.ingredients}
+            ingredients={this.state.recipeDetail.ingredients}
             ingredientTypes={this.props.ingredientTypes}
             unitTypes={this.props.unitTypes}
           />
