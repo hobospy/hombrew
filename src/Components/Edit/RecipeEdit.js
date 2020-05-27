@@ -87,8 +87,8 @@ class RecipeEdit extends Component {
 
     if (currentStep === 3) {
       return (
-        // <Button variant="outlined" onClick={this.props.onSubmit}>
-        <Button variant="outlined" onClick={this.handleSubmit}>
+        <Button variant="outlined" onClick={this.props.onSubmit}>
+        {/* <Button variant="outlined" onClick={this.handleSubmit}> */}
           Submit
         </Button>
       );
@@ -100,16 +100,18 @@ class RecipeEdit extends Component {
   handleChange(event) {
     event.preventDefault();
 
-    const { name, value } = event.target;
+    this.props.onChange(event);
 
-    console.log(name + ' - ' + value);
+    // const { name, value } = event.target;
 
-    this.setState((prevState) => ({
-      recipeDetail: {
-        ...prevState.recipeDetail,
-        [name]: value,
-      },
-    }));
+    // console.log(name + ' - ' + value);
+
+    // this.setState((prevState) => ({
+    //   recipeDetail: {
+    //     ...prevState.recipeDetail,
+    //     [name]: value,
+    //   },
+    // }));
   }
 
   handleSubmit = (event) => {
@@ -162,21 +164,6 @@ class RecipeEdit extends Component {
     console.log(postURL);
 
     fetch(postURL, requestOptions);
-
-    // fetch(this.props.baseUrl, requestOptions)
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     this.setState({
-    //       recipeDetail: response,
-    //     });
-    //   });
-
-    // this.props.handleSubmit;
-    // const { name, description, abv } = this.state;
-    // alert(`Form details:\n
-    // Name: ${name}\n
-    // Description: ${description}\n
-    // ABV: ${abv}`);
   };
 
   componentDidMount() {
@@ -190,11 +177,12 @@ class RecipeEdit extends Component {
           <RecipeEdit_Step1
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            name={this.state.recipeDetail.name}
-            description={this.state.recipeDetail.description}
+            name={this.props.recipe.name}
+            description={this.props.recipe.description}
+            recipeType={this.props.recipe.type}
             waterProfiles={this.props.waterProfiles}
-            currentWaterProfile={this.state.recipeDetail.waterProfile}
-            abv={this.state.recipeDetail.abv}
+            currentWaterProfile={this.props.recipe.waterProfile}
+            abv={this.props.recipe.abv}
           />
           <RecipeEdit_Step2
             currentStep={this.state.currentStep}

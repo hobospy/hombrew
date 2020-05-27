@@ -58,19 +58,28 @@ class RecipeEdit_Step2 extends Component {
     console.log('Changed drop down list, new value');
   }
 
-  addItemToIngredientList() {
+  addItemToIngredientList(event) {
     const newIngredient = {
-      id: 7007,
+      id: -1,
       type: this.state.newIngredientType,
       name: this.state.newIngredient,
       amount: this.state.newIngredientVolume,
       unit: this.state.newIngredientUnit,
     };
+
+    
+
     this.setState({ ingredients: this.state.ingredients.concat(newIngredient) });
     this.setState({ newIngredient: '' });
     this.setState({ newIngredientType: 'Grains' });
     this.setState({ newIngredientVolume: '0' });
     this.setState({ newIngredientUnit: 'kg' });
+
+
+    var ingEvent = event;
+    ingEvent.target.name = 'AddIngredient';
+    ingEvent.target.value = newIngredient;
+    this.props.handleChange(ingEvent);
   }
 
   updateNewIngredientValue(event) {

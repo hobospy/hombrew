@@ -4,7 +4,7 @@ import RecipeEdit from '../Components/Edit/RecipeEdit';
 import axios from 'axios';
 import FocusLock from 'react-focus-lock';
 
-export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, recipe, baseUrl, title }) => {
+export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, onChange, recipe, baseUrl, title }) => {
   const [waterProfileList, setWaterProfileList] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [ingredientTypes, dispatchIngredientTypes] = useReducer(
@@ -68,6 +68,7 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
               {waterProfileList !== null ? (
                 <RecipeEdit
                   onSubmit={onSubmit}
+                  onChange={onChange}
                   recipe={recipe}
                   waterProfiles={waterProfileList}
                   ingredientTypes={ingredientTypes}

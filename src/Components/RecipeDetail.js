@@ -13,11 +13,16 @@ class RecipeDetail extends Component {
     this.state = {
       hasLoaded: false,
       recipeDetail: '',
+      recipeEdit: '',
+      recipeTypeEdit: '',
+      waterProfileID: '',
+      recipeIngredients: '',
       url: `${this.props.baseUrl}recipe/${this.props.match.params.id}`,
       id: this.props.match.params.id,
       modalShown: false,
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.updateFavourite = this.updateFavourite.bind(this);
     this.editItem = this.editItem.bind(this);
     this.addItem = this.addItem.bind(this);
@@ -33,6 +38,9 @@ class RecipeDetail extends Component {
       .then((response) => response.data)
       .then((data) => {
         this.setState({ recipeDetail: data });
+        this.setState({ recipeTypeEdit: data.type });
+        this.setState({ waterProfileID: data.waterProfile.id });
+        this.setState({ recipeIngredients: data.ingredients });
         this.setState({ hasLoaded: true });
       });
   }
@@ -86,12 +94,78 @@ class RecipeDetail extends Component {
   onKeyDown = (event) => {
     if (event.keyCode === 27) {
       this.closeModal();
+      console.log(this.state.waterProfileID);
     }
   };
 
+  handleChange = (event) => {
+    event.preventDefault();
+
+    console.log("External handle change");
+
+    const { name, value } = event.target;
+
+    if (name === 'waterProfile.name')
+    {
+      this.setState({waterProfileID: value});
+
+      // this.setState((prevState) => ({
+      //   ...prevState,
+      //   recipeEdit: {
+      //     ...prevState.recipeEdit,
+      //     waterProfile: {
+      //       ...prevState.recipeEdit.waterProfile,
+      //     'id': value,
+      //     }
+      //   },
+      // }));
+    }
+    else if (name === 'AddIngredient')
+    {
+      this.setState({ recipeIngredients: this.state.recipeIngredients.concat(value) });
+    }
+    else if (name === 'recipeType')
+    {
+      this.setState({ recipeTypeEdit: value });
+    }
+    else
+    {
+    this.setState((prevState) => ({
+      recipeEdit: {
+        ...prevState.recipeEdit,
+        [name]: value,
+      },
+    }));
+  }
+
+    console.log(this.state.recipeEdit);
+  }
+
   onSubmit = (event) => {
-    console.log('Update the recipe with: ');
-    console.log(this.state.recipeDetail);
+    event.preventDefault();
+
+    this.closeModal();
+
+    var myHeaders = new Headers();
+    myHeaders.append('Accept', 'applicaiton/json');
+    myHeaders.append('Content-Type', 'application/json-patch+json');
+
+    var rawObject = {
+      Name: this.state.recipeEdit.name,
+      Type: this.state.recipeTypeEdit,
+      Description: this.state.recipeEdit.description,
+      WaterProfileID: this.state.waterProfileID,
+      Ingredients: this.state.recipeIngredients,
+    };
+
+    var requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: JSON.stringify(rawObject),
+      redirect: 'follow',
+    };
+
+    fetch(this.state.url, requestOptions);  
   };
 
   onClickOutside = (event) => {
@@ -110,6 +184,9 @@ class RecipeDetail extends Component {
 
   editItem() {
     console.log('Editing item from the amazing menu item');
+    this.setState({
+      recipeEdit: this.state.recipeDetail,
+    });
     this.showModal();
   }
 
@@ -148,9 +225,10 @@ class RecipeDetail extends Component {
                 modalRef={(n) => (this.ModalForm = n)}
                 buttonRef={(n) => (this.closeButton = n)}
                 onSubmit={this.onSubmit}
+                onChange={this.handleChange}
                 closeModal={this.closeModal}
                 onKeyDown={this.onKeyDown}
-                recipe={this.state.recipeDetail}
+                recipe={this.state.recipeEdit}
                 baseUrl={this.props.baseUrl}
                 title="Recipe definition"
               />
