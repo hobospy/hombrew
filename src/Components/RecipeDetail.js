@@ -90,7 +90,8 @@ class RecipeDetail extends Component {
   };
 
   onSubmit = (event) => {
-    console.log('Update the recipe');
+    console.log('Update the recipe with: ');
+    console.log(this.state.recipeDetail);
   };
 
   onClickOutside = (event) => {

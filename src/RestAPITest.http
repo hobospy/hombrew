@@ -1,0 +1,63 @@
+@contentType = application/json
+
+PUT https://localhost:44363/recipe/2001
+Content-Type: {{contentType}}
+
+{
+    "Name": "Amarillo SMaSHing",
+    "Type":"American ale",
+    "Description":"Characterized by floral, fruity, citrus-like.",
+    "WaterProfileID": 1000,
+    "Ingredients":
+    [
+        {
+            "ID": 7001,
+            "Name": "Pale ale",
+            "Type": "Grains",
+            "Amount": 3.5,
+            "Unit": "kilo"
+        },
+        {
+            "ID": -1,
+            "Name": "Dark crystal",
+            "Type": "Grains",
+            "Amount": 0.25,
+            "Unit": "kilo",
+            "RecipeID": 2001
+        }
+    ]
+}
+
+
+    "WaterProfile":
+    {
+        "id": 1000,
+        "description": "Soft water profile used to accentuate the hop profile",
+        "additions":
+        [
+            {
+                "amount": 6,
+                "id": 9000,
+                "name": "Lactic acid",
+                "unit": "ml"
+            },
+            {
+                "amount": 3.6,
+                "id": 9001,
+                "name": "Gypsum",
+                "unit": "g"
+            },
+            {
+                "amount": 3.6,
+                "id": 9002,
+                "name": "Bicarbonate soda",
+                "unit": "g"
+            },
+            {
+                "amount": 3.6,
+                "id": 9003,
+                "name": "Epsom salt",
+                "unit": "g"
+            }
+        ]
+    }

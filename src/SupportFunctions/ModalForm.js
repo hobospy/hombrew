@@ -72,6 +72,7 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
                   waterProfiles={waterProfileList}
                   ingredientTypes={ingredientTypes}
                   unitTypes={unitTypes}
+                  baseUrl={baseUrl}
                 />
               ) : (
                 <div>Still loading</div>

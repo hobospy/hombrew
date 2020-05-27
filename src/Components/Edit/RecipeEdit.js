@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
@@ -86,7 +87,8 @@ class RecipeEdit extends Component {
 
     if (currentStep === 3) {
       return (
-        <Button variant="outlined" onClick={this.props.onSubmit}>
+        // <Button variant="outlined" onClick={this.props.onSubmit}>
+        <Button variant="outlined" onClick={this.handleSubmit}>
           Submit
         </Button>
       );
@@ -100,18 +102,75 @@ class RecipeEdit extends Component {
 
     const { name, value } = event.target;
 
-    console.log(name + " - " + value);
+    console.log(name + ' - ' + value);
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       recipeDetail: {
         ...prevState.recipeDetail,
-        [name]: value
-      }
+        [name]: value,
+      },
     }));
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    console.log('Handling recipe edit submit');
+    console.log(this.state.recipeDetail);
+    console.log(this.props.baseUrl);
+
+    var myHeaders = new Headers();
+    myHeaders.append('Accept', 'applicaiton/json');
+    myHeaders.append('Content-Type', 'application/json-patch+json');
+
+    // var data = [
+    //   {
+    //     Name: this.state.recipeDetail.name,
+    //     Type: this.state.recipeDetail.Type,
+    //     Description: this.state.recipeDetail.Description,
+    //   },
+    // ];
+    // var raw = JSON.stringify(data);
+    var rawObject = {
+      Name: this.state.recipeDetail.name,
+      Type: this.state.recipeDetail.type,
+      Description: this.state.recipeDetail.description,
+      WaterProfileID: this.state.recipeDetail.waterProfile.id,
+      Ingredients: this.state.recipeDetail.ingredients,
+    };
+
+    console.log('Raw object:');
+    console.log(rawObject);
+
+    var raw = JSON.stringify(rawObject);
+
+    var requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    console.log('Raw data:');
+    console.log(raw);
+
+    console.log('Request options:');
+    console.log(requestOptions);
+
+    var postURL = this.props.baseUrl + 'recipe/' + this.props.recipe.id;
+    console.log('Request URL');
+    console.log(postURL);
+
+    fetch(postURL, requestOptions);
+
+    // fetch(this.props.baseUrl, requestOptions)
+    //   .then((response) => response.json())
+    //   .then((response) => {
+    //     this.setState({
+    //       recipeDetail: response,
+    //     });
+    //   });
+
     // this.props.handleSubmit;
     // const { name, description, abv } = this.state;
     // alert(`Form details:\n
