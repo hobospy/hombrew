@@ -88,7 +88,7 @@ class RecipeEdit extends Component {
     if (currentStep === 3) {
       return (
         <Button variant="outlined" onClick={this.props.onSubmit}>
-        {/* <Button variant="outlined" onClick={this.handleSubmit}> */}
+          {/* <Button variant="outlined" onClick={this.handleSubmit}> */}
           Submit
         </Button>
       );
@@ -180,6 +180,7 @@ class RecipeEdit extends Component {
             name={this.props.recipe.name}
             description={this.props.recipe.description}
             recipeType={this.props.recipe.type}
+            expectedABV={this.props.recipe.expectedABV}
             waterProfiles={this.props.waterProfiles}
             currentWaterProfile={this.props.recipe.waterProfile}
             abv={this.props.recipe.abv}
@@ -187,6 +188,7 @@ class RecipeEdit extends Component {
           <RecipeEdit_Step2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
+            onDeleteIngredient={this.props.onDeleteIngredient}
             ingredients={this.state.recipeDetail.ingredients}
             ingredientTypes={this.props.ingredientTypes}
             unitTypes={this.props.unitTypes}

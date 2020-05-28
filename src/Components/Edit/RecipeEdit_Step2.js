@@ -5,7 +5,10 @@ import { Select, Zoom } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import CancelIcon from '@material-ui/icons/Cancel';
+import ClearIcon from '@material-ui/icons/Clear';
+import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -34,6 +37,8 @@ class RecipeEdit_Step2 extends Component {
       newIngredientType: 'Grains',
       newIngredientVolume: '',
       newIngredientUnit: 'kg',
+
+      ingredientUpdate: null,
     };
 
     this.addItemToIngredientList = this.addItemToIngredientList.bind(this);
@@ -41,13 +46,13 @@ class RecipeEdit_Step2 extends Component {
     this.updateIngredientTypeValue = this.updateIngredientTypeValue.bind(this);
     this.updateNewIngredientVolume = this.updateNewIngredientVolume.bind(this);
     this.updateUnitTypeValue = this.updateUnitTypeValue.bind(this);
+
+    this.deleteIngredient = this.deleteIngredient.bind(this);
   }
 
   componentDidMount() {
     this.setState({ ingredients: this.props.ingredients });
     this.setState({ hasLoaded: true });
-
-    console.log(this.state.ingredients);
   }
 
   changingItem() {
@@ -67,14 +72,11 @@ class RecipeEdit_Step2 extends Component {
       unit: this.state.newIngredientUnit,
     };
 
-    
-
     this.setState({ ingredients: this.state.ingredients.concat(newIngredient) });
     this.setState({ newIngredient: '' });
     this.setState({ newIngredientType: 'Grains' });
     this.setState({ newIngredientVolume: '0' });
     this.setState({ newIngredientUnit: 'kg' });
-
 
     var ingEvent = event;
     ingEvent.target.name = 'AddIngredient';
@@ -97,6 +99,20 @@ class RecipeEdit_Step2 extends Component {
   updateUnitTypeValue(event) {
     this.setState({ newIngredientUnit: event.target.value });
   }
+
+  deleteIngredient = (ingredientID) => (event) => {
+    event.preventDefault();
+
+    var array = [...this.state.ingredients];
+    var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
+
+    if (ingredientIndex !== -1) {
+      array.splice(ingredientIndex, 1);
+      this.setState({ ingredients: array });
+    }
+
+    this.props.onDeleteIngredient(ingredientID)(event);
+  };
 
   // addItemToIngredientList = e => {
   //   const {target} = e;
@@ -121,8 +137,15 @@ class RecipeEdit_Step2 extends Component {
                     <div className="edit-page-recipe-ingredient">
                       <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} />
                     </div>
+                    <div className="edit-button">
+                      <Skeleton variant="circle" animation={false} width={30} height={30}>
+                        <EditIcon fontSize="small" />
+                      </Skeleton>
+                    </div>
                     <div className="cancel-button">
-                      <CancelIcon />
+                      <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.deleteIngredient(i.id)}>
+                        <ClearIcon fontSize="small" />
+                      </Skeleton>
                     </div>
                   </div>
                 ))}

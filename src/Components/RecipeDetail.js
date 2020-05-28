@@ -28,6 +28,7 @@ class RecipeDetail extends Component {
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
 
+    this.deleteRecipeIngredient = this.deleteRecipeIngredient.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -101,13 +102,12 @@ class RecipeDetail extends Component {
   handleChange = (event) => {
     event.preventDefault();
 
-    console.log("External handle change");
+    console.log('External handle change');
 
     const { name, value } = event.target;
 
-    if (name === 'waterProfile.name')
-    {
-      this.setState({waterProfileID: value});
+    if (name === 'waterProfile.name') {
+      this.setState({ waterProfileID: value });
 
       // this.setState((prevState) => ({
       //   ...prevState,
@@ -119,27 +119,31 @@ class RecipeDetail extends Component {
       //     }
       //   },
       // }));
-    }
-    else if (name === 'AddIngredient')
-    {
+    } else if (name === 'AddIngredient') {
       this.setState({ recipeIngredients: this.state.recipeIngredients.concat(value) });
-    }
-    else if (name === 'recipeType')
-    {
+    } else if (name === 'recipeType') {
       this.setState({ recipeTypeEdit: value });
+    } else {
+      this.setState((prevState) => ({
+        recipeEdit: {
+          ...prevState.recipeEdit,
+          [name]: value,
+        },
+      }));
     }
-    else
-    {
-    this.setState((prevState) => ({
-      recipeEdit: {
-        ...prevState.recipeEdit,
-        [name]: value,
-      },
-    }));
-  }
 
     console.log(this.state.recipeEdit);
-  }
+  };
+
+  deleteRecipeIngredient = (ingredientID) => (event) => {
+    var array = [...this.state.recipeIngredients];
+    var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
+
+    if (ingredientIndex !== -1) {
+      array.splice(ingredientIndex, 1);
+      this.setState({ recipeIngredients: array });
+    }
+  };
 
   onSubmit = (event) => {
     event.preventDefault();
@@ -165,7 +169,7 @@ class RecipeDetail extends Component {
       redirect: 'follow',
     };
 
-    fetch(this.state.url, requestOptions);  
+    fetch(this.state.url, requestOptions);
   };
 
   onClickOutside = (event) => {
@@ -226,6 +230,7 @@ class RecipeDetail extends Component {
                 buttonRef={(n) => (this.closeButton = n)}
                 onSubmit={this.onSubmit}
                 onChange={this.handleChange}
+                onDeleteIngredient={this.deleteRecipeIngredient}
                 closeModal={this.closeModal}
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeEdit}

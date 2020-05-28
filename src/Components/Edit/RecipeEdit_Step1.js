@@ -14,7 +14,32 @@ class RecipeEdit_Step1 extends Component {
     this.state = {
       name: '',
       hasLoaded: false,
-      availableTypes: ["Light lager", "Pilsner", "European amber lager", "Dark lager", "Bock", "Light hybrid beer", "Amber hybrid beer", "English pale ale", "Scottish and Irish ale", "American ale", "English brown ale", "Porter", "Stout", "India pale ale (IPA)", "German wheat and rye beer", "Belgian and French ale", "Sour ale", "Belgian strong ale", "Strong ale", "Fruit beer", "Spice/herb/vegetable beer", "Smoke flavoured and wood-aged beer", "Speciality beer", "Kolsch and altbier"],
+      availableTypes: [
+        'Light lager',
+        'Pilsner',
+        'European amber lager',
+        'Dark lager',
+        'Bock',
+        'Light hybrid beer',
+        'Amber hybrid beer',
+        'English pale ale',
+        'Scottish and Irish ale',
+        'American ale',
+        'English brown ale',
+        'Porter',
+        'Stout',
+        'India pale ale (IPA)',
+        'German wheat and rye beer',
+        'Belgian and French ale',
+        'Sour ale',
+        'Belgian strong ale',
+        'Strong ale',
+        'Fruit beer',
+        'Spice/herb/vegetable beer',
+        'Smoke flavoured and wood-aged beer',
+        'Speciality beer',
+        'Kolsch and altbier',
+      ],
       thisType: '',
     };
 
@@ -39,9 +64,9 @@ class RecipeEdit_Step1 extends Component {
 
     var newEvent = event;
 
-    var result = this.props.waterProfiles.filter(obj => {
+    var result = this.props.waterProfiles.filter((obj) => {
       return obj.name === event.target.value;
-    })
+    });
 
     newEvent.target.value = result[0].id;
 
@@ -70,7 +95,7 @@ class RecipeEdit_Step1 extends Component {
 
       typeList = this.state.availableTypes.map((type, id) => (
         <MenuItem value={type} key={id}>
-            <div>{type}</div>
+          <div>{type}</div>
         </MenuItem>
       ));
     }
@@ -83,10 +108,16 @@ class RecipeEdit_Step1 extends Component {
               <FloatingLabelInput id="name" label="Name" name="name" onChange={this.props.handleChange} value={this.props.name} />
             </div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput id="description" label="Description" name="description" onChange={this.props.handleChange} value={this.props.description} />
+              <FloatingLabelInput
+                id="description"
+                label="Description"
+                name="description"
+                onChange={this.props.handleChange}
+                value={this.props.description}
+              />
             </div>
             <div className="edit-page-container-item">
-            <FloatingLabelInput id="type" label="Type" />
+              <FloatingLabelInput id="type" label="Type" />
               <Select
                 labelId="type-label"
                 id="type-select"
@@ -113,7 +144,13 @@ class RecipeEdit_Step1 extends Component {
               </Select>
             </div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput id="abv" label="Expected ABV" name="abv" onChange={this.props.handleChange} value={String(this.props.abv)} />
+              <FloatingLabelInput
+                id="abv"
+                label="Expected ABV"
+                name="abv"
+                onChange={this.props.handleChange}
+                value={String(this.props.expectedABV)}
+              />
             </div>
             <div className="edit-page-container-item">
               {/* <InputLabel id="wp-label">Water profile</InputLabel> */}

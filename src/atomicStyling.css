@@ -319,7 +319,7 @@
   margin-top: 0.5em;
 }
 
-.brewed-beer-recipe-rating {
+.brewed-beer-recipe-expected-abv {
   grid-column: 2;
   grid-row: 2;
   margin-top: 0.5em;
@@ -629,20 +629,28 @@
 .edit-page-recipe-ingredient-container {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 50px;
+  grid-template-columns: 1fr 33px 33px;
   padding-bottom: 15px;
 }
 
 .edit-page-recipe-ingredient {
-  grid-column: 1 / span 2;
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.edit-button {
+  text-align: center;
+  padding-right: 5px;
+  z-index: 1;
+  grid-column: 2;
   grid-row: 1;
 }
 
 .cancel-button {
-  text-align: right;
+  text-align: center;
   padding-right: 5px;
   z-index: 1;
-  grid-column: 1 / span 2;
+  grid-column: 3;
   grid-row: 1;
 }
 
