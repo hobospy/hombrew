@@ -121,6 +121,15 @@ class RecipeDetail extends Component {
       // }));
     } else if (name === 'AddIngredient') {
       this.setState({ recipeIngredients: this.state.recipeIngredients.concat(value) });
+    } else if (name === 'UpdateIngredient') {
+      var array = [...this.state.recipeIngredients];
+      var ingredientIndex = array.findIndex((e) => e.id === value.id);
+
+      if (ingredientIndex !== -1) {
+        let editIngredient = { ...array[ingredientIndex], name: value.name, type: value.type, amount: value.amount, unit: value.unit };
+        array[ingredientIndex] = editIngredient;
+        this.setState({ recipeIngredients: array });
+      }
     } else if (name === 'recipeType') {
       this.setState({ recipeTypeEdit: value });
     } else {
@@ -160,6 +169,7 @@ class RecipeDetail extends Component {
       Description: this.state.recipeEdit.description,
       WaterProfileID: this.state.waterProfileID,
       Ingredients: this.state.recipeIngredients,
+      ExpectedABV: this.state.recipeEdit.expectedABV,
     };
 
     var requestOptions = {

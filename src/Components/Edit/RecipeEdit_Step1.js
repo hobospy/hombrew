@@ -147,7 +147,7 @@ class RecipeEdit_Step1 extends Component {
               <FloatingLabelInput
                 id="abv"
                 label="Expected ABV"
-                name="abv"
+                name="expectedABV"
                 onChange={this.props.handleChange}
                 value={String(this.props.expectedABV)}
               />

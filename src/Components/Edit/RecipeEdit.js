@@ -191,6 +191,7 @@ class RecipeEdit extends Component {
             onDeleteIngredient={this.props.onDeleteIngredient}
             ingredients={this.state.recipeDetail.ingredients}
             ingredientTypes={this.props.ingredientTypes}
+            recipeID={this.props.recipe.recipeID}
             unitTypes={this.props.unitTypes}
           />
           <RecipeEdit_Step3 currentStep={this.state.currentStep} handleChange={this.handleChange} />
