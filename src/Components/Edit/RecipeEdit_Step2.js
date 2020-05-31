@@ -213,12 +213,6 @@ class RecipeEdit_Step2 extends Component {
     }
   };
 
-  // addItemToIngredientList = e => {
-  //   const {target} = e;
-  //   const newIngredient = {'id':7007, 'type':"Grains", 'name':"Dark crystal", 'amount':"0.1", unit: "kg"};
-  //   this.setState({ingredients: this.state.ingredients.concat(newIngredient)});
-  // }
-
   render() {
     if (this.props.currentStep !== 2) {
       return null;
@@ -251,47 +245,41 @@ class RecipeEdit_Step2 extends Component {
                       </div>
                     ) : (
                       <div className="edit-ingredient-container">
-                        <div className="new-ingredient-title">
-                          <FloatingLabelInput id="newIngredient" label="Edit ingredient" />
-                        </div>
-                        <div className="new-ingredient-name">
-                          <FloatingLabelInput
-                            id="Ingredient"
-                            label="Ingredient"
-                            value={this.state.editIngredient}
-                            onChange={this.updateEditIngredientValue}
-                          />
-                        </div>
-                        <div className="new-ingredient-type">
-                          <Select
-                            labelId="it-label"
-                            id="it-select"
-                            style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                            value={this.state.editIngredientType}
-                            onChange={this.updateEditIngredientTypeValue}
-                          >
-                            {this.props.ingredientTypes.map((it, i) => (
-                              <MenuItem value={it} key={i}>
-                                <div>
-                                  <div>{it}</div>
-                                </div>
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </div>
-                        <div className="new-ingredient-volume">
-                          <FloatingLabelInput
-                            id="Volume"
-                            label="Volume"
-                            value={this.state.editIngredientVolume.toString()}
-                            onChange={this.updateEditIngredientVolume}
-                          />
-                        </div>
-                        <div className="new-ingredient-unit">
-                          <Select
-                            labelId="ut-label"
+                        <div className="inline-edit-recipe-name">
+                                                   <FloatingLabelInput
+                             id="editIngredient"
+                             label="Ingredient"
+                             value={this.state.editIngredient}
+                             onChange={this.updateEditIngredientValue}
+                           /></div>
+                           <div className="inline-edit-recipe-type">
+                                                      <Select
+                             labelId="it-label"
+                             id="edit-it-select"
+                            //  style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
+                             value={this.state.editIngredientType}
+                             onChange={this.updateEditIngredientTypeValue}
+                           >
+                             {this.props.ingredientTypes.map((it, i) => (
+                               <MenuItem value={it} key={i}>
+                                 <div>
+                                   <div>{it}</div>
+                                 </div>
+                               </MenuItem>
+                             ))}
+                           </Select></div>
+                           <div className="inline-edit-recipe-amount">
+                                    <FloatingLabelInput
+                             id="editVolume"
+                             label="Volume"
+                             value={this.state.editIngredientVolume.toString()}
+                             onChange={this.updateEditIngredientVolume}
+                           /></div>
+                           <div className="inline-edit-recipe-unit">
+                                                     <Select
+                            labelId="edit-ut-label"
                             id="ut-select"
-                            style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
+                            // style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
                             value={this.state.editIngredientUnit}
                             onChange={this.updateEditUnitTypeValue}
                           >
@@ -303,16 +291,71 @@ class RecipeEdit_Step2 extends Component {
                               </MenuItem>
                             ))}
                           </Select>
-                        </div>
-                        <div className="new-ingredient-add">
-                          <Button className="add-button, inline" onClick={this.updateIngredient(i.id)}>
-                            Update
-                          </Button>
-                          <Button className="add-button, inline" onClick={this.cancelEdit(i.id)}>
-                            Cancel
-                          </Button>
-                        </div>
+                          </div>
                       </div>
+                  //     <div className="edit-ingredient-container">
+                  //       <div className="new-ingredient-title">
+                  //         <FloatingLabelInput id="newIngredient" label="Edit ingredient" />
+                  //       </div>
+                  //       <div className="new-ingredient-name">
+                  //         <FloatingLabelInput
+                  //           id="Ingredient"
+                  //           label="Ingredient"
+                  //           value={this.state.editIngredient}
+                  //           onChange={this.updateEditIngredientValue}
+                  //         />
+                  //       </div>
+                  //       <div className="new-ingredient-type">
+                  //         <Select
+                  //           labelId="it-label"
+                  //           id="it-select"
+                  //           style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
+                  //           value={this.state.editIngredientType}
+                  //           onChange={this.updateEditIngredientTypeValue}
+                  //         >
+                  //           {this.props.ingredientTypes.map((it, i) => (
+                  //             <MenuItem value={it} key={i}>
+                  //               <div>
+                  //                 <div>{it}</div>
+                  //               </div>
+                  //             </MenuItem>
+                  //           ))}
+                  //         </Select>
+                  //       </div>
+                  //       <div className="new-ingredient-volume">
+                  //         <FloatingLabelInput
+                  //           id="Volume"
+                  //           label="Volume"
+                  //           value={this.state.editIngredientVolume.toString()}
+                  //           onChange={this.updateEditIngredientVolume}
+                  //         />
+                  //       </div>
+                  //       <div className="new-ingredient-unit">
+                          // <Select
+                          //   labelId="ut-label"
+                          //   id="ut-select"
+                          //   style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
+                          //   value={this.state.editIngredientUnit}
+                          //   onChange={this.updateEditUnitTypeValue}
+                          // >
+                          //   {this.props.unitTypes.map((ut, i) => (
+                          //     <MenuItem value={ut} key={i}>
+                          //       <div>
+                          //         <div>{ut}</div>
+                          //       </div>
+                          //     </MenuItem>
+                          //   ))}
+                          // </Select>
+                  //       </div>
+                  //       <div className="new-ingredient-add">
+                  //         <Button className="add-button, inline" onClick={this.updateIngredient(i.id)}>
+                  //           Update
+                  //         </Button>
+                  //         <Button className="add-button, inline" onClick={this.cancelEdit(i.id)}>
+                  //           Cancel
+                  //         </Button>
+                  //       </div>
+                  //     </div>
                     )}
                   </div>
                 ))}
