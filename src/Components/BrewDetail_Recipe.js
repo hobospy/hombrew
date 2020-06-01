@@ -19,6 +19,10 @@ class BrewDetail_Recipe extends Component {
     this.setState({ hasLoadedRecipe: true });
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ recipe: newProps.recipe });  
+  }
+
   changingItem() {
     console.log('Output here - recipe');
   }

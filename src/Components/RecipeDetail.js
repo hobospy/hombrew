@@ -179,7 +179,9 @@ class RecipeDetail extends Component {
       redirect: 'follow',
     };
 
-    fetch(this.state.url, requestOptions);
+    fetch(this.state.url, requestOptions)
+    .then(response => response.json())
+    .then(data => { this.setState({ recipeDetail: data }) })
   };
 
   onClickOutside = (event) => {
@@ -224,12 +226,13 @@ class RecipeDetail extends Component {
               <div className="recipe-detail-title-container">
                 <div className="recipe-detail-title">
                   <FloatingLabelInput id="recipe-name" label="Name" value={recipe.name} />
+                  <FloatingLabelInput id="recipe-nae" label="WP name" value={recipe.waterProfile.name} />
                 </div>
                 <div className="recipe-detail-favourite">
                   <Favourite favourite={recipe.favourite} onClick={this.updateFavourite} />
                 </div>
               </div>
-              <BrewDetail_Recipe recipe={recipe} detailsExpanded={true} />
+              {/* <BrewDetail_Recipe recipe={recipe} detailsExpanded={true} /> */}
               <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
                 <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
               </div>
@@ -245,7 +248,8 @@ class RecipeDetail extends Component {
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeEdit}
                 baseUrl={this.props.baseUrl}
-                title={this.state.recipeEdit.name}
+                // title={this.state.recipeEdit.name}
+                title="Edit Recipe"
               />
             ) : null}
           </React.Fragment>

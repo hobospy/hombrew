@@ -7,8 +7,19 @@ class DoubleCollapsiblePanel extends Component {
     super(props);
     this.state = {
       open: this.props.open,
+      leftChild: this.props.leftChild,
+      leftTitle: this.props.leftTitle,
+      rightChild: this.props.rightChild,
+      rightTitle: this.props.rightTitle,
     };
     this.togglePanel = this.togglePanel.bind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({ leftChild: newProps.leftChild });
+    this.setState({ leftTitle: newProps.leftTitle });
+    this.setState({ rightChild: newProps.rightChild });
+    this.setState({ rightTitle: newProps.rightTitle });
   }
 
   togglePanel(e) {
@@ -20,15 +31,15 @@ class DoubleCollapsiblePanel extends Component {
       <div className="double-collapsible-panel">
         <div className="double-collapsible-panel-left-column">
           <div onClick={(e) => this.togglePanel(e)} className="header">
-            {this.props.leftTitle}
+            {this.state.leftTitle}
           </div>
           {this.state.open ? (
-            <div className="content">{this.props.leftChild}</div>
+            <div className="content">{this.state.leftChild}</div>
           ) : null}
         </div>
         <div className="double-collapsible-panel-right-column">
           <div onClick={(e) => this.togglePanel(e)} className="header">
-            {this.props.rightTitle}
+            {this.state.rightTitle}
             {this.state.open ? (
               <div className="expander-top-right">
                 <ExpandLessOutlinedIcon />
@@ -40,7 +51,7 @@ class DoubleCollapsiblePanel extends Component {
             )}
           </div>
           {this.state.open ? (
-            <div className="content">{this.props.rightChild}</div>
+            <div className="content">{this.state.rightChild}</div>
           ) : null}
         </div>
       </div>

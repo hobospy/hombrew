@@ -122,6 +122,17 @@ class RecipeEdit_Step1 extends Component {
             <div className="edit-page-container-item">
               <CssTextField
                 fullWidth
+                id="name"
+                label="Name"
+                InputProps={{ disableUnderline: true }}
+                name="name"
+                onChange={this.props.handleChange}
+                value={this.props.name}
+              />
+            </div>
+            <div className="edit-page-container-item">
+              <CssTextField
+                fullWidth
                 id="description"
                 label="Description"
                 InputProps={{ disableUnderline: true }}
