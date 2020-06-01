@@ -554,6 +554,7 @@
 ._modal-title {
   grid-column: 1;
   grid-row: 1;
+  color: #001a33;
 }
 
 ._modal-close {
@@ -668,14 +669,29 @@
   /*display: grid;
   grid-template-columns: 5% 1fr 1fr 5%;
   grid-template-rows: auto auto auto auto; */
+  display: grid;
+  grid-template-columns: 1fr 75px;
+  grid-template-rows: auto auto;
+  border-collapse: separate;
+  border: solid rgb(105, 97, 97) 1px;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
   margin-bottom: 10px;
+  width: 98%;
 }
 
 .new-ingredient-container {
-  display: grid;
+  /* display: grid;
   grid-template-columns: 5% 1fr 1fr 5%;
   grid-template-rows: auto auto auto auto;
-  margin-bottom: 10px;
+  margin-bottom: 10px; */
+  grid-column: 0 / span 3;
+  display: grid;
+  grid-template-columns: 1fr 75px;
+  grid-template-rows: auto auto;
+  /* margin-bottom: 30px; */
+  margin-top: -45px;
+  width: 98%;
 }
 
 .new-ingredient-title {
@@ -713,21 +729,38 @@
   text-align: right;
 }
 
-.inline {
+.inline-edit-button-container {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  text-align: right;
+}
+
+.inline-edit-button {
   display: inline-block;
+  position: relative;
   margin-right: 5px;
+  max-width: 100px;
+}
+
+.inline-edit-recipe-container {
+  grid-row: 1;
+  grid-column: 1 / span 2;
 }
 
 .inline-edit-recipe-name {
   display: inline-block;
   position: relative;
+  margin-left: 5px;
   margin-right: 5px;
-  max-width: 150px;
+  margin-top: 5px;
+  max-width: 200px;
 }
 .inline-edit-recipe-type {
   display: inline-block;
+  grid-row: 1;
+  grid-column: 2;
   position: relative;
-  margin-right: 5px;
+  margin-top: 5px;
   max-width: 100px;
   min-width: 100px;
 }
@@ -735,11 +768,35 @@
   display: inline-block;
   position: relative;
   margin-right: 5px;
-  max-width: 75px;
+  max-width: 55px;
 }
 .inline-edit-recipe-unit {
   display: inline-block;
   position: relative;
   margin-right: 5px;
   max-width: 75px;
+}
+
+.test-group-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px;
+  border-collapse: separate;
+  border: solid rgb(105, 97, 97) 1px;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.test-group-container-header {
+  margin-top: -12px;
+  margin-left: 8px;
+  margin-bottom: 0px;
+  background-color: white;
+  padding-left: 3px;
+  padding-right: 3px;
+  width: fit-content;
+  height: fit-content;
+  font-size: small;
+  color: rgb(105, 97, 97);
 }

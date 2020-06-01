@@ -245,7 +245,7 @@ class RecipeDetail extends Component {
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeEdit}
                 baseUrl={this.props.baseUrl}
-                title="Recipe definition"
+                title={this.state.recipeEdit.name}
               />
             ) : null}
           </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FloatingLabelInput from 'react-floating-label-input';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Select, Zoom } from '@material-ui/core';
+import { Select, TextField, Zoom } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -13,7 +13,29 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { withStyles, emphasize } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#001a33',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#001a33',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#001a33',
+      },
+    },
+  },
+})(TextField);
 
 const WaterProfilesTooltip = withStyles({
   tooltip: {
@@ -224,7 +246,7 @@ class RecipeEdit_Step2 extends Component {
           <div>
             <div className="edit-page-container-item, useStyles.root">
               <FloatingLabelInput id="name" label="Ingredients" />
-              <div style={{ marginTop: 15, marginLeft: 10, marginBottom: 15 }}>
+              <div style={{ marginTop: 15, marginLeft: 10 }}>
                 {this.state.ingredients.map((i) => (
                   <div>
                     {i.inEdit === false ? (
@@ -245,171 +267,151 @@ class RecipeEdit_Step2 extends Component {
                       </div>
                     ) : (
                       <div className="edit-ingredient-container">
-                        <div className="inline-edit-recipe-name">
-                                                   <FloatingLabelInput
-                             id="editIngredient"
-                             label="Ingredient"
-                             value={this.state.editIngredient}
-                             onChange={this.updateEditIngredientValue}
-                           /></div>
-                           <div className="inline-edit-recipe-type">
-                                                      <Select
-                             labelId="it-label"
-                             id="edit-it-select"
-                            //  style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                             value={this.state.editIngredientType}
-                             onChange={this.updateEditIngredientTypeValue}
-                           >
-                             {this.props.ingredientTypes.map((it, i) => (
-                               <MenuItem value={it} key={i}>
-                                 <div>
-                                   <div>{it}</div>
-                                 </div>
-                               </MenuItem>
-                             ))}
-                           </Select></div>
-                           <div className="inline-edit-recipe-amount">
-                                    <FloatingLabelInput
-                             id="editVolume"
-                             label="Volume"
-                             value={this.state.editIngredientVolume.toString()}
-                             onChange={this.updateEditIngredientVolume}
-                           /></div>
-                           <div className="inline-edit-recipe-unit">
-                                                     <Select
-                            labelId="edit-ut-label"
-                            id="ut-select"
-                            // style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                            value={this.state.editIngredientUnit}
-                            onChange={this.updateEditUnitTypeValue}
+                        <div className="inline-edit-recipe-container">
+                          <div className="inline-edit-recipe-name">
+                            <CssTextField
+                              InputProps={{ disableUnderline: true }}
+                              id="editIngredient"
+                              label="Ingredient"
+                              value={this.state.editIngredient}
+                              onChange={this.updateEditIngredientValue}
+                            />
+                          </div>
+                          <div className="inline-edit-recipe-amount">
+                            <CssTextField
+                              InputProps={{ disableUnderline: true }}
+                              id="editVolume"
+                              label="Volume"
+                              value={this.state.editIngredientVolume.toString()}
+                              onChange={this.updateEditIngredientVolume}
+                            />
+                          </div>
+                          <div className="inline-edit-recipe-unit">
+                            <CssTextField
+                              InputProps={{ disableUnderline: true }}
+                              labelId="edit-ut-label"
+                              id="ut-select"
+                              label="Unit"
+                              select
+                              value={this.state.editIngredientUnit}
+                              onChange={this.updateEditUnitTypeValue}
+                            >
+                              {this.props.unitTypes.map((ut, i) => (
+                                <MenuItem value={ut} key={i}>
+                                  <div>
+                                    <div>{ut}</div>
+                                  </div>
+                                </MenuItem>
+                              ))}
+                            </CssTextField>
+                          </div>
+                        </div>
+                        <div className="inline-edit-recipe-type">
+                          <CssTextField
+                            InputProps={{ disableUnderline: true }}
+                            labelId="it-label"
+                            id="edit-it-select"
+                            label="Type"
+                            select
+                            value={this.state.editIngredientType}
+                            onChange={this.updateEditIngredientTypeValue}
                           >
-                            {this.props.unitTypes.map((ut, i) => (
-                              <MenuItem value={ut} key={i}>
+                            {this.props.ingredientTypes.map((it, i) => (
+                              <MenuItem value={it} key={i}>
                                 <div>
-                                  <div>{ut}</div>
+                                  <div>{it}</div>
                                 </div>
                               </MenuItem>
                             ))}
-                          </Select>
-                          </div>
+                          </CssTextField>
+                        </div>
+                        <div className="inline-edit-button-container">
+                          <Button className="inline-edit-button" onClick={this.updateIngredient(i.id)}>
+                            Update
+                          </Button>
+                          <Button className="inline-edit-button" onClick={this.cancelEdit(i.id)}>
+                            Cancel
+                          </Button>
+                        </div>
                       </div>
-                  //     <div className="edit-ingredient-container">
-                  //       <div className="new-ingredient-title">
-                  //         <FloatingLabelInput id="newIngredient" label="Edit ingredient" />
-                  //       </div>
-                  //       <div className="new-ingredient-name">
-                  //         <FloatingLabelInput
-                  //           id="Ingredient"
-                  //           label="Ingredient"
-                  //           value={this.state.editIngredient}
-                  //           onChange={this.updateEditIngredientValue}
-                  //         />
-                  //       </div>
-                  //       <div className="new-ingredient-type">
-                  //         <Select
-                  //           labelId="it-label"
-                  //           id="it-select"
-                  //           style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                  //           value={this.state.editIngredientType}
-                  //           onChange={this.updateEditIngredientTypeValue}
-                  //         >
-                  //           {this.props.ingredientTypes.map((it, i) => (
-                  //             <MenuItem value={it} key={i}>
-                  //               <div>
-                  //                 <div>{it}</div>
-                  //               </div>
-                  //             </MenuItem>
-                  //           ))}
-                  //         </Select>
-                  //       </div>
-                  //       <div className="new-ingredient-volume">
-                  //         <FloatingLabelInput
-                  //           id="Volume"
-                  //           label="Volume"
-                  //           value={this.state.editIngredientVolume.toString()}
-                  //           onChange={this.updateEditIngredientVolume}
-                  //         />
-                  //       </div>
-                  //       <div className="new-ingredient-unit">
-                          // <Select
-                          //   labelId="ut-label"
-                          //   id="ut-select"
-                          //   style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                          //   value={this.state.editIngredientUnit}
-                          //   onChange={this.updateEditUnitTypeValue}
-                          // >
-                          //   {this.props.unitTypes.map((ut, i) => (
-                          //     <MenuItem value={ut} key={i}>
-                          //       <div>
-                          //         <div>{ut}</div>
-                          //       </div>
-                          //     </MenuItem>
-                          //   ))}
-                          // </Select>
-                  //       </div>
-                  //       <div className="new-ingredient-add">
-                  //         <Button className="add-button, inline" onClick={this.updateIngredient(i.id)}>
-                  //           Update
-                  //         </Button>
-                  //         <Button className="add-button, inline" onClick={this.cancelEdit(i.id)}>
-                  //           Cancel
-                  //         </Button>
-                  //       </div>
-                  //     </div>
                     )}
                   </div>
                 ))}
               </div>
-              <div className="new-ingredient-container">
-                <div className="new-ingredient-title">
-                  <FloatingLabelInput id="newIngredient" label="New ingredient" />
-                </div>
-                <div className="new-ingredient-name">
-                  <FloatingLabelInput id="Ingredient" label="Ingredient" value={this.state.newIngredient} onChange={this.updateNewIngredientValue} />
-                </div>
-                <div className="new-ingredient-type">
-                  <Select
-                    labelId="it-label"
-                    id="it-select"
-                    style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                    value={this.state.newIngredientType}
-                    onChange={this.updateIngredientTypeValue}
-                  >
-                    {this.props.ingredientTypes.map((it, i) => (
-                      <MenuItem value={it} key={i}>
-                        <div>
-                          <div>{it}</div>
-                        </div>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
-                <div className="new-ingredient-volume">
-                  <FloatingLabelInput id="Volume" label="Volume" value={this.state.newIngredientVolume} onChange={this.updateNewIngredientVolume} />
-                </div>
-                <div className="new-ingredient-unit">
-                  <Select
-                    labelId="ut-label"
-                    id="ut-select"
-                    style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                    value={this.state.newIngredientUnit}
-                    onChange={this.updateUnitTypeValue}
-                  >
-                    {this.props.unitTypes.map((ut, i) => (
-                      <MenuItem value={ut} key={i}>
-                        <div>
-                          <div>{ut}</div>
-                        </div>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
-                <div className="new-ingredient-add">
-                  <Button className="add-button" onClick={this.addItemToIngredientList}>
-                    Add
-                  </Button>
+              {/* <div className="new-ingredient-title">
+                <FloatingLabelInput id="newIngredient" label="New ingredient" />
+              </div> */}
+              <div className="test-group-container">
+                <label className="test-group-container-header">New ingredient</label>
+                <div className="new-ingredient-container">
+                  <div className="inline-edit-recipe-container">
+                    <div className="inline-edit-recipe-name">
+                      <CssTextField
+                        InputProps={{ disableUnderline: true }}
+                        id="Ingredient"
+                        label="Ingredient"
+                        value={this.state.newIngredient}
+                        onChange={this.updateNewIngredientValue}
+                      />
+                    </div>
+                    <div className="inline-edit-recipe-amount">
+                      <CssTextField
+                        InputProps={{ disableUnderline: true }}
+                        id="Volume"
+                        label="Volume"
+                        value={this.state.newIngredientVolume.toString()}
+                        onChange={this.updateNewIngredientVolume}
+                      />
+                    </div>
+                    <div className="inline-edit-recipe-unit">
+                      <CssTextField
+                        InputProps={{ disableUnderline: true }}
+                        select
+                        labelId="edit-ut-label"
+                        label="Unit"
+                        id="ut-select"
+                        value={this.state.newIngredientUnit}
+                        onChange={this.updateUnitTypeValue}
+                      >
+                        {this.props.unitTypes.map((ut, i) => (
+                          <MenuItem value={ut} key={i}>
+                            <div>
+                              <div>{ut}</div>
+                            </div>
+                          </MenuItem>
+                        ))}
+                      </CssTextField>
+                    </div>
+                  </div>
+                  <div className="inline-edit-recipe-type">
+                    <CssTextField
+                      InputProps={{ disableUnderline: true }}
+                      select
+                      labelId="it-label"
+                      label="Type"
+                      id="edit-it-select"
+                      value={this.state.newIngredientType}
+                      onChange={this.updateIngredientTypeValue}
+                    >
+                      {this.props.ingredientTypes.map((it, i) => (
+                        <MenuItem value={it} key={i}>
+                          <div>
+                            <div>{it}</div>
+                          </div>
+                        </MenuItem>
+                      ))}
+                    </CssTextField>
+                  </div>
+                  <div className="inline-edit-button-container">
+                    <Button className="inline-edit-button" onClick={this.addItemToIngredientList}>
+                      Add
+                    </Button>
+                  </div>
                 </div>
               </div>
+              {/* <div className="test-group-container">
+                <label className="test-group-container-header">Something new</label>
+              </div> */}
             </div>
           </div>
         ) : (

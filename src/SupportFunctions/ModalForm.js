@@ -66,7 +66,7 @@ export const Modal = ({
         <aside tag="aside" role="dialog" tabIndex="-1" aria-modal="true" className="modal-cover" onClick={onClickOutside} onKeyDown={onKeyDown}>
           <div className="modal-area" ref={modalRef}>
             <div className="_modal-titlebar-container">
-              <h1 className="_modal-title">{title}</h1>
+              <h2 className="_modal-title">{title}</h2>
               <button ref={buttonRef} aria-label="Close Modal" aria-labelledby="close-modal" className="_modal-close" onClick={closeModal}>
                 <span id="close-modal" className="_hide-visual">
                   Close

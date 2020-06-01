@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
-import EditNavigation from '../EditNavigation';
-import FloatingLabelInput from 'react-floating-label-input';
-import { Select, Zoom } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles } from '@material-ui/core/styles';
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#001a33',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#001a33',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#001a33',
+      },
+    },
+  },
+})(TextField);
 
 class RecipeEdit_Step1 extends Component {
   constructor(props) {
@@ -78,8 +95,6 @@ class RecipeEdit_Step1 extends Component {
       return null;
     }
 
-    let rawBeerTypes = ['beertype1', 'beertype2', 'beertype3'];
-
     let wpList;
     let typeList;
 
@@ -105,46 +120,36 @@ class RecipeEdit_Step1 extends Component {
         {this.state.hasLoaded ? (
           <div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput id="name" label="Name" name="name" onChange={this.props.handleChange} value={this.props.name} />
-            </div>
-            <div className="edit-page-container-item">
-              <FloatingLabelInput
+              <CssTextField
+                fullWidth
                 id="description"
                 label="Description"
+                InputProps={{ disableUnderline: true }}
                 name="description"
+                multiline
                 onChange={this.props.handleChange}
                 value={this.props.description}
               />
             </div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput id="type" label="Type" />
-              <Select
+              <CssTextField
+                select
+                InputProps={{ disableUnderline: true }}
                 labelId="type-label"
+                label="Type"
                 id="type-select"
                 name="recipeType"
-                style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                //value={this.props.currentWaterProfile.name}
+                style={{ marginBottom: 15, width: '100%' }}
                 value={this.state.thisType}
                 onChange={this.updateRecipeTypeValue}
-                //onChange={this.props.handleChange}
               >
                 {typeList}
-                {/* {this.props.waterProfiles.map((wp) => {
-                  return (
-                    // <WaterProfilesTooltip title={wp.description} placement="right-start" TransitionComponent={Zoom}>
-                    <MenuItem value={wp.name} key={wp.id}>
-                      <div>
-                        <div>{wp.name}</div>
-                        <div style={{ fontSize: 12 }}>{wp.description}</div>
-                      </div>
-                    </MenuItem>
-                    // </WaterProfilesTooltip>
-                  );
-                })} */}
-              </Select>
+              </CssTextField>
             </div>
             <div className="edit-page-container-item">
-              <FloatingLabelInput
+              <CssTextField
+                fullWidth
+                InputProps={{ disableUnderline: true }}
                 id="abv"
                 label="Expected ABV"
                 name="expectedABV"
@@ -153,44 +158,24 @@ class RecipeEdit_Step1 extends Component {
               />
             </div>
             <div className="edit-page-container-item">
-              {/* <InputLabel id="wp-label">Water profile</InputLabel> */}
-              <FloatingLabelInput id="profile" label="Water profile" />
-              <Select
+              <CssTextField
+                select
+                InputProps={{ disableUnderline: true }}
                 labelId="wp-label"
+                label="Water profile"
                 id="wp-select"
                 name="waterProfile.name"
-                style={{ marginLeft: 10, marginBottom: 15, width: '97%' }}
-                //value={this.props.currentWaterProfile.name}
+                style={{ marginBottom: 15, width: '100%' }}
                 value={this.state.name}
                 onChange={this.updateWaterProfileValue}
-                //onChange={this.props.handleChange}
               >
                 {wpList}
-                {/* {this.props.waterProfiles.map((wp) => {
-                  return (
-                    // <WaterProfilesTooltip title={wp.description} placement="right-start" TransitionComponent={Zoom}>
-                    <MenuItem value={wp.name} key={wp.id}>
-                      <div>
-                        <div>{wp.name}</div>
-                        <div style={{ fontSize: 12 }}>{wp.description}</div>
-                      </div>
-                    </MenuItem>
-                    // </WaterProfilesTooltip>
-                  );
-                })} */}
-              </Select>
+              </CssTextField>
             </div>
           </div>
         ) : (
           <div>Still loading</div>
         )}
-        {/* <label>Type</label> */}
-        {/* <input id="beerType" list="beerTypes" />
-        <datalist id="beerTypes">
-          {rawBeerTypes.map(function (beerType) {
-            <option value={beerType}></option>;
-          })}
-        </datalist> */}
       </div>
     );
   }
