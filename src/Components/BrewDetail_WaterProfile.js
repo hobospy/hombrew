@@ -10,6 +10,10 @@ class BrewDetail_WaterProfile extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ waterProfile: newProps.waterProfile });
+  }
+
   componentDidMount() {
     this.setState({ hasLoadedWaterProfile: true });
   }

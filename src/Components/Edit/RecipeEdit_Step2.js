@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import FloatingLabelInput from 'react-floating-label-input';
-import InputLabel from '@material-ui/core/InputLabel';
-import { Select, TextField, Zoom } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ClearIcon from '@material-ui/icons/Clear';
-import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Skeleton from '@material-ui/lab/Skeleton';
-
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -64,6 +57,7 @@ class RecipeEdit_Step2 extends Component {
       editIngredientType: '',
       editIngredientVolume: '',
       editIngredientUnit: '',
+      editingIngredient: false,
 
       ingredientUpdate: null,
     };
@@ -130,7 +124,7 @@ class RecipeEdit_Step2 extends Component {
     this.setState({ newIngredientType: 'Grains' });
     this.setState({ newIngredientVolume: '0' });
     this.setState({ newIngredientUnit: 'kg' });
-    this.setState({ newIngredient: this.state.newIngredientID - 1 });
+    this.setState({ newIngredientID: this.state.newIngredientID - 1 });
 
     var ingEvent = event;
     ingEvent.target.name = 'AddIngredient';
@@ -198,6 +192,7 @@ class RecipeEdit_Step2 extends Component {
       this.setState({ editIngredientUnit: editIngredient.unit });
 
       this.setState({ ingredients: array });
+      this.setState({ editingIngredient: true });
     }
   };
 
@@ -209,6 +204,7 @@ class RecipeEdit_Step2 extends Component {
       let editIngredient = { ...array[ingredientIndex], inEdit: false };
       array[ingredientIndex] = editIngredient;
       this.setState({ ingredients: array });
+      this.setState({ editingIngredient: false });
     }
   };
 
@@ -227,6 +223,7 @@ class RecipeEdit_Step2 extends Component {
       };
       array[ingredientIndex] = editIngredient;
       this.setState({ ingredients: array });
+      this.setState({ editingIngredient: false });
 
       var ingEvent = event;
       ingEvent.target.name = 'UpdateIngredient';
@@ -245,23 +242,31 @@ class RecipeEdit_Step2 extends Component {
         {this.state.hasLoaded ? (
           <div>
             <div className="edit-page-container-item, useStyles.root">
-              <FloatingLabelInput id="name" label="Ingredients" />
+              <div className="edit-page-recipe-title-container">Ingredients</div>
               <div style={{ marginTop: 15, marginLeft: 10 }}>
                 {this.state.ingredients.map((i) => (
                   <div>
                     {i.inEdit === false ? (
                       <div className="edit-page-recipe-ingredient-container">
                         <div className="edit-page-recipe-ingredient">
-                          <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} />
+                          {/* <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} /> */}
+                          <CssTextField
+                            fullWidth
+                            InputProps={{ disableUnderline: true }}
+                            id={i.id}
+                            key={i.id}
+                            value={i.amount.toString() + i.unit + ' ' + i.name}
+                            onFocus={this.editIngredient(i.id)}
+                          />
                         </div>
-                        <div className="edit-button">
+                        {/* <div className="edit-button">
                           <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.editIngredient(i.id)}>
                             <EditIcon fontSize="small" />
                           </Skeleton>
-                        </div>
+                        </div> */}
                         <div className="cancel-button">
                           <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.deleteIngredient(i.id)}>
-                            <ClearIcon fontSize="small" />
+                            <DeleteIcon fontSize="small" />
                           </Skeleton>
                         </div>
                       </div>
@@ -338,11 +343,10 @@ class RecipeEdit_Step2 extends Component {
                   </div>
                 ))}
               </div>
-              {/* <div className="new-ingredient-title">
-                <FloatingLabelInput id="newIngredient" label="New ingredient" />
-              </div> */}
+            </div>
+            {this.state.editingIngredient === false ? (
               <div className="test-group-container">
-                <label className="test-group-container-header">New ingredient</label>
+                <label className="test-group-container-header">New</label>
                 <div className="new-ingredient-container">
                   <div className="inline-edit-recipe-container">
                     <div className="inline-edit-recipe-name">
@@ -409,10 +413,7 @@ class RecipeEdit_Step2 extends Component {
                   </div>
                 </div>
               </div>
-              {/* <div className="test-group-container">
-                <label className="test-group-container-header">Something new</label>
-              </div> */}
-            </div>
+            ) : null}
           </div>
         ) : (
           <div>Still loading</div>

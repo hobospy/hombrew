@@ -117,6 +117,8 @@ class RecipeEdit_Step1 extends Component {
 
     return (
       <div className="edit-page-container">
+        <div className="edit-page-recipe-title-container">General information</div>
+
         {this.state.hasLoaded ? (
           <div>
             <div className="edit-page-container-item">

@@ -10,6 +10,10 @@ class BrewDetail_Ingredients extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ ingredients: newProps.ingredients });
+  }
+
   componentDidMount() {
     this.setState({ hasLoadedWaterProfile: true });
   }
@@ -27,7 +31,13 @@ class BrewDetail_Ingredients extends Component {
         <div>
           {ingredients.map((i) => (
             <div className="brewed-beer-ingredient-item">
-              <FloatingLabelInput key={i.id} id={'ingredient_' + i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} />
+              <FloatingLabelInput
+                key={i.id}
+                id={'ingredient_' + i.id}
+                label={i.name}
+                onChange={this.changingItem}
+                value={String(i.amount) + i.unit}
+              />
             </div>
           ))}
         </div>
