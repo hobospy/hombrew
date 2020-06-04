@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FloatingLabelInput, { action } from 'react-floating-label-input';
+import FloatingLabelInput from 'react-floating-label-input';
 import CollapsiblePanel from '../Components/CollapsiblePanel';
 import DoubleCollapsiblePanel from '../Components/DoubleCollapsiblePanel';
 import BrewDetail_WaterProfile from '../Components/BrewDetail_WaterProfile';
@@ -20,7 +20,7 @@ class BrewDetail_Recipe extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({ recipe: newProps.recipe });  
+    this.setState({ recipe: newProps.recipe });
   }
 
   changingItem() {
@@ -57,7 +57,30 @@ class BrewDetail_Recipe extends Component {
               />
             </div>
             <div className="brewed-beer-recipe-steps">
-              <CollapsiblePanel title="Brewing steps" children={'Supposed to be brewing steps in here'} open={true} />
+              <CollapsiblePanel
+                title="Brewing steps"
+                children={
+                  <div>
+                    {recipe.steps.length === 0 || recipe.steps === undefined ? (
+                      <div>No steps defined</div>
+                    ) : (
+                      <div>
+                        {recipe.steps.map((s, i) => (
+                          <div className="recipe-grid-container">
+                            <div className="recipe-grid-container-step">{'Step ' + (i + 1)}</div>
+                            <div className="recipe-grid-container-description">{s.description}</div>
+                            <div className="recipe-grid-container-timer">
+                              {s.timer}
+                              {s.timer === 1 ? ' min' : ' mins'}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                }
+                open={true}
+              />
             </div>
           </div>
         ) : (

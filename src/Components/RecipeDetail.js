@@ -16,7 +16,8 @@ class RecipeDetail extends Component {
       recipeEdit: '',
       recipeTypeEdit: '',
       waterProfileID: '',
-      recipeIngredients: '',
+      recipeIngredients: [],
+      recipeSteps: [],
       url: `${this.props.baseUrl}recipe/${this.props.match.params.id}`,
       id: this.props.match.params.id,
       modalShown: false,
@@ -29,6 +30,7 @@ class RecipeDetail extends Component {
     this.deleteItem = this.deleteItem.bind(this);
 
     this.deleteRecipeIngredient = this.deleteRecipeIngredient.bind(this);
+    this.deleteRecipeStep = this.deleteRecipeStep.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -42,6 +44,7 @@ class RecipeDetail extends Component {
         this.setState({ recipeTypeEdit: data.type });
         this.setState({ waterProfileID: data.waterProfile.id });
         this.setState({ recipeIngredients: data.ingredients });
+        this.setState({ recipeSteps: data.steps });
         this.setState({ hasLoaded: true });
       });
   }
@@ -130,6 +133,17 @@ class RecipeDetail extends Component {
         array[ingredientIndex] = editIngredient;
         this.setState({ recipeIngredients: array });
       }
+    } else if (name === 'AddStep') {
+      this.setState({ recipeSteps: this.state.recipeSteps.concat(value) });
+    } else if (name === 'UpdateStep') {
+      var stepArray = [...this.state.recipeSteps];
+      var stepIndex = stepArray.findIndex((e) => e.id === value.id);
+
+      if (stepIndex !== -1) {
+        let editStep = { ...stepArray[stepIndex], description: value.description, timer: value.timer };
+        stepArray[stepIndex] = editStep;
+        this.setState({ recipeSteps: stepArray });
+      }
     } else if (name === 'recipeType') {
       this.setState({ recipeTypeEdit: value });
     } else {
@@ -154,6 +168,16 @@ class RecipeDetail extends Component {
     }
   };
 
+  deleteRecipeStep = (stepID) => (event) => {
+    var array = [...this.state.recipeSteps];
+    var stepIndex = array.findIndex((e) => e.id === stepID);
+
+    if (stepIndex !== -1) {
+      array.splice(stepIndex, 1);
+      this.setState({ recipeSteps: array });
+    }
+  };
+
   onSubmit = (event) => {
     event.preventDefault();
 
@@ -170,6 +194,7 @@ class RecipeDetail extends Component {
       WaterProfileID: this.state.waterProfileID,
       Ingredients: this.state.recipeIngredients,
       ExpectedABV: this.state.recipeEdit.expectedABV,
+      Steps: this.state.recipeSteps,
     };
 
     var requestOptions = {
@@ -228,7 +253,6 @@ class RecipeDetail extends Component {
               <div className="recipe-detail-title-container">
                 <div className="recipe-detail-title">
                   <FloatingLabelInput id="recipe-name" label="Name" value={recipe.name} />
-                  {/* <FloatingLabelInput id="recipe-nae" label="WP name" value={recipe.waterProfile.name} /> */}
                 </div>
                 <div className="recipe-detail-favourite">
                   <Favourite favourite={recipe.favourite} onClick={this.updateFavourite} />
@@ -246,11 +270,11 @@ class RecipeDetail extends Component {
                 onSubmit={this.onSubmit}
                 onChange={this.handleChange}
                 onDeleteIngredient={this.deleteRecipeIngredient}
+                onDeleteStep={this.deleteRecipeStep}
                 closeModal={this.closeModal}
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeEdit}
                 baseUrl={this.props.baseUrl}
-                // title={this.state.recipeEdit.name}
                 title="Edit Recipe"
               />
             ) : null}

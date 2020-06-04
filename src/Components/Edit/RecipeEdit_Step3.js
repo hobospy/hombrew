@@ -113,7 +113,7 @@ class RecipeEdit_Step3 extends Component {
       this.setState({ steps: array });
     }
 
-    // this.props.onDeleteIngredient(ingredientID)(event);
+    this.props.onDeleteStep(stepID)(event);
   };
 
   cancelEdit = (stepID) => (event) => {
@@ -146,7 +146,7 @@ class RecipeEdit_Step3 extends Component {
       var ingEvent = event;
       ingEvent.target.name = 'UpdateStep';
       ingEvent.target.value = editStep;
-      // this.props.handleChange(ingEvent);
+      this.props.handleChange(ingEvent);
     }
   };
 
@@ -166,7 +166,7 @@ class RecipeEdit_Step3 extends Component {
     var ingEvent = event;
     ingEvent.target.name = 'AddStep';
     ingEvent.target.value = newStep;
-    // this.props.handleChange(ingEvent);
+    this.props.handleChange(ingEvent);
   }
 
   render() {
@@ -213,8 +213,8 @@ class RecipeEdit_Step3 extends Component {
                     </div>
                   ) : (
                     <div className="edit-ingredient-container">
-                      <div className="inline-edit-recipe-container">
-                        <div className="inline-edit-recipe-name">
+                      <div className="edit-step-container">
+                        <div className="inline-edit-step-description">
                           <CssTextField
                             InputProps={{ disableUnderline: true }}
                             id="editDescription"
@@ -223,7 +223,7 @@ class RecipeEdit_Step3 extends Component {
                             onChange={this.updateEditStepDescription}
                           />
                         </div>
-                        <div className="inline-edit-recipe-amount">
+                        <div className="inline-edit-step-timer">
                           <CssTextField
                             InputProps={{ disableUnderline: true }}
                             id="editTimer"
@@ -249,26 +249,24 @@ class RecipeEdit_Step3 extends Component {
             {this.state.editingStep === false ? (
               <div className="test-group-container">
                 <label className="test-group-container-header">New</label>
-                <div className="new-ingredient-container">
-                  <div className="inline-edit-recipe-container">
-                    <div className="inline-edit-recipe-name">
-                      <CssTextField
-                        InputProps={{ disableUnderline: true }}
-                        id="Description"
-                        label="Description"
-                        value={this.state.newDescription}
-                        onChange={this.updateNewStepDescription}
-                      />
-                    </div>
-                    <div className="inline-edit-recipe-amount">
-                      <CssTextField
-                        InputProps={{ disableUnderline: true }}
-                        id="Timer"
-                        label="Timer"
-                        value={this.state.newTimer.toString()}
-                        onChange={this.updateNewStepTimer}
-                      />
-                    </div>
+                <div className="new-step-container">
+                  <div className="inline-edit-step-description">
+                    <CssTextField
+                      InputProps={{ disableUnderline: true }}
+                      id="Description"
+                      label="Description"
+                      value={this.state.newDescription}
+                      onChange={this.updateNewStepDescription}
+                    />
+                  </div>
+                  <div className="inline-edit-step-timer">
+                    <CssTextField
+                      InputProps={{ disableUnderline: true }}
+                      id="Timer"
+                      label="Timer"
+                      value={this.state.newTimer.toString()}
+                      onChange={this.updateNewStepTimer}
+                    />
                   </div>
                   <div className="inline-edit-button-container">
                     <Button className="inline-edit-button" onClick={this.addItemToStepList}>

@@ -194,7 +194,12 @@ class RecipeEdit extends Component {
             recipeID={this.props.recipe.recipeID}
             unitTypes={this.props.unitTypes}
           />
-          <RecipeEdit_Step3 currentStep={this.state.currentStep} handleChange={this.handleChange} steps={this.state.recipeDetail.steps} />
+          <RecipeEdit_Step3
+            currentStep={this.state.currentStep}
+            handleChange={this.handleChange}
+            onDeleteStep={this.props.onDeleteStep}
+            steps={this.state.recipeDetail.steps}
+          />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {this.previousButton}
             {this.nextButton}
