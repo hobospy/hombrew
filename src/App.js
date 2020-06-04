@@ -13,8 +13,9 @@ import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 import RecipeDetail from './Components/RecipeDetail';
 import BrewDetail_Recipe from './Components/BrewDetail_Recipe';
 
-const API_URL =
-  process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
+//const API_URL =
+//  process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
+const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 
 class DebugRouter extends Router {
   constructor(props) {
