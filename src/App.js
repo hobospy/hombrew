@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, NavLink, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 import BrewDetail from './Components/BrewDetail';
@@ -11,11 +11,10 @@ import AppBar from '@material-ui/core/AppBar';
 import BrewSummary from './Components/Summary/BrewSummary';
 import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 import RecipeDetail from './Components/RecipeDetail';
-import BrewDetail_Recipe from './Components/BrewDetail_Recipe';
 
-//const API_URL =
-//  process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
-const API_URL = 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
+const API_URL =
+  process.env.NODE_ENV === 'production' ? 'http://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/' : 'https://localhost:44363/';
+//const API_URL = 'https://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 
 class DebugRouter extends Router {
   constructor(props) {
@@ -62,7 +61,6 @@ class App extends Component {
             <Route exact={true} path="/recipe/summary/" render={(props) => <RecipeSummary {...props} baseUrl={API_URL} />} />
             <Route path="/recipe/:id" render={(props) => <RecipeDetail {...props} baseUrl={API_URL} />} />
             <Route exact={true} path="/waterprofile/summary/" render={(props) => <WaterProfileSummary {...props} baseUrl={API_URL} />} />
-            {/* <Route path="/waterprofile/:id" render={(props) => <WaterProfileDetail {...props} baseUrl={API_URL} />} /> */}
             <Route exact={true} path="/*" render={(props) => <BrewSummary {...props} baseUrl={API_URL} />} />
           </Switch>
         </div>
