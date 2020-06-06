@@ -534,7 +534,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 300px) {
   /* Center the Modal! */
   .modal-area {
     left: 50%;
