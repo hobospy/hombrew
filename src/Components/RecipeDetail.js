@@ -184,7 +184,7 @@ class RecipeDetail extends Component {
     this.closeModal();
 
     var myHeaders = new Headers();
-    myHeaders.append('Accept', 'applicaiton/json');
+    // myHeaders.append('Accept', 'application/json');
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
     var rawObject = {
@@ -202,6 +202,7 @@ class RecipeDetail extends Component {
       headers: myHeaders,
       body: JSON.stringify(rawObject),
       redirect: 'follow',
+      mode: 'cors',
     };
 
     fetch(this.state.url, requestOptions)
