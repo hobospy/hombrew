@@ -16,8 +16,8 @@ import RecipeDetail from './Components/RecipeDetail';
 
 //const API_URL = 'https://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 //const API_URL = 'https://13.239.136.38/';
-//const API_URL = 'https://localhost:44363/';
 const API_URL = 'https://localhost:44363/';
+//const API_URL = 'https://localhost:44363/';
 
 class DebugRouter extends Router {
   constructor(props) {
