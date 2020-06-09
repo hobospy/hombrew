@@ -12,11 +12,11 @@ import BrewSummary from './Components/Summary/BrewSummary';
 import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 import RecipeDetail from './Components/RecipeDetail';
 
-//const API_URL = process.env.NODE_ENV === 'production' ? 'https://13.239.136.38/' : 'https://localhost:44363/';
+const API_URL = process.env.NODE_ENV === 'production' ? 'https://13.239.136.38/' : 'https://localhost:44363/';
 
 //const API_URL = 'https://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
 //const API_URL = 'https://13.239.136.38/';
-const API_URL = 'https://localhost:44363/';
+//const API_URL = 'https://localhost:44363/';
 //const API_URL = 'https://localhost:44363/';
 
 class DebugRouter extends Router {
