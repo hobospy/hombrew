@@ -33,9 +33,7 @@ class DoubleCollapsiblePanel extends Component {
           <div onClick={(e) => this.togglePanel(e)} className="header">
             {this.state.leftTitle}
           </div>
-          {this.state.open ? (
-            <div className="content">{this.state.leftChild}</div>
-          ) : null}
+          {this.state.open ? <div className="content">{this.state.leftChild}</div> : null}
         </div>
         <div className="double-collapsible-panel-right-column">
           <div onClick={(e) => this.togglePanel(e)} className="header">
@@ -50,9 +48,7 @@ class DoubleCollapsiblePanel extends Component {
               </div>
             )}
           </div>
-          {this.state.open ? (
-            <div className="content">{this.state.rightChild}</div>
-          ) : null}
+          {this.state.open ? <div className="content">{this.state.rightChild}</div> : null}
         </div>
       </div>
     );

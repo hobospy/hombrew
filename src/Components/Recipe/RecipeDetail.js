@@ -58,7 +58,7 @@ class RecipeDetail extends Component {
       {
         op: 'replace',
         path: '/Favourite',
-        value: !this.state.recipeDetail.Favourite,
+        value: !this.state.recipeDetail.favourite,
       },
     ];
     var raw = JSON.stringify(data);
@@ -233,8 +233,8 @@ class RecipeDetail extends Component {
                 <div className="recipe-detail-title">
                   <FloatingLabelInput id="recipe-name" label="Name" value={recipe.name} />
                 </div>
-                <div className="recipe-detail-favourite">
-                  <Favourite favourite={recipe.favourite} onClick={this.updateFavourite} />
+                <div className="recipe-detail-favourite" onClick={this.updateFavourite}>
+                  <Favourite favourite={recipe.favourite} />
                 </div>
               </div>
               <BrewDetailRecipe recipe={recipe} detailsExpanded={true} />
