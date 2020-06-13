@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
 import axios from 'axios';
 
-import BrewDetail from './Components/BrewDetail';
-import RecipeSummary from './Components/Summary/RecipeSummary';
-import './atomicStyling.css';
-import NavBarMenu from './Components/NavBarMenu';
-
-import AppBar from '@material-ui/core/AppBar';
+import BrewDetail from './Components/Brew/BrewDetail';
 import BrewSummary from './Components/Summary/BrewSummary';
+import NavBarMenu from './Components/SupportComponents/NavBarMenu';
+import RecipeDetail from './Components/Recipe/RecipeDetail';
+import RecipeSummary from './Components/Summary/RecipeSummary';
 import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
-import RecipeDetail from './Components/RecipeDetail';
+
+import './atomicStyling.css';
 
 const API_URL = process.env.NODE_ENV === 'production' ? 'https://13.239.136.38/' : 'https://localhost:44363/';
-
-//const API_URL = 'https://ec2-13-211-100-228.ap-southeast-2.compute.amazonaws.com/';
-//const API_URL = 'https://13.239.136.38/';
-//const API_URL = 'https://localhost:44363/';
-//const API_URL = 'https://localhost:44363/';
 
 class DebugRouter extends Router {
   constructor(props) {
     super(props);
-    console.log('initial history is: ', JSON.stringify(this.history, null, 2));
     this.history.listen((location, action) => {
       console.log(`The current URL is ${location.pathname}${location.search}${location.hash}`);
-      console.log(`The last navigation action was ${action}`, JSON.stringify(this.history, null, 2));
     });
   }
 }
@@ -41,7 +34,6 @@ class App extends Component {
 
   componentDidMount() {
     const url = `${API_URL}brew/summary`;
-    console.log('Data source URL: ' + url);
     axios
       .get(url)
       .then((response) => response.data)
@@ -60,7 +52,7 @@ class App extends Component {
           console.log(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
+          console.log('Error when retrieving data from: ' + url + ' - ' + error.message);
         }
       });
   }

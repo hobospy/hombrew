@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import moment from 'moment';
-import FloatingLabelInput, { action } from 'react-floating-label-input';
-import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import { makeStyles, withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-
-import CollapsiblePanel from '../Components/CollapsiblePanel';
-import BrewDetail_Recipe from '../Components/BrewDetail_Recipe';
-
+import FloatingLabelInput from 'react-floating-label-input';
+import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 
-import blankBeerPhoto from '../resources/BeerPhotoUnloaded.png';
-import { blue } from '@material-ui/core/colors';
-
-import EditSpeedDial from '../SupportFunctions/EditSpeedDial';
+import blankBeerPhoto from '../../resources/BeerPhotoUnloaded.png';
+import BrewDetailRecipe from './BrewDetailRecipe';
+import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -25,17 +16,6 @@ const StyledRating = withStyles({
     color: '#001A33',
   },
 })(Rating);
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#001A33',
-    },
-    secondary: {
-      main: '#f66636',
-    },
-  },
-});
 
 const styles = (theme) => ({
   fab: {
@@ -60,10 +40,6 @@ class BrewDetail extends Component {
       url: `${this.props.baseUrl}brew/${this.props.match.params.id}`,
       id: this.props.match.params.id,
     };
-
-    this.editItem = this.editItem.bind(this);
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -77,30 +53,12 @@ class BrewDetail extends Component {
       });
   }
 
-  changingItem() {
-    console.log('Output here');
-  }
-
-  editItem() {
-    console.log('Editing item from the amazing menu item');
-  }
-
-  addItem() {
-    console.log('Adding item from the amazing menu item');
-  }
-
-  deleteItem() {
-    console.log('Deleting item from the amazing menu item');
-  }
-
   displayEditMenu = () => {
     return this.setState({ editMenuDisplayed: !this.state.editMenuDisplayed });
   };
 
   render() {
     const brew = this.state.brewDetail;
-    const { classes } = this.props;
-    console.log(brew);
 
     return (
       <div className="grid-brewed-detail">
@@ -125,18 +83,12 @@ class BrewDetail extends Component {
                   <FloatingLabelInput id="brew-abv" label="ABV" onChange={this.changingItem} value={String(brew.abv)} />
                 </div>
               </div>
-              <CollapsiblePanel title={'Recipe - ' + brew.recipe.name} children={<BrewDetail_Recipe recipe={brew.recipe} detailsExpanded={false} />} open={false} />
+              <CollapsiblePanel
+                title={'Recipe - ' + brew.recipe.name}
+                children={<BrewDetailRecipe recipe={brew.recipe} detailsExpanded={false} />}
+                open={false}
+              />
               <CollapsiblePanel title={'Tasting notes'} children={brew.tastingNotes} open={true} />
-            </div>
-            {/* <MuiThemeProvider theme={theme}>
-              <Fab aria-label="edit" color="primary" className={classes.fab} onClick={this.displayEditMenu} style={{}}>
-                {this.state.editingBrew ? <SaveIcon fontSize="small" /> : <EditIcon fontSize="small" />}
-              </Fab>
-            </MuiThemeProvider> */}
-            <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(2) }}>
-              <MuiThemeProvider theme={theme}>
-                <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
-              </MuiThemeProvider>
             </div>
           </div>
         ) : (

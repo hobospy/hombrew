@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import BrewDetail_WaterProfile from '../BrewDetail_WaterProfile';
+import React from 'react';
+import BrewDetailWaterProfile from '../Brew/BrewDetailWaterProfile';
 
 function WaterProfileSummaryItem(props) {
   const waterProfile = props.waterProfile;
@@ -7,7 +7,7 @@ function WaterProfileSummaryItem(props) {
   return (
     <div className="water-profile-summary-container">
       <div className="water-profile-summary-name recipe-title-size recipe-title-colour">{waterProfile.name}</div>
-      <BrewDetail_WaterProfile waterProfile={waterProfile} />
+      <BrewDetailWaterProfile waterProfile={waterProfile} />
     </div>
   );
 }

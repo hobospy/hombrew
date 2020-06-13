@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
-import RecipeEdit_Step1 from './RecipeEdit_Step1';
-import RecipeEdit_Step2 from './RecipeEdit_Step2';
-import RecipeEdit_Step3 from './RecipeEdit_Step3';
-
-import InputLabel from '@material-ui/core/InputLabel';
-import { Select } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
+import RecipeEditStep1 from './RecipeEditStep1';
+import RecipeEditStep2 from './RecipeEditStep2';
+import RecipeEditStep3 from './RecipeEditStep3';
 
 class RecipeEdit extends Component {
   constructor(props) {
@@ -88,7 +83,6 @@ class RecipeEdit extends Component {
     if (currentStep === 3) {
       return (
         <Button variant="outlined" onClick={this.props.onSubmit}>
-          {/* <Button variant="outlined" onClick={this.handleSubmit}> */}
           Submit
         </Button>
       );
@@ -101,38 +95,15 @@ class RecipeEdit extends Component {
     event.preventDefault();
 
     this.props.onChange(event);
-
-    // const { name, value } = event.target;
-
-    // console.log(name + ' - ' + value);
-
-    // this.setState((prevState) => ({
-    //   recipeDetail: {
-    //     ...prevState.recipeDetail,
-    //     [name]: value,
-    //   },
-    // }));
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log('Handling recipe edit submit');
-    console.log(this.state.recipeDetail);
-    console.log(this.props.baseUrl);
-
     var myHeaders = new Headers();
     myHeaders.append('Accept', 'applicaiton/json');
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
-    // var data = [
-    //   {
-    //     Name: this.state.recipeDetail.name,
-    //     Type: this.state.recipeDetail.Type,
-    //     Description: this.state.recipeDetail.Description,
-    //   },
-    // ];
-    // var raw = JSON.stringify(data);
     var rawObject = {
       Name: this.state.recipeDetail.name,
       Type: this.state.recipeDetail.type,
@@ -140,9 +111,6 @@ class RecipeEdit extends Component {
       WaterProfileID: this.state.recipeDetail.waterProfile.id,
       Ingredients: this.state.recipeDetail.ingredients,
     };
-
-    console.log('Raw object:');
-    console.log(rawObject);
 
     var raw = JSON.stringify(rawObject);
 
@@ -152,16 +120,7 @@ class RecipeEdit extends Component {
       body: raw,
       redirect: 'follow',
     };
-
-    console.log('Raw data:');
-    console.log(raw);
-
-    console.log('Request options:');
-    console.log(requestOptions);
-
     var postURL = this.props.baseUrl + 'recipe/' + this.props.recipe.id;
-    console.log('Request URL');
-    console.log(postURL);
 
     fetch(postURL, requestOptions);
   };
@@ -174,7 +133,7 @@ class RecipeEdit extends Component {
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <RecipeEdit_Step1
+          <RecipeEditStep1
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             name={this.props.recipe.name}
@@ -185,7 +144,7 @@ class RecipeEdit extends Component {
             currentWaterProfile={this.props.recipe.waterProfile}
             abv={this.props.recipe.abv}
           />
-          <RecipeEdit_Step2
+          <RecipeEditStep2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             onDeleteIngredient={this.props.onDeleteIngredient}
@@ -194,7 +153,7 @@ class RecipeEdit extends Component {
             recipeID={this.props.recipe.recipeID}
             unitTypes={this.props.unitTypes}
           />
-          <RecipeEdit_Step3
+          <RecipeEditStep3
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             onDeleteStep={this.props.onDeleteStep}

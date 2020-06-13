@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -29,17 +28,6 @@ const CssTextField = withStyles({
     },
   },
 })(TextField);
-
-const WaterProfilesTooltip = withStyles({
-  tooltip: {
-    color: 'white',
-    backgroundColor: '#001a33',
-    fontSize: 12,
-    border: '1px solid #dadde9',
-    marginTop: -10,
-    marginLeft: -10,
-  },
-})(Tooltip);
 
 class RecipeEdit_Step2 extends Component {
   constructor(props) {

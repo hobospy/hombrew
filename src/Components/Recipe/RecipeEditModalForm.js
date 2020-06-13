@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import RecipeEdit from '../Components/Edit/RecipeEdit';
 import axios from 'axios';
 import FocusLock from 'react-focus-lock';
+
+import RecipeEdit from './RecipeEdit';
 
 export const Modal = ({
   onClickOutside,
@@ -20,43 +21,19 @@ export const Modal = ({
 }) => {
   const [waterProfileList, setWaterProfileList] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [ingredientTypes, dispatchIngredientTypes] = useReducer(
-    (ingredientTypes, { type, value }) => {
-      switch (type) {
-        case 'add':
-          return [...ingredientTypes, value];
-        case 'remove':
-          return ingredientTypes.filter((_, index) => index !== value);
-        default:
-          return ingredientTypes;
-      }
-    },
-    ['Grains', 'Hops', 'Adjuncts']
-  );
-  const [unitTypes, dispatchUnitTypes] = useReducer(
-    (unitTypes, { type, value }) => {
-      switch (type) {
-        case 'add':
-          return [...unitTypes, value];
-        case 'remove':
-          return unitTypes.filter((_, index) => index !== value);
-        default:
-          return unitTypes;
-      }
-    },
-    ['kg', 'g', 'l', 'ml']
-  );
+  const ingredientTypes = ['Grains', 'Hops', 'Adjuncts'];
+  const unitTypes = ['kg', 'g', 'l', 'ml'];
 
   useEffect(() => {
+    const url = `${baseUrl}waterprofile/summary`;
     if (hasLoaded !== true) {
-      console.log(baseUrl);
+      console.log(url);
       axios
-        .get(baseUrl + 'waterprofile/summary')
+        .get(url)
         .then((response) => response.data)
         .then((data) => {
           setHasLoaded(true);
           setWaterProfileList(data);
-          console.log(data);
         });
     }
   });

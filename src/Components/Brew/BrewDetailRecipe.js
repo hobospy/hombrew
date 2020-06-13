@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import FloatingLabelInput from 'react-floating-label-input';
-import CollapsiblePanel from '../Components/CollapsiblePanel';
-import DoubleCollapsiblePanel from '../Components/DoubleCollapsiblePanel';
-import BrewDetail_WaterProfile from '../Components/BrewDetail_WaterProfile';
-import BrewDetail_Ingredients from '../Components/BrewDetail_Ingredients';
+import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
+import DoubleCollapsiblePanel from '../SupportComponents/DoubleCollapsiblePanel';
+import BrewDetailWaterProfile from './BrewDetailWaterProfile';
+import BrewDetailIngredients from './BrewDetailIngredients';
 
 class BrewDetail_Recipe extends Component {
   constructor(props) {
@@ -50,9 +50,9 @@ class BrewDetail_Recipe extends Component {
             <div className="brewed-beer-recipe-ingredients-water-profile">
               <DoubleCollapsiblePanel
                 leftTitle="Ingredients"
-                leftChild={<BrewDetail_Ingredients ingredients={recipe.ingredients} />}
+                leftChild={<BrewDetailIngredients ingredients={recipe.ingredients} />}
                 rightTitle={'Water profile - ' + recipe.waterProfile.name}
-                rightChild={<BrewDetail_WaterProfile waterProfile={recipe.waterProfile} />}
+                rightChild={<BrewDetailWaterProfile waterProfile={recipe.waterProfile} />}
                 open={detailsExpanded}
               />
             </div>

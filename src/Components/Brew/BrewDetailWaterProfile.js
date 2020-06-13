@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FloatingLabelInput, { action } from 'react-floating-label-input';
+import FloatingLabelInput from 'react-floating-label-input';
 
 class BrewDetail_WaterProfile extends Component {
   constructor(props) {

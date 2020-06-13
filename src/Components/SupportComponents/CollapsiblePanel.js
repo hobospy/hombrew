@@ -30,9 +30,7 @@ class CollapsiblePanel extends Component {
             </div>
           )}
         </div>
-        {this.state.open ? (
-          <div className="content">{this.props.children}</div>
-        ) : null}
+        {this.state.open ? <div className="content">{this.props.children}</div> : null}
       </div>
     );
   }

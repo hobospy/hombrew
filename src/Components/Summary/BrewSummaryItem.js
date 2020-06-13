@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import TextTruncate from 'react-text-truncate';
 import blankBeerPhoto from '../../resources/BeerPhotoUnloaded.png';
