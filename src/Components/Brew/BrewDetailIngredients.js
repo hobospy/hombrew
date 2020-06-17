@@ -10,10 +10,6 @@ class BrewDetail_Ingredients extends Component {
     };
   }
 
-  // componentWillReceiveProps(newProps) {
-  //   this.setState({ ingredients: newProps.ingredients });
-  // }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     return { ingredients: nextProps.ingredients };
   }
