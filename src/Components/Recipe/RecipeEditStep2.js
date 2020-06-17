@@ -70,19 +70,22 @@ class RecipeEdit_Step2 extends Component {
 
   componentDidMount() {
     var ingList = [];
-    this.props.ingredients.forEach(function (arrayItem) {
-      const obj = {
-        id: arrayItem.id,
-        name: arrayItem.name,
-        type: arrayItem.type,
-        amount: arrayItem.amount,
-        unit: arrayItem.unit,
-        recipeID: arrayItem.recipeID,
-        inEdit: false,
-      };
 
-      ingList.push(obj);
-    });
+    if (this.props.ingredients !== undefined) {
+      this.props.ingredients.forEach(function (arrayItem) {
+        const obj = {
+          id: arrayItem.id,
+          name: arrayItem.name,
+          type: arrayItem.type,
+          amount: arrayItem.amount,
+          unit: arrayItem.unit,
+          recipeID: arrayItem.recipeID,
+          inEdit: false,
+        };
+
+        ingList.push(obj);
+      });
+    }
 
     this.setState({ ingredients: ingList });
     this.setState({ hasLoaded: true });
@@ -247,11 +250,6 @@ class RecipeEdit_Step2 extends Component {
                             onFocus={this.editIngredient(i.id)}
                           />
                         </div>
-                        {/* <div className="edit-button">
-                          <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.editIngredient(i.id)}>
-                            <EditIcon fontSize="small" />
-                          </Skeleton>
-                        </div> */}
                         <div className="cancel-button">
                           <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.deleteIngredient(i.id)}>
                             <DeleteIcon fontSize="small" />

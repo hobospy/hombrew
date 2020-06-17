@@ -29,7 +29,7 @@ class RecipeEdit_Step1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      waterProfileName: '',
       hasLoaded: false,
       availableTypes: [
         'Light lager',
@@ -66,8 +66,28 @@ class RecipeEdit_Step1 extends Component {
 
   componentDidMount() {
     this.setState({ hasLoaded: true });
-    this.setState({ name: this.props.currentWaterProfile.name });
-    this.setState({ thisType: this.props.recipeType });
+
+    if (this.props.addingNewRecipe === 'true') {
+      this.setState({ waterProfileName: this.props.waterProfiles[0].name });
+
+      var cEvent = new CustomEvent('DefaultType');
+      cEvent.recipeTarget = { name: 'waterProfile.name', value: this.props.waterProfiles[0].id };
+
+      this.props.handleChange(cEvent);
+    } else {
+      this.setState({ waterProfileName: this.props.currentWaterProfile === undefined ? '' : this.props.currentWaterProfile.name });
+    }
+
+    if (this.props.addingNewRecipe === 'true') {
+      this.setState({ thisType: this.state.availableTypes[0] });
+
+      var cEvent = new CustomEvent('DefaultType');
+      cEvent.recipeTarget = { name: 'recipeType', value: this.state.availableTypes[0] };
+
+      this.props.handleChange(cEvent);
+    } else {
+      this.setState({ thisType: this.props.recipeType === undefined ? '' : this.props.recipeType });
+    }
   }
 
   updateRecipeTypeValue(event) {
@@ -77,7 +97,7 @@ class RecipeEdit_Step1 extends Component {
   }
 
   updateWaterProfileValue(event) {
-    this.setState({ name: event.target.value });
+    this.setState({ waterProfileName: event.target.value });
 
     var newEvent = event;
 
@@ -179,7 +199,7 @@ class RecipeEdit_Step1 extends Component {
                 id="wp-select"
                 name="waterProfile.name"
                 style={{ marginBottom: 15, width: '100%' }}
-                value={this.state.name}
+                value={this.state.waterProfileName}
                 onChange={this.updateWaterProfileValue}
               >
                 {wpList}

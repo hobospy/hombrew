@@ -143,6 +143,7 @@ class RecipeEdit extends Component {
             waterProfiles={this.props.waterProfiles}
             currentWaterProfile={this.props.recipe.waterProfile}
             abv={this.props.recipe.abv}
+            addingNewRecipe={this.props.addingNewRecipe}
           />
           <RecipeEditStep2
             currentStep={this.state.currentStep}

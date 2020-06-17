@@ -55,16 +55,19 @@ class RecipeEdit_Step3 extends Component {
 
   componentDidMount() {
     var stepList = [];
-    this.props.steps.forEach(function (arrayItem) {
-      const obj = {
-        id: arrayItem.id,
-        description: arrayItem.description,
-        timer: arrayItem.timer,
-        inEdit: false,
-      };
 
-      stepList.push(obj);
-    });
+    if (this.props.steps !== undefined) {
+      this.props.steps.forEach(function (arrayItem) {
+        const obj = {
+          id: arrayItem.id,
+          description: arrayItem.description,
+          timer: arrayItem.timer,
+          inEdit: false,
+        };
+
+        stepList.push(obj);
+      });
+    }
 
     this.setState({ steps: stepList });
     this.setState({ hasLoaded: true });

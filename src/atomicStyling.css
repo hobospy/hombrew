@@ -551,6 +551,11 @@
   grid-template-columns: 1fr 40px;
 }
 
+._modal-titlebar-container-small {
+  display: grid;
+  grid-template-columns: 1fr 25px;
+}
+
 ._modal-title {
   grid-column: 1;
   grid-row: 1;
@@ -572,9 +577,33 @@
   height: 40px;
 }
 
+._modal-close-small {
+  top: 0;
+  right: 0;
+  padding: 0.3em;
+  line-height: 1;
+  background: #f6f6f7;
+  border: 0;
+  box-shadow: 0;
+  cursor: pointer;
+  grid-column: 2;
+  grid-row: 1;
+  width: 25px;
+  height: 25px;
+}
+
 ._modal-close-icon {
   width: 25px;
   height: 25px;
+  fill: transparent;
+  stroke: black;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+._modal-close-icon-small {
+  width: 18px;
+  height: 18px;
   fill: transparent;
   stroke: black;
   stroke-linecap: round;

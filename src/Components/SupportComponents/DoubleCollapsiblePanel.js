@@ -15,11 +15,13 @@ class DoubleCollapsiblePanel extends Component {
     this.togglePanel = this.togglePanel.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setState({ leftChild: newProps.leftChild });
-    this.setState({ leftTitle: newProps.leftTitle });
-    this.setState({ rightChild: newProps.rightChild });
-    this.setState({ rightTitle: newProps.rightTitle });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      leftChild: nextProps.leftChild,
+      leftTitle: nextProps.leftTitle,
+      rightChild: nextProps.rightChild,
+      rightTitle: nextProps.rightTitle,
+    };
   }
 
   togglePanel(e) {

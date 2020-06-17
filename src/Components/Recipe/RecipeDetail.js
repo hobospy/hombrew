@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import FloatingLabelInput from 'react-floating-label-input';
 
 import BrewDetailRecipe from '../Brew/BrewDetailRecipe';
 import EditSpeedDial from '../../SupportFunctions/EditSpeedDial';
 import Favourite from '../../SupportFunctions/Favourite';
-import ModalForm from './RecipeEditModalForm';
+import RecipeEditModalForm from './RecipeEditModalForm';
+import ConfirmationModalForm from '../SupportComponents/ConfirmationModalForm';
 
 class RecipeDetail extends Component {
   constructor(props) {
@@ -20,14 +22,17 @@ class RecipeDetail extends Component {
       recipeSteps: [],
       url: `${this.props.baseUrl}recipe/${this.props.match.params.id}`,
       id: this.props.match.params.id,
-      modalShown: false,
+      editModalShown: false,
+      deleteConfirmationModalShown: false,
+      errorModalShown: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.updateFavourite = this.updateFavourite.bind(this);
     this.editItem = this.editItem.bind(this);
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.showErrorModal = this.showErrorModal.bind(this);
 
     this.deleteRecipeIngredient = this.deleteRecipeIngredient.bind(this);
     this.deleteRecipeStep = this.deleteRecipeStep.bind(this);
@@ -79,22 +84,48 @@ class RecipeDetail extends Component {
       });
   };
 
-  showModal = () => {
-    this.setState({ modalShown: true }, () => {
-      this.closeButton.focus();
+  showEditModal = () => {
+    this.setState({ editModalShown: true }, () => {
+      this.closeEditButton.focus();
     });
 
     this.toggleScrollLock();
   };
 
-  closeModal = () => {
-    this.setState({ modalShown: false });
+  closeEditModal = () => {
+    this.setState({ editModalShown: false });
+    this.toggleScrollLock();
+  };
+
+  showDeleteModal = () => {
+    this.setState({ deleteConfirmationModalShown: true }, () => {
+      this.closeDeleteConfirmationButton.focus();
+    });
+
+    this.toggleScrollLock();
+  };
+
+  closeDeleteModal = () => {
+    this.setState({ deleteConfirmationModalShown: false });
+    this.toggleScrollLock();
+  };
+
+  showErrorModal = () => {
+    this.setState({ errorModalShown: true }, () => {
+      this.closeErrorButton.focus();
+    });
+
+    this.toggleScrollLock();
+  };
+
+  closeErrorModal = () => {
+    this.setState({ errorModalShown: false });
     this.toggleScrollLock();
   };
 
   onKeyDown = (event) => {
     if (event.keyCode === 27) {
-      this.closeModal();
+      this.closeEditModal();
       console.log(this.state.waterProfileID);
     }
   };
@@ -163,7 +194,7 @@ class RecipeDetail extends Component {
   onSubmit = (event) => {
     event.preventDefault();
 
-    this.closeModal();
+    this.closeEditModal();
 
     var myHeaders = new Headers();
     myHeaders.append('Accept', 'application/json');
@@ -195,10 +226,10 @@ class RecipeDetail extends Component {
   };
 
   onClickOutside = (event) => {
-    if (this.ModalForm && this.ModalForm.contains(event.target)) {
+    if (this.modalEditForm && this.modalEditForm.contains(event.target)) {
       // return;
     } else {
-      this.closeModal();
+      this.closeEditModal();
     }
   };
 
@@ -210,15 +241,32 @@ class RecipeDetail extends Component {
     this.setState({
       recipeEdit: this.state.recipeDetail,
     });
-    this.showModal();
+    this.showEditModal();
   }
 
-  addItem() {
-    console.log('Adding item from the amazing menu item');
-  }
+  async deleteRecipe() {
+    this.closeDeleteModal();
 
-  deleteItem() {
-    console.log('Deleting item from the amazing menu item');
+    var myHeaders = new Headers();
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Content-Type', 'application/json-patch+json');
+
+    var rawObject = '';
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: JSON.stringify(rawObject),
+      redirect: 'follow',
+      mode: 'cors',
+    };
+
+    var response = await fetch(this.state.url, requestOptions);
+    if (response.ok) {
+      this.props.history.push('/recipe/summary');
+    } else {
+      this.showErrorModal();
+    }
   }
 
   render() {
@@ -239,22 +287,47 @@ class RecipeDetail extends Component {
               </div>
               <BrewDetailRecipe recipe={recipe} detailsExpanded={true} />
               <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
-                <EditSpeedDial editItemAction={this.editItem} addItemAction={this.addItem} deleteItemAction={this.deleteItem} />
+                <EditSpeedDial editItemAction={this.editItem} deleteItemAction={this.showDeleteModal} />
               </div>
             </div>
-            {this.state.modalShown ? (
-              <ModalForm
-                modalRef={(n) => (this.ModalForm = n)}
-                buttonRef={(n) => (this.closeButton = n)}
+            {this.state.editModalShown ? (
+              <RecipeEditModalForm
+                modalRef={(n) => (this.modalEditForm = n)}
+                buttonRef={(n) => (this.closeEditButton = n)}
                 onSubmit={this.onSubmit}
                 onChange={this.handleChange}
                 onDeleteIngredient={this.deleteRecipeIngredient}
                 onDeleteStep={this.deleteRecipeStep}
-                closeModal={this.closeModal}
+                closeModal={this.closeEditModal}
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeEdit}
                 baseUrl={this.props.baseUrl}
                 title="Edit Recipe"
+                addingNewRecipe="false"
+              />
+            ) : null}
+            {this.state.deleteConfirmationModalShown ? (
+              <ConfirmationModalForm
+                modalRef={(n) => (this.modalDeleteConfirmationForm = n)}
+                buttonRef={(n) => (this.closeDeleteConfirmationButton = n)}
+                onOK={this.deleteRecipe}
+                closeModal={this.closeDeleteModal}
+                onKeyDown={this.onKeyDown}
+                confirmationMessage={'Are you sure you want to delete the ' + this.state.recipeDetail.name + ' recipe?'}
+                title="Delete Recipe"
+                showCancel="true"
+              />
+            ) : null}
+            {this.state.errorModalShown ? (
+              <ConfirmationModalForm
+                modalRef={(n) => (this.modalErrorForm = n)}
+                buttonRef={(n) => (this.closeErrorButton = n)}
+                onOK={this.closeErrorModal}
+                closeModal={this.closeErrorModal}
+                onKeyDown={this.onKeyDown}
+                confirmationMessage={'There has been an unknown error whilst deleting the ' + this.state.recipeDetail.name + ' recipe'}
+                title="Delete Recipe Error"
+                showCancel="false"
               />
             ) : null}
           </React.Fragment>

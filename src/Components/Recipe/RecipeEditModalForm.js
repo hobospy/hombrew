@@ -18,6 +18,7 @@ export const Modal = ({
   recipe,
   baseUrl,
   title,
+  addingNewRecipe,
 }) => {
   const [waterProfileList, setWaterProfileList] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -66,6 +67,7 @@ export const Modal = ({
                   ingredientTypes={ingredientTypes}
                   unitTypes={unitTypes}
                   baseUrl={baseUrl}
+                  addingNewRecipe={addingNewRecipe}
                 />
               ) : (
                 <div>Still loading</div>
