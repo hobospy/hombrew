@@ -3,8 +3,9 @@ import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Skeleton from '@material-ui/lab/Skeleton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import { withStyles } from '@material-ui/core/styles';
+
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 const CssTextField = withStyles({
   root: {
@@ -208,6 +209,7 @@ class RecipeEdit_Step3 extends Component {
                           onFocus={this.editStep(s.id)}
                         />
                       </div>
+                      <div className="edit-page-recipe-step-container-timer-unit">mins</div>
                       <div className="edit-page-recipe-step-container-delete">
                         <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.deleteStep(s.id)}>
                           <DeleteIcon fontSize="small" />
@@ -235,6 +237,7 @@ class RecipeEdit_Step3 extends Component {
                             onChange={this.updateEditStepTimer}
                           />
                         </div>
+                        <div className="inline-edit-step-timer-unit">mins</div>
                       </div>
                       <div className="inline-edit-button-container">
                         <Button className="inline-edit-button" onClick={this.updateStep(s.id)}>
@@ -271,6 +274,7 @@ class RecipeEdit_Step3 extends Component {
                       onChange={this.updateNewStepTimer}
                     />
                   </div>
+                  <div className="inline-edit-step-timer-unit">mins</div>
                   <div className="inline-edit-button-container">
                     <Button className="inline-edit-button" onClick={this.addItemToStepList}>
                       Add
@@ -281,7 +285,7 @@ class RecipeEdit_Step3 extends Component {
             ) : null}
           </div>
         ) : (
-          <div>Still loading</div>
+          <LoadingIndicator />
         )}
       </div>
     );

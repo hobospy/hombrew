@@ -7,6 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import blankBeerPhoto from '../../resources/BeerPhotoUnloaded.png';
 import BrewDetailRecipe from './BrewDetailRecipe';
 import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -92,7 +93,7 @@ class BrewDetail extends Component {
             </div>
           </div>
         ) : (
-          <div>Still loading</div>
+          <LoadingIndicator />
         )}
       </div>
     );

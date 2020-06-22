@@ -4,8 +4,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Skeleton from '@material-ui/lab/Skeleton';
-
 import { withStyles } from '@material-ui/core/styles';
+
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 const CssTextField = withStyles({
   root: {
@@ -402,7 +403,7 @@ class RecipeEdit_Step2 extends Component {
             ) : null}
           </div>
         ) : (
-          <div>Still loading</div>
+          <LoadingIndicator />
         )}
       </div>
     );

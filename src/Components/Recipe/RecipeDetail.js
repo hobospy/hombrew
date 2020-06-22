@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import FloatingLabelInput from 'react-floating-label-input';
 
@@ -8,6 +7,7 @@ import EditSpeedDial from '../../SupportFunctions/EditSpeedDial';
 import Favourite from '../../SupportFunctions/Favourite';
 import RecipeEditModalForm from './RecipeEditModalForm';
 import ConfirmationModalForm from '../SupportComponents/ConfirmationModalForm';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 class RecipeDetail extends Component {
   constructor(props) {
@@ -332,7 +332,7 @@ class RecipeDetail extends Component {
             ) : null}
           </React.Fragment>
         ) : (
-          <div>Still loading</div>
+          <LoadingIndicator />
         )}
       </div>
     );

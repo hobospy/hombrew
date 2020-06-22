@@ -4,6 +4,7 @@ import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
 import DoubleCollapsiblePanel from '../SupportComponents/DoubleCollapsiblePanel';
 import BrewDetailWaterProfile from './BrewDetailWaterProfile';
 import BrewDetailIngredients from './BrewDetailIngredients';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 class BrewDetail_Recipe extends Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class BrewDetail_Recipe extends Component {
             </div>
           </div>
         ) : (
-          <div>Still loading</div>
+          <LoadingIndicator />
         )}
       </div>
     );

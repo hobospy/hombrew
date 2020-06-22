@@ -4,6 +4,7 @@ import axios from 'axios';
 import FocusLock from 'react-focus-lock';
 
 import RecipeEdit from './RecipeEdit';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 export const Modal = ({
   onClickOutside,
@@ -70,7 +71,7 @@ export const Modal = ({
                   addingNewRecipe={addingNewRecipe}
                 />
               ) : (
-                <div>Still loading</div>
+                <LoadingIndicator />
               )}
             </div>
           </div>

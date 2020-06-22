@@ -3,6 +3,8 @@ import { TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
+
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
@@ -81,10 +83,10 @@ class RecipeEdit_Step1 extends Component {
     if (this.props.addingNewRecipe === 'true') {
       this.setState({ thisType: this.state.availableTypes[0] });
 
-      var cEvent = new CustomEvent('DefaultType');
-      cEvent.recipeTarget = { name: 'recipeType', value: this.state.availableTypes[0] };
+      var addingRecipeEvent = new CustomEvent('DefaultType');
+      addingRecipeEvent.recipeTarget = { name: 'recipeType', value: this.state.availableTypes[0] };
 
-      this.props.handleChange(cEvent);
+      this.props.handleChange(addingRecipeEvent);
     } else {
       this.setState({ thisType: this.props.recipeType === undefined ? '' : this.props.recipeType });
     }
@@ -207,7 +209,7 @@ class RecipeEdit_Step1 extends Component {
             </div>
           </div>
         ) : (
-          <div>Still loading</div>
+          <LoadingIndicator />
         )}
       </div>
     );
