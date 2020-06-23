@@ -108,7 +108,7 @@
 }
 
 .recipe-summary-date {
-  font-size: 8px;
+  font-size: 9px;
   color: darkgrey;
 }
 
@@ -776,7 +776,7 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
-  max-width: 200px;
+  max-width: 45%;
 }
 .inline-edit-recipe-type {
   display: inline-block;
@@ -784,20 +784,19 @@
   grid-column: 2;
   position: relative;
   margin-top: 5px;
-  max-width: 100px;
-  min-width: 100px;
+  max-width: 15%;
 }
 .inline-edit-recipe-amount {
   display: inline-block;
   position: relative;
   margin-right: 5px;
-  max-width: 55px;
+  max-width: 15%;
 }
 .inline-edit-recipe-unit {
   display: inline-block;
   position: relative;
   margin-right: 5px;
-  max-width: 75px;
+  max-width: 10%;
 }
 
 .test-group-container {
@@ -944,4 +943,95 @@
   position: absolute;
   top: 44vh;
   color: #001a33 !important;
+}
+
+.brew-summary-mobile-item-grid {
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+  grid-template-rows: auto auto auto 75px auto;
+  margin-bottom: 5px;
+}
+
+.brew-summary-mobile-item-grid-title {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.brew-summary-mobile-item-grid-rating {
+  grid-column: 3;
+  grid-row: 1;
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.brew-summary-mobile-item-grid-type {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  margin-bottom: 5px;
+}
+
+.brew-summary-mobile-item-grid-brewdate {
+  grid-column: 3;
+  grid-row: 2;
+  text-align: right;
+  margin-right: 2px;
+  margin-top: 5px;
+}
+
+.brew-summary-mobile-item-grid-image {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+.brew-summary-mobile-item-grid-image-size {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+
+.brew-summary-mobile-item-grid-description {
+  grid-column: 2 / span 2;
+  grid-row: 4;
+}
+
+.brew-summary-mobile-item-grid-notes {
+  grid-column: 1 / span 3;
+  grid-row: 5;
+}
+
+.recipe-summary-mobile-item-grid {
+  display: grid;
+  grid-template-columns: 1fr 55px;
+  grid-template-rows: auto auto auto;
+  margin-bottom: 5px;
+}
+
+.recipe-summary-mobile-item-grid-title {
+  grid-column: 1;
+  grid-row: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.recipe-summary-mobile-item-grid-favourite {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.recipe-summary-mobile-item-grid-type {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  margin-bottom: 8px;
+}
+
+.recipe-summary-mobile-item-grid-description {
+  grid-column: 1 / span 2;
+  grid-row: 3;
+  margin-bottom: 25px;
 }

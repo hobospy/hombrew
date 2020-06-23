@@ -1,41 +1,55 @@
-import React, {Component} from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import BrewSummaryItem from './BrewSummaryItem';
+import BrewSummaryItemMobile from './BrewSummaryItemMobile';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
-class BrewSummary extends Component{
-    constructor(props) {
-        super(props)
-        this.state = {
-            hasLoaded: false,
-            url: props.baseUrl,
-            brews: []
-        }
-    }
+function BrewSummary(props) {
+  const [brews, setBrewValues] = useState([]);
+  const largeScreenSize = useMediaQuery('(min-width:600px)');
+  const [hasLoaded, setHasLoaded] = useState(false);
 
-    componentDidMount () {
-        const url = `${this.state.url}brew/summary`;
-        axios.get(url).then(response => response.data)
-        .then((data) => {
-            this.setState({ brews: data})
-        })
-    }
+  useEffect(() => {
+    const url = `${props.baseUrl}brew/summary`;
+    axios
+      .get(url)
+      .then((response) => response.data)
+      .then((data) => {
+        setBrewValues(data);
+        setHasLoaded(true);
+      });
+  }, [props.baseUrl]);
 
-    render () {
-        let content;
-
-        content = this.state.brews.map(b =>
-            <NavLink to={`/brew/${b.id}`} >
-                <BrewSummaryItem key={b.id} brew={b} />
-            </NavLink>)
-
-        return (
-            <div className="grid-brew-summary-link-indicator" >
-                {content}
+  return (
+    <div>
+      {hasLoaded ? (
+        <div>
+          {largeScreenSize ? (
+            <div className="grid-brew-summary-link-indicator">
+              {brews.map((b) => (
+                <NavLink to={`/brew/${b.id}`}>
+                  <BrewSummaryItem key={b.id} brew={b} />
+                </NavLink>
+              ))}
             </div>
-        )
-    }
+          ) : (
+            <div className="grid-brew-summary-link-indicator">
+              {brews.map((b) => (
+                <NavLink to={`/brew/${b.id}`}>
+                  <BrewSummaryItemMobile key={b.id} brew={b} />
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <LoadingIndicator />
+      )}
+    </div>
+  );
 }
 
 export default BrewSummary;

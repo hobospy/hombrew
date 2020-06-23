@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import ModalForm from '../Recipe/RecipeEditModalForm';
 import RecipeSummaryItem from './RecipeSummaryItem';
+import RecipeSummaryItemMobile from './RecipeSummaryItemMobile';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,71 +35,61 @@ const styles = (theme) => ({
   },
 });
 
-class RecipeSummary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasLoaded: false,
-      url: props.baseUrl,
-      recipes: [],
-      recipeAdd: '',
-      recipeType: '',
-      waterProfileID: '',
-      recipeIngredients: [],
-      recipeSteps: [],
-      modalShown: false,
-    };
+function RecipeSummary(props) {
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [recipeAdd, setRecipeAdd] = useState();
+  const [recipeType, setRecipeType] = useState();
+  const [waterProfileID, setWaterProfileID] = useState();
+  const [recipeIngredients, setRecipeIngredients] = useState([]);
+  const [recipeSteps, setRecipeSteps] = useState([]);
+  const [modalShown, setModalShown] = useState(false);
+  const largeScreenSize = useMediaQuery('(min-width:600px)');
 
-    this.addRecipe = this.addRecipe.bind(this);
-  }
+  var closeButton = React.useRef();
+  var modalForm = React.useRef(null);
 
-  componentDidMount() {
-    const url = `${this.state.url}recipe/summary`;
-    console.log(url);
+  useEffect(() => {
+    const url = `${props.baseUrl}recipe/summary`;
     axios
       .get(url)
       .then((response) => response.data)
       .then((data) => {
-        console.log('DATA: ' + data);
-        this.setState({ recipes: data });
-        this.setState({ hasLoaded: true });
-        console.log(this.state.recipes);
+        setRecipes(data);
+        setHasLoaded(true);
       });
-  }
+  }, [props.baseUrl]);
 
-  toggleScrollLock = () => {
+  const toggleScrollLock = () => {
     document.querySelector('html').classList.toggle('scroll-lock');
   };
 
-  showModal = () => {
-    this.setState({ modalShown: true }, () => {
-      this.closeButton.focus();
-    });
-
-    this.toggleScrollLock();
+  const showModal = () => {
+    setModalShown(true);
+    toggleScrollLock();
   };
 
-  closeModal = () => {
-    this.setState({ modalShown: false });
-    this.toggleScrollLock();
+  const closeModal = () => {
+    setModalShown(false);
+    toggleScrollLock();
   };
 
-  onSubmit = async (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    this.closeModal();
+    closeModal();
 
     var myHeaders = new Headers();
     myHeaders.append('Accept', 'application/json');
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
     var rawObject = {
-      Name: this.state.recipeAdd.name,
-      Type: this.state.recipeType,
-      Description: this.state.recipeAdd.description,
-      WaterProfileID: this.state.waterProfileID,
-      Ingredients: this.state.recipeIngredients,
-      ExpectedABV: this.state.recipeAdd.expectedABV,
-      Steps: this.state.recipeSteps,
+      Name: recipeAdd.name,
+      Type: recipeType,
+      Description: recipeAdd.description,
+      WaterProfileID: waterProfileID,
+      Ingredients: recipeIngredients,
+      ExpectedABV: recipeAdd.expectedABV,
+      Steps: recipeSteps,
     };
 
     var requestOptions = {
@@ -107,49 +100,49 @@ class RecipeSummary extends Component {
       mode: 'cors',
     };
 
-    let updateURL = this.state.url + 'recipe/';
+    let updateURL = props.baseUrl + 'recipe/';
     console.log(updateURL);
 
     fetch(updateURL, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ recipes: this.state.recipes.concat(data) });
+        setRecipes(recipes.concat(data));
       });
   };
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     event.preventDefault();
 
     const { name, value } = event.target !== null ? event.target : event.recipeTarget;
 
     if (name === 'waterProfile.name') {
-      this.setState({ waterProfileID: value });
+      setWaterProfileID(value);
     } else if (name === 'AddIngredient') {
-      this.setState({ recipeIngredients: this.state.recipeIngredients.concat(value) });
+      setRecipeIngredients(recipeIngredients.concat(value));
     } else if (name === 'UpdateIngredient') {
-      var array = [...this.state.recipeIngredients];
+      var array = [...recipeIngredients];
       var ingredientIndex = array.findIndex((e) => e.id === value.id);
 
       if (ingredientIndex !== -1) {
         let editIngredient = { ...array[ingredientIndex], name: value.name, type: value.type, amount: value.amount, unit: value.unit };
         array[ingredientIndex] = editIngredient;
-        this.setState({ recipeIngredients: array });
+        setRecipeIngredients(array);
       }
     } else if (name === 'AddStep') {
-      this.setState({ recipeSteps: this.state.recipeSteps.concat(value) });
+      setRecipeSteps(recipeSteps.concat(value));
     } else if (name === 'UpdateStep') {
-      var stepArray = [...this.state.recipeSteps];
+      var stepArray = [...recipeSteps];
       var stepIndex = stepArray.findIndex((e) => e.id === value.id);
 
       if (stepIndex !== -1) {
         let editStep = { ...stepArray[stepIndex], description: value.description, timer: value.timer };
         stepArray[stepIndex] = editStep;
-        this.setState({ recipeSteps: stepArray });
+        setRecipeSteps(stepArray);
       }
     } else if (name === 'recipeType') {
-      this.setState({ recipeType: value });
+      setRecipeType(value);
     } else {
-      this.setState((prevState) => ({
+      setRecipeAdd((prevState) => ({
         recipeAdd: {
           ...prevState.recipeAdd,
           [name]: value,
@@ -158,90 +151,98 @@ class RecipeSummary extends Component {
     }
   };
 
-  deleteRecipeIngredient = (ingredientID) => (event) => {
-    var array = [...this.state.recipeIngredients];
+  const deleteRecipeIngredient = (ingredientID) => (event) => {
+    var array = [...recipeIngredients];
     var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
 
     if (ingredientIndex !== -1) {
       array.splice(ingredientIndex, 1);
-      this.setState({ recipeIngredients: array });
+      setRecipeIngredients(array);
     }
   };
 
-  deleteRecipeStep = (stepID) => (event) => {
-    var array = [...this.state.recipeSteps];
+  const deleteRecipeStep = (stepID) => (event) => {
+    var array = [...recipeSteps];
     var stepIndex = array.findIndex((e) => e.id === stepID);
 
     if (stepIndex !== -1) {
       array.splice(stepIndex, 1);
-      this.setState({ recipeSteps: array });
+      setRecipeSteps(array);
     }
   };
 
-  onKeyDown = (event) => {
+  const onKeyDown = (event) => {
     if (event.keyCode === 27) {
-      this.closeModal();
-      console.log(this.state.waterProfileID);
+      closeModal();
     }
   };
 
-  addRecipe() {
-    this.setState({
-      recipeAdd: {
-        name: '',
-        description: '',
-        expectedABV: 0,
-        ingredients: [],
-        steps: [],
-      },
-      recipeTypeEdit: '',
-      waterProfileID: '',
-      recipeIngredients: [],
-      recipeSteps: [],
+  const addRecipe = () => {
+    setRecipeAdd({
+      name: '',
+      description: '',
+      expectedABV: 0,
+      ingredients: [],
+      steps: [],
     });
-    this.showModal();
-  }
+    setWaterProfileID('');
+    setRecipeIngredients([]);
+    setRecipeSteps([]);
+    showModal();
+  };
 
-  render() {
-    let content;
-
-    content = this.state.recipes.map((r) => (
-      <NavLink to={`/recipe/${r.id}`}>
-        <RecipeSummaryItem key={r.id} recipe={r} />
-      </NavLink>
-    ));
-
-    return (
-      <React.Fragment>
-        <div className="grid-brew-summary-link-indicator">
-          {content}
-          <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(3) }}>
-            <MuiThemeProvider theme={theme}>
-              <Fab aria-label="add" color="primary" className={styles.fab} onClick={this.addRecipe}>
-                <AddIcon fontSize="small" />
-              </Fab>
-            </MuiThemeProvider>
+  return (
+    <div>
+      {hasLoaded ? (
+        <React.Fragment>
+          <div className="grid-brew-summary-link-indicator">
+            {largeScreenSize ? (
+              <div>
+                {recipes.map((r) => (
+                  <NavLink to={`/recipe/${r.id}`}>
+                    <RecipeSummaryItem key={r.id} recipe={r} />
+                  </NavLink>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {recipes.map((r) => (
+                  <NavLink to={`/recipe/${r.id}`}>
+                    <RecipeSummaryItemMobile key={r.id} recipe={r} />
+                  </NavLink>
+                ))}
+              </div>
+            )}
+            <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(3) }}>
+              <MuiThemeProvider theme={theme}>
+                <Fab aria-label="add" color="primary" className={styles.fab} onClick={addRecipe}>
+                  <AddIcon fontSize="small" />
+                </Fab>
+              </MuiThemeProvider>
+            </div>
           </div>
-        </div>
-        {this.state.modalShown ? (
-          <ModalForm
-            modalRef={(n) => (this.ModalForm = n)}
-            buttonRef={(n) => (this.closeButton = n)}
-            onSubmit={this.onSubmit}
-            onChange={this.handleChange}
-            onDeleteIngredient={this.deleteRecipeIngredient}
-            onDeleteStep={this.deleteRecipeStep}
-            closeModal={this.closeModal}
-            onKeyDown={this.onKeyDown}
-            recipe={this.state.recipeAdd}
-            baseUrl={this.props.baseUrl}
-            title="Add Recipe"
-            addingNewRecipe="true"
-          />
-        ) : null}
-      </React.Fragment>
-    );
-  }
+          {modalShown ? (
+            <ModalForm
+              modalRef={modalForm}
+              buttonRef={closeButton}
+              onSubmit={onSubmit}
+              onChange={handleChange}
+              onDeleteIngredient={deleteRecipeIngredient}
+              onDeleteStep={deleteRecipeStep}
+              closeModal={closeModal}
+              onKeyDown={onKeyDown}
+              recipe={recipeAdd}
+              baseUrl={props.baseUrl}
+              title="Add Recipe"
+              addingNewRecipe="true"
+            />
+          ) : null}
+        </React.Fragment>
+      ) : (
+        <LoadingIndicator />
+      )}
+    </div>
+  );
 }
 
 export default withStyles(styles, { withTheme: true })(RecipeSummary);
