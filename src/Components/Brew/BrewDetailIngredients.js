@@ -1,5 +1,31 @@
 import React, { Component } from 'react';
-import FloatingLabelInput from 'react-floating-label-input';
+import { TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+const CssTextField = withStyles({
+  root: {
+    '& .Mui-disabled': {
+      color: '#001a33',
+    },
+    '& label.Mui-focused': {
+      color: '#001a33',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#001a33',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#001a33',
+      },
+    },
+  },
+})(TextField);
 
 class BrewDetail_Ingredients extends Component {
   constructor(props) {
@@ -18,10 +44,6 @@ class BrewDetail_Ingredients extends Component {
     this.setState({ hasLoadedWaterProfile: true });
   }
 
-  changingItem() {
-    console.log('Output here - water profile');
-  }
-
   render() {
     const ingredients = this.state.ingredients;
     console.log(ingredients);
@@ -31,11 +53,12 @@ class BrewDetail_Ingredients extends Component {
         <div>
           {ingredients.map((i) => (
             <div className="brewed-beer-ingredient-item">
-              <FloatingLabelInput
-                key={i.id}
+              <CssTextField
+                disabled
                 id={'ingredient_' + i.id}
+                InputProps={{ disableUnderline: true }}
+                key={i.id}
                 label={i.name}
-                onChange={this.changingItem}
                 value={String(i.amount) + i.unit}
               />
             </div>

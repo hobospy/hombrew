@@ -69,19 +69,19 @@ class BrewDetail extends Component {
               <div className="grid-brewed-detail-edit">
                 <div className="grid-brewed-detail-edit-name">
                   {/* https://css-tricks.com/float-labels-css/ */}
-                  <FloatingLabelInput id="brew-name" label="Name" onChange={this.changingItem} value={brew.name} />
+                  <FloatingLabelInput id="brew-name" label="Name" readOnly={true} value={brew.name} />
                 </div>
                 <div className="grid-brewed-detail-edit-rating">
-                  <StyledRating value={brew.rating} precision={0.5} size="small" readOnly="true" />
+                  <StyledRating value={brew.rating} precision={0.5} size="small" readOnly={true} />
                 </div>
                 <div className="grid-brewed-detail-edit-images">
                   <img src={blankBeerPhoto} alt="Capture that beer" />
                 </div>
                 <div className="grid-brewed-detail-edit-type">
-                  <FloatingLabelInput id="brew-type" label="Type" onChange={this.changingItem} value={brew.recipe.type} />
+                  <FloatingLabelInput id="brew-type" label="Type" readOnly={true} value={brew.recipe.type} />
                 </div>
                 <div className="grid-brewed-detail-edit-abv">
-                  <FloatingLabelInput id="brew-abv" label="ABV" onChange={this.changingItem} value={String(brew.abv)} />
+                  <FloatingLabelInput id="brew-abv" label="ABV" readonly={true} value={String(brew.abv)} />
                 </div>
               </div>
               <CollapsiblePanel

@@ -145,6 +145,7 @@ class RecipeEdit_Step1 extends Component {
           <div>
             <div className="edit-page-container-item">
               <CssTextField
+                autoComplete="off"
                 fullWidth
                 id="name"
                 label="Name"
@@ -156,6 +157,7 @@ class RecipeEdit_Step1 extends Component {
             </div>
             <div className="edit-page-container-item">
               <CssTextField
+                autoComplete="off"
                 fullWidth
                 id="description"
                 label="Description"
@@ -183,6 +185,7 @@ class RecipeEdit_Step1 extends Component {
             </div>
             <div className="edit-page-container-item">
               <CssTextField
+                autoComplete="off"
                 fullWidth
                 InputProps={{ disableUnderline: true }}
                 id="abv"

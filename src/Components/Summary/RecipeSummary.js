@@ -195,9 +195,9 @@ function RecipeSummary(props) {
     <div>
       {hasLoaded ? (
         <React.Fragment>
-          <div className="grid-brew-summary-link-indicator">
+          <div>
             {largeScreenSize ? (
-              <div>
+              <div className="grid-brew-summary-link-indicator">
                 {recipes.map((r) => (
                   <NavLink to={`/recipe/${r.id}`}>
                     <RecipeSummaryItem key={r.id} recipe={r} />
@@ -205,17 +205,19 @@ function RecipeSummary(props) {
                 ))}
               </div>
             ) : (
-              <div>
-                {recipes.map((r) => (
-                  <NavLink to={`/recipe/${r.id}`}>
-                    <RecipeSummaryItemMobile key={r.id} recipe={r} />
-                  </NavLink>
-                ))}
+              <div style={{ marginBottom: '56px' }}>
+                <div className="grid-brew-summary-link-indicator">
+                  {recipes.map((r) => (
+                    <NavLink to={`/recipe/${r.id}`}>
+                      <RecipeSummaryItemMobile key={r.id} recipe={r} />
+                    </NavLink>
+                  ))}
+                </div>
               </div>
             )}
             <div style={{ position: 'fixed', bottom: theme.spacing(2), right: theme.spacing(3) }}>
               <MuiThemeProvider theme={theme}>
-                <Fab aria-label="add" color="primary" className={styles.fab} onClick={addRecipe}>
+                <Fab aria-label="add" color="primary" className={styles.fab} onClick={addRecipe} size="small">
                   <AddIcon fontSize="small" />
                 </Fab>
               </MuiThemeProvider>

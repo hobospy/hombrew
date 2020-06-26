@@ -163,19 +163,19 @@
   display: grid;
   width: auto;
   margin: auto;
-  grid-template-columns: 200px auto 300px;
+  grid-template-columns: 200px 1fr;
   grid-template-rows: 40px 100px 100px;
 }
 
 .grid-brewed-detail-edit-name {
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 2;
   grid-row: 1;
   padding-top: 0.5em;
 }
 
 .grid-brewed-detail-edit-rating {
   display: flex;
-  grid-column: 3;
+  grid-column: 2;
   grid-row: 1;
   align-items: center;
   justify-content: flex-end;
@@ -197,13 +197,13 @@
 }
 
 .grid-brewed-detail-edit-type {
-  grid-column: 2 / span 2;
+  grid-column: 2;
   grid-row: 2;
   padding-top: 2em;
 }
 
 .grid-brewed-detail-edit-abv {
-  grid-column: 2 / span 2;
+  grid-column: 2;
   grid-row: 3;
   padding-top: 2em;
 }
@@ -340,11 +340,13 @@
 }
 
 .brewed-beer-water-profile-item {
-  margin-top: 0.5em;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
 
 .brewed-beer-ingredient-item {
-  margin-top: 0.5em;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
 
 .double-collapsible-panel {
@@ -462,10 +464,16 @@
   overflow: hidden;
 }
 
+.water-profile-name {
+  color: '#001a33';
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
 .water-profile-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-gap: 1rem;
+  column-gap: 5px;
 }
 
 .water-profile-container > div::before {
@@ -939,9 +947,10 @@
 }
 
 .CentreLoadingIndicator {
-  left: 46%;
+  left: 50%;
   position: absolute;
-  top: 44vh;
+  top: 50%;
+  transform: translate(-50%, -50%);
   color: #001a33 !important;
 }
 

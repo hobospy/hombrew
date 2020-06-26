@@ -1,10 +1,37 @@
 import React, { Component } from 'react';
-import FloatingLabelInput from 'react-floating-label-input';
-import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
-import DoubleCollapsiblePanel from '../SupportComponents/DoubleCollapsiblePanel';
+import { TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
 import BrewDetailWaterProfile from './BrewDetailWaterProfile';
 import BrewDetailIngredients from './BrewDetailIngredients';
+import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
+import DoubleCollapsiblePanel from '../SupportComponents/DoubleCollapsiblePanel';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
+
+const CssTextField = withStyles({
+  root: {
+    '& .Mui-disabled': {
+      color: '#001a33',
+    },
+    '& label.Mui-focused': {
+      color: '#001a33',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#001a33',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#001a33',
+      },
+    },
+  },
+})(TextField);
 
 class BrewDetail_Recipe extends Component {
   constructor(props) {
@@ -24,10 +51,6 @@ class BrewDetail_Recipe extends Component {
     this.setState({ recipe: newProps.recipe });
   }
 
-  changingItem() {
-    console.log('Output here - recipe');
-  }
-
   render() {
     const recipe = this.state.recipe;
     const detailsExpanded = this.state.detailsExpanded;
@@ -39,20 +62,33 @@ class BrewDetail_Recipe extends Component {
         {this.state.hasLoadedRecipe ? (
           <div className="brewed-beer-recipe">
             <div className="brewed-beer-recipe-description">
-              <div style={{ color: 'gray', fontSize: '10px' }}>Description</div>
-              <div>{recipe.description}</div>
+              <CssTextField
+                disabled
+                fullWidth
+                id="recipe-description"
+                InputProps={{ disableUnderline: true }}
+                multiline
+                label="Description"
+                value={recipe.description}
+              />
             </div>
             <div className="brewed-beer-recipe-type">
-              <FloatingLabelInput id="recipe-type" label="Type" onChange={this.changingItem} value={recipe.type} />
+              <CssTextField disabled id="recipe-type" InputProps={{ disableUnderline: true }} label="Type" value={recipe.type} />
             </div>
             <div className="brewed-beer-recipe-expected-abv">
-              <FloatingLabelInput id="recipe-expected-abv" label="Expected ABV" value={recipe.expectedABV.toString()} />
+              <CssTextField
+                disabled
+                id="recipe-expected-abv"
+                InputProps={{ disableUnderline: true }}
+                label="Expected ABV"
+                value={recipe.expectedABV.toString()}
+              />
             </div>
             <div className="brewed-beer-recipe-ingredients-water-profile">
               <DoubleCollapsiblePanel
                 leftTitle="Ingredients"
                 leftChild={<BrewDetailIngredients ingredients={recipe.ingredients} />}
-                rightTitle={'Water profile - ' + recipe.waterProfile.name}
+                rightTitle="Water profile"
                 rightChild={<BrewDetailWaterProfile waterProfile={recipe.waterProfile} />}
                 open={detailsExpanded}
               />

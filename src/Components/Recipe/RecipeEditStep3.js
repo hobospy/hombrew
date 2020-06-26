@@ -221,6 +221,7 @@ class RecipeEdit_Step3 extends Component {
                       <div className="edit-step-container">
                         <div className="inline-edit-step-description">
                           <CssTextField
+                            autoComplete="off"
                             InputProps={{ disableUnderline: true }}
                             id="editDescription"
                             label="Description"
@@ -230,6 +231,7 @@ class RecipeEdit_Step3 extends Component {
                         </div>
                         <div className="inline-edit-step-timer">
                           <CssTextField
+                            autoComplete="off"
                             InputProps={{ disableUnderline: true }}
                             id="editTimer"
                             label="Timer"
@@ -258,6 +260,7 @@ class RecipeEdit_Step3 extends Component {
                 <div className="new-step-container">
                   <div className="inline-edit-step-description">
                     <CssTextField
+                      autoComplete="off"
                       InputProps={{ disableUnderline: true }}
                       id="Description"
                       label="Description"
@@ -267,6 +270,7 @@ class RecipeEdit_Step3 extends Component {
                   </div>
                   <div className="inline-edit-step-timer">
                     <CssTextField
+                      autoComplete="off"
                       InputProps={{ disableUnderline: true }}
                       id="Timer"
                       label="Timer"

@@ -1,5 +1,31 @@
 import React, { Component } from 'react';
-import FloatingLabelInput from 'react-floating-label-input';
+import { TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+const CssTextField = withStyles({
+  root: {
+    '& .Mui-disabled': {
+      color: '#001a33',
+    },
+    '& label.Mui-focused': {
+      color: '#001a33',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#001a33',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#001a33',
+      },
+    },
+  },
+})(TextField);
 
 class BrewDetail_WaterProfile extends Component {
   constructor(props) {
@@ -18,10 +44,6 @@ class BrewDetail_WaterProfile extends Component {
     this.setState({ hasLoadedWaterProfile: true });
   }
 
-  changingItem() {
-    console.log('Output here - water profile');
-  }
-
   render() {
     const waterProfile = this.state.waterProfile;
     console.log(waterProfile);
@@ -33,12 +55,15 @@ class BrewDetail_WaterProfile extends Component {
         {waterProfile.additions.length === 0 || waterProfile.additions === undefined ? (
           <div>No waterprofile additions</div>
         ) : (
-          <div className="water-profile-container">
-            {waterProfile.additions.map((a) => (
-              <p className="brewed-beer-water-profile-item">
-                <FloatingLabelInput id={a.id} label={a.name} onChange={this.changingItem} value={String(a.amount) + a.unit} />
-              </p>
-            ))}
+          <div>
+            <div className="water-profile-name">{waterProfile.name}</div>
+            <div className="water-profile-container">
+              {waterProfile.additions.map((a) => (
+                <p className="brewed-beer-water-profile-item">
+                  <CssTextField disabled id={a.id} InputProps={{ disableUnderline: true }} label={a.name} value={String(a.amount) + a.unit} />
+                </p>
+              ))}
+            </div>
           </div>
         )}
       </span>
