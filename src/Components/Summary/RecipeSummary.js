@@ -142,11 +142,9 @@ function RecipeSummary(props) {
     } else if (name === 'recipeType') {
       setRecipeType(value);
     } else {
-      setRecipeAdd((prevState) => ({
-        recipeAdd: {
-          ...prevState.recipeAdd,
+      setRecipeAdd(prevRecipeAdd => ({
+          ...prevRecipeAdd,
           [name]: value,
-        },
       }));
     }
   };
