@@ -358,13 +358,15 @@
   -webkit-border-radius: 15px;
   border-radius: 15px;
 }
-.ingredient-cancel-button-background :hover {
-  background: #b4b4b4;
-  height: 30px;
-  width: 30px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
+@media (hover: hover) {
+  .ingredient-cancel-button-background :hover {
+    background: #b4b4b4;
+    height: 30px;
+    width: 30px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+  }
 }
 .step-cancel-button-background {
   grid-column: 4;
@@ -382,13 +384,15 @@
   -webkit-border-radius: 15px;
   border-radius: 15px;
 }
-.step-cancel-button-background :hover {
-  background: #b4b4b4;
-  height: 30px;
-  width: 30px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
+@media (hover: hover) {
+  .step-cancel-button-background :hover {
+    background: #b4b4b4;
+    height: 30px;
+    width: 30px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+  }
 }
 .new-ingredient {
   grid-column: 1;
