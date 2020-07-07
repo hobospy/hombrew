@@ -128,6 +128,8 @@ class RecipeEdit_Step3 extends Component {
     }
 
     this.props.onDeleteStep(stepID)(event);
+
+    document.getElementById('submitButton').focus();
   };
 
   cancelEdit = (stepID) => (event) => {

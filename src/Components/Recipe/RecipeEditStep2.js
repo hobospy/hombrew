@@ -178,6 +178,8 @@ class RecipeEdit_Step2 extends Component {
     }
 
     this.props.onDeleteIngredient(ingredientID)(event);
+
+    document.getElementById('nextButton').focus();
   };
 
   editIngredient = (ingredientID) => (event) => {

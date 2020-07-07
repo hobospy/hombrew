@@ -75,7 +75,7 @@ class RecipeEdit extends Component {
 
     if (currentStep < 3) {
       return (
-        <StyledButton variant="outlined" onClick={this._next}>
+        <StyledButton id="nextButton" variant="outlined" onClick={this._next}>
           Next
         </StyledButton>
       );
@@ -89,7 +89,7 @@ class RecipeEdit extends Component {
 
     if (currentStep === 3) {
       return (
-        <StyledButton variant="outlined" onClick={this.props.onSubmit}>
+        <StyledButton id="submitButton" variant="outlined" onClick={this.props.onSubmit}>
           Submit
         </StyledButton>
       );
