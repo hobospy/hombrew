@@ -1,0 +1,45 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+
+@defaultFontFamily: Verdana, Geneva, Tahoma, sans-serif;
+@titleFontSize: 20px;
+@defaultFontSize: 14px;
+@subFontSize: 10px;
+
+@page-padding: 2%;
+
+@summary-table: {
+  a {
+    color: @textColour;
+    display: block;
+    padding-left: @page-padding;
+    padding-right: @page-padding;
+    text-decoration: none;
+  }
+  :hover {
+    background-color: @hoverColour;
+  }
+};
+
+@detail-table: {
+  padding-top: 10px;
+  padding-left: @page-padding;
+  padding-right: @page-padding;
+};
+
+.MuiCircularProgress-root {
+  margin-left: 15px;
+}
+
+.CentreLoadingIndicator {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: @primaryColour !important;
+}
+
+@border: {
+  border: solid 1px @borderColour;
+};

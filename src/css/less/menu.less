@@ -1,0 +1,48 @@
+// main: ./atomicStyling.less
+
+.main-menu {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 75px;
+  background-image: url(../resources/grain.jpg);
+  background-size: 50%;
+  background-position: 0px 35%;
+
+  div {
+    display: flex;
+    font-size: 35px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@hover: {
+  :hover {
+    border-color: @primaryColour;
+    color: @primaryColour;
+  }
+};
+
+.main-menu-brews {
+  grid-column: 2;
+  @hover();
+}
+
+.main-menu-recipes {
+  grid-column: 3;
+  @hover();
+}
+
+.main-menu-water {
+  grid-column: 4;
+  @hover();
+}
+
+.main-menu-button {
+  background-color: rgba(211, 211, 211, 0.4);
+  border: 2.5px solid @menuSelectionColour;
+  border-radius: 3px;
+  color: @menuSelectionColour;
+  display: flex;
+  padding: 3px;
+}

@@ -6,7 +6,7 @@ function WaterProfileSummaryItem(props) {
 
   return (
     <div className="water-profile-summary-container">
-      <div className="water-profile-summary-name recipe-title-size recipe-title-colour">{waterProfile.name}</div>
+      <div className="water-profile-summary-name recipe-title-size">{waterProfile.name}</div>
       <BrewDetailWaterProfile waterProfile={waterProfile} />
     </div>
   );

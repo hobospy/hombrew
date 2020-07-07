@@ -10,7 +10,7 @@ import RecipeDetail from './Components/Recipe/RecipeDetail';
 import RecipeSummary from './Components/Summary/RecipeSummary';
 import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 
-import './atomicStyling.css';
+import './css/atomicStyling.css';
 
 const API_URL = process.env.NODE_ENV === 'production' ? 'https://13.239.136.38/' : 'https://localhost:44363/';
 
@@ -63,7 +63,7 @@ class App extends Component {
         <AppBar position="fixed">
           <NavBarMenu baseUrl="/" />
         </AppBar>
-        <div className="testMainPage">
+        <div className="bodyStyle">
           <Switch>
             <Route exact={true} path="/brew/summary/" render={(props) => <BrewSummary {...props} baseUrl={API_URL} />} />
             <Route path="/brew/:id" render={(props) => <BrewDetail {...props} baseUrl={API_URL} />} />

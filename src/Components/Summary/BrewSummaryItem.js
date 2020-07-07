@@ -19,32 +19,20 @@ function BrewSummaryItem(props) {
 
   return (
     <div className="grid-brew-summary">
-      <div className="grid-brew-summary-column">
-        <div className="grid-brew-summary-title grid-brew-summary-title-column">
-          <div className="grid-brew-summary-title-beer-title recipe-title-size recipe-title-colour">{brew.name}</div>
-          <div className="recipe-summary-date grid-brew-summary-title-beer-brewdate">{moment(brew.brewDate).format('Do-MMM-YYYY')}</div>
-          <div className="grid-brew-summary-title-beer-type recipe-title-colour">{brew.recipe.type}</div>
-          <div className="grid-brew-summary-title-beer-favourite">
-            <StyledRating className="recipe-summary-rating" value={brew.rating} precision={0.5} size="small" readOnly="true" />
-          </div>
+      <div className="grid-brew-summary-title">
+        <div className="grid-brew-summary-title-beer-title recipe-title-size">{brew.name}</div>
+        <div className="recipe-summary-date grid-brew-summary-title-beer-brewdate">{moment(brew.brewDate).format('Do-MMM-YYYY')}</div>
+        <div className="grid-brew-summary-title-beer-type">{brew.recipe.type}</div>
+        <div className="grid-brew-summary-title-beer-favourite">
+          <StyledRating className="recipe-summary-rating" value={brew.rating} precision={0.5} size="small" readOnly="true" />
         </div>
       </div>
       <div className="grid-brew-summary-detail">
         <div className="grid-brew-summary-image">
           <img className="recipe-summary-beer-image-size" src={blankBeerPhoto} alt="Capture that beer" />
         </div>
-        <TextTruncate
-          className="grid-brew-summary-description-text recipe-summary-size recipe-summary-colour"
-          line={3}
-          truncateText=" ..."
-          text={brew.recipe.description}
-        />
-        <TextTruncate
-          className="grid-brew-summary-tastingNotes-text recipe-summary-size recipe-summary-colour"
-          line={3}
-          truncateText=" ..."
-          text={brew.tastingNotes}
-        />
+        <TextTruncate className="grid-brew-summary-description-text" line={3} truncateText=" ..." text={brew.recipe.description} />
+        <TextTruncate className="grid-brew-summary-tastingNotes-text" line={3} truncateText=" ..." text={brew.tastingNotes} />
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import Skeleton from '@material-ui/lab/Skeleton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -28,6 +27,17 @@ const CssTextField = withStyles({
     },
   },
 })(TextField);
+
+const CSSDeleteIcon = withStyles({
+  fontSizeSmall: {
+    height: '20px',
+    '&:hover': {
+      height: '30px',
+      paddingTop: '5px',
+      paddingBottom: '5px',
+    },
+  },
+})(DeleteIcon);
 
 class RecipeEdit_Step3 extends Component {
   constructor(props) {
@@ -210,10 +220,8 @@ class RecipeEdit_Step3 extends Component {
                         />
                       </div>
                       <div className="edit-page-recipe-step-container-timer-unit">mins</div>
-                      <div className="edit-page-recipe-step-container-delete">
-                        <Skeleton variant="circle" animation={false} width={30} height={30} onClick={this.deleteStep(s.id)}>
-                          <DeleteIcon fontSize="small" />
-                        </Skeleton>
+                      <div className="step-cancel-button-background" onClick={this.deleteStep(s.id)}>
+                        <CSSDeleteIcon fontSize="small" />
                       </div>
                     </div>
                   ) : (

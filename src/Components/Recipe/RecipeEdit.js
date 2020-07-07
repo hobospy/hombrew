@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 import RecipeEditStep1 from './RecipeEditStep1';
 import RecipeEditStep2 from './RecipeEditStep2';
 import RecipeEditStep3 from './RecipeEditStep3';
+
+const StyledButton = withStyles({
+  outlined: {
+    border: '1px solid #b4b4b4',
+  },
+})(Button);
 
 class RecipeEdit extends Component {
   constructor(props) {
@@ -50,16 +57,16 @@ class RecipeEdit extends Component {
 
     if (currentStep !== 1) {
       return (
-        <Button variant="outlined" onClick={this._prev}>
+        <StyledButton variant="outlined" onClick={this._prev}>
           Previous
-        </Button>
+        </StyledButton>
       );
     }
 
     return (
-      <Button variant="outlined" onClick={this._prev} style={{ visibility: 'hidden' }}>
+      <StyledButton variant="outlined" onClick={this._prev} style={{ visibility: 'hidden' }}>
         Previous
-      </Button>
+      </StyledButton>
     );
   }
 
@@ -68,9 +75,9 @@ class RecipeEdit extends Component {
 
     if (currentStep < 3) {
       return (
-        <Button variant="outlined" onClick={this._next}>
+        <StyledButton variant="outlined" onClick={this._next}>
           Next
-        </Button>
+        </StyledButton>
       );
     }
 
@@ -82,9 +89,9 @@ class RecipeEdit extends Component {
 
     if (currentStep === 3) {
       return (
-        <Button variant="outlined" onClick={this.props.onSubmit}>
+        <StyledButton variant="outlined" onClick={this.props.onSubmit}>
           Submit
-        </Button>
+        </StyledButton>
       );
     }
 

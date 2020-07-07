@@ -1,0 +1,27 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+@import 'extend';
+
+.recipe-detail {
+  @detail-table();
+  padding-top: 15px;
+}
+
+.recipe-detail-title-container {
+  display: grid;
+  grid-template-columns: 85% 15%;
+}
+
+.recipe-detail-title {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.recipe-detail-favourite {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: right;
+  padding-right: 5px;
+  z-index: 1;
+}

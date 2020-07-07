@@ -19,20 +19,20 @@ function BrewSummaryItemMobile(props) {
 
   return (
     <div className="brew-summary-mobile-item-grid">
-      <div className="brew-summary-mobile-item-grid-title recipe-title-size recipe-title-colour">{brew.name}</div>
+      <div className="brew-summary-mobile-item-grid-title recipe-title-size">{brew.name}</div>
       <div className="brew-summary-mobile-item-grid-rating">
         <StyledRating className="recipe-summary-rating" value={brew.rating} precision={0.5} size="small" readOnly="true" />
       </div>
-      <div className="brew-summary-mobile-item-grid-type recipe-title-colour">{brew.recipe.type}</div>
+      <div className="brew-summary-mobile-item-grid-type">{brew.recipe.type}</div>
       <div className="brew-summary-mobile-item-grid-brewdate recipe-summary-date">{moment(brew.brewDate).format('Do-MMM-YYYY')}</div>
       <div className="brew-summary-mobile-item-grid-image">
         <img className="brew-summary-mobile-item-grid-image-size" src={blankBeerPhoto} alt="Capture that beer" />
       </div>
       <div className="brew-summary-mobile-item-grid-description">
-        <TextTruncate className="recipe-summary-size recipe-summary-colour" line={3} truncateText=" ..." text={brew.recipe.description} />
+        <TextTruncate line={3} truncateText=" ..." text={brew.recipe.description} />
       </div>
       <div className="brew-summary-mobile-item-grid-notes">
-        <TextTruncate className="recipe-summary-size recipe-summary-colour" line={3} truncateText=" ..." text={brew.tastingNotes} />
+        <TextTruncate line={3} truncateText=" ..." text={brew.tastingNotes} />
       </div>
     </div>
   );

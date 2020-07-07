@@ -1,0 +1,68 @@
+// main: ./atomicStyling.less
+
+@import 'extend';
+
+.grid-brew-summary-link-indicator {
+  @summary-table();
+}
+
+.grid-brew-summary {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.grid-brew-summary-title {
+  display: grid;
+  grid-template-columns: 60% 30% 10%;
+  grid-template-rows: auto auto;
+}
+
+.grid-brew-summary-title-beer-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.grid-brew-summary-title-beer-brewdate {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.grid-brew-summary-title-beer-type {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.grid-brew-summary-title-beer-favourite {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.grid-brew-summary-detail {
+  display: grid;
+  margin-top: 10px;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 100px 100px;
+  overflow: hidden;
+}
+
+.grid-brew-summary-image {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.grid-brew-summary-description-text {
+  grid-column: 2;
+  grid-row: 1;
+  overflow: hidden;
+}
+
+.grid-brew-summary-tastingNotes-text {
+  grid-column: 2;
+  grid-row: 2;
+  overflow: hidden;
+}

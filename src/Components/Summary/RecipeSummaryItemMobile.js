@@ -7,12 +7,12 @@ export default function RecipeSummaryItemMobile(props) {
   return (
     <div>
       <div className="recipe-summary-mobile-item-grid">
-        <div className="recipe-summary-mobile-item-grid-title recipe-title-size recipe-title-colour">{recipe.name}</div>
+        <div className="recipe-summary-mobile-item-grid-title recipe-title-size">{recipe.name}</div>
         <div className="recipe-summary-mobile-item-grid-favourite">
           <Favourite favourite={recipe.favourite} />
         </div>
-        <div className="recipe-summary-mobile-item-grid-type recipe-title-colour">{recipe.type}</div>
-        <div className="recipe-summary-mobile-item-grid-description recipe-summary-colour">{recipe.description}</div>
+        <div className="recipe-summary-mobile-item-grid-type">{recipe.type}</div>
+        <div className="recipe-summary-mobile-item-grid-description">{recipe.description}</div>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ class BrewDetail_Recipe extends Component {
     console.log('Details expanded: ' + detailsExpanded);
 
     return (
-      <div className="brewed-beer-recipe-column">
+      <div>
         {this.state.hasLoadedRecipe ? (
           <div className="brewed-beer-recipe">
             <div className="brewed-beer-recipe-description">

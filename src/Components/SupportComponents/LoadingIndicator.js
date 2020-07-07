@@ -6,7 +6,7 @@ class LoadingIndicator extends Component {
     return (
       <div className="CentreLoadingIndicator">
         <CircularProgress color="inherit" size="4em" />
-        <div>Still loading ...</div>
+        <div>Loading ...</div>
       </div>
     );
   }

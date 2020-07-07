@@ -1,0 +1,50 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+@import 'extend';
+
+.recipe-title-size {
+  font-size: @titleFontSize;
+}
+
+.recipe-summary-date {
+  font-size: @subFontSize;
+  color: darkgrey;
+}
+
+.recipe-summary-beer-image-size {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+
+.recipe-summary-container {
+  display: grid;
+  grid-template-columns: 60% 30% 10%;
+  grid-template-rows: 40px 100px;
+  padding-top: 10px;
+}
+
+.recipe-summary-name {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.recipe-summary-type {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.recipe-summary-favourite {
+  grid-column: 3;
+  grid-row: 1;
+  padding-right: 5px;
+  text-align: right;
+}
+
+.recipe-summary-description {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  overflow: hidden;
+}
