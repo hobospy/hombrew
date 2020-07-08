@@ -47,58 +47,26 @@
   grid-row: 1;
 }
 
-@cancel-button-background: {
+@cancel-button: {
   align-items: center;
   align-self: center;
-  @border();
-  color: @primaryColour;
   display: flex;
-  height: 30px;
+  height: 31px;
   justify-content: center;
-  width: 30px;
+  width: 31px;
   z-index: 1;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
-
-  :hover {
-    background: @borderColour;
-    height: 30px;
-    width: 30px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    border-radius: 15px;
-  }
 };
 
-.ingredient-cancel-button-background {
+.ingredient-cancel-button {
   grid-column: 3;
   grid-row: 1;
-  @cancel-button-background();
+  @cancel-button();
 }
 
-.ingredient-cancel-test {
-  grid-column: 3;
-  grid-row: 1;
-
-  align-items: center;
-  align-self: center;
-  // @border();
-  // color: @primaryColour;
-  display: flex;
-  height: 30px;
-  justify-content: center;
-  width: 30px;
-  z-index: 1;
-  // -moz-border-radius: 15px;
-  // -webkit-border-radius: 15px;
-  // border-radius: 15px;
-}
-
-.step-cancel-button-background {
+.step-cancel-button {
   grid-column: 4;
   grid-row: 1;
-  @cancel-button-background();
+  @cancel-button();
 }
 
 // WORK FROM HERE DOWN

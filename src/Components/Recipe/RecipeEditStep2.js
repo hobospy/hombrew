@@ -30,16 +30,17 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-const CSSDeleteIcon = withStyles({
-  // fontSizeSmall: {
-  //   height: '20px',
-  //   '&:hover': {
-  //     height: '30px',
-  //     paddingTop: '5px',
-  //     paddingBottom: '5px',
-  //   },
-  // },
-})(DeleteIcon);
+const CSSIconButton = withStyles({
+  root: {
+    border: '1px solid #b4b4b4',
+    color: '#001a33',
+    height: '32px',
+    width: '32px',
+    '&:hover': {
+      background: '#b4b4b4',
+    },
+  },
+})(IconButton);
 
 class RecipeEdit_Step2 extends Component {
   constructor(props) {
@@ -264,11 +265,10 @@ class RecipeEdit_Step2 extends Component {
                             onFocus={this.editIngredient(i.id)}
                           />
                         </div>
-                        {/* <div className="ingredient-cancel-button-background" onClick={this.deleteIngredient(i.id)}> */}
-                        <div className="ingredient-cancel-test" onClick={this.deleteIngredient(i.id)}>
-                          <IconButton arial-label="delete">
-                            <CSSDeleteIcon fontSize="small" />
-                          </IconButton>
+                        <div className="ingredient-cancel-button" onClick={this.deleteIngredient(i.id)}>
+                          <CSSIconButton arial-label="delete">
+                            <DeleteIcon fontSize="small" />
+                          </CSSIconButton>
                         </div>
                       </div>
                     ) : (
