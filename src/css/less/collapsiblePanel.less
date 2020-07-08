@@ -1,0 +1,41 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+@import 'extend';
+
+.header {
+  cursor: pointer;
+  border: solid 1px #f2f2f2;
+  padding: 15px 5px;
+  background-color: @primaryColour;
+  color: #fff;
+}
+
+.content {
+  cursor: pointer;
+  border-left: solid 1px #f2f2f2;
+  border-right: solid 1px #f2f2f2;
+  border-bottom: solid 1px #f2f2f2;
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
+  font-size: @defaultFontSize;
+}
+
+.double-collapsible-panel {
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: 50% 50%;
+}
+
+.double-collapsible-panel-left-column {
+  grid-column: 1;
+}
+
+.double-collapsible-panel-right-column {
+  grid-column: 2;
+}
+
+.expander-top-right {
+  float: right;
+}

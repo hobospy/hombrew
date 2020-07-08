@@ -1,0 +1,30 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+@import 'extend';
+
+.water-profile-name {
+  color: '@primaryColour';
+  font-size: @titleFontSize;
+  margin-bottom: 5px;
+}
+
+.water-profile-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  column-gap: 5px;
+}
+
+.water-profile-container > div::before {
+  content: '';
+  padding-bottom: 15%;
+  display: block;
+}
+
+.water-profile-summary-container {
+  padding-left: 5px;
+}
+
+.water-profile-summary-name {
+  margin-top: 10px;
+}

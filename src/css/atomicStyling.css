@@ -148,6 +148,86 @@
   grid-row: 2;
   overflow: hidden;
 }
+.brew-summary-mobile-item-grid {
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+  grid-template-rows: auto auto auto 75px auto;
+  margin-bottom: 5px;
+}
+.brew-summary-mobile-item-grid-title {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.brew-summary-mobile-item-grid-rating {
+  grid-column: 3;
+  grid-row: 1;
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+.brew-summary-mobile-item-grid-type {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  margin-bottom: 5px;
+}
+.brew-summary-mobile-item-grid-brewdate {
+  grid-column: 3;
+  grid-row: 2;
+  text-align: right;
+  margin-right: 2px;
+  margin-top: 5px;
+}
+.brew-summary-mobile-item-grid-image {
+  grid-column: 1;
+  grid-row: 4;
+}
+.brew-summary-mobile-item-grid-image-size {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+.brew-summary-mobile-item-grid-description {
+  grid-column: 2 / span 2;
+  grid-row: 4;
+}
+.brew-summary-mobile-item-grid-notes {
+  grid-column: 1 / span 3;
+  grid-row: 5;
+}
+.header {
+  cursor: pointer;
+  border: solid 1px #f2f2f2;
+  padding: 15px 5px;
+  background-color: #001a33;
+  color: #fff;
+}
+.content {
+  cursor: pointer;
+  border-left: solid 1px #f2f2f2;
+  border-right: solid 1px #f2f2f2;
+  border-bottom: solid 1px #f2f2f2;
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+.double-collapsible-panel {
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: 50% 50%;
+}
+.double-collapsible-panel-left-column {
+  grid-column: 1;
+}
+.double-collapsible-panel-right-column {
+  grid-column: 2;
+}
+.expander-top-right {
+  float: right;
+}
 .main-menu {
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
@@ -283,6 +363,21 @@
 }
 .modal-body {
   padding: 5px 5px 5px 5px;
+}
+._hide-visual {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
+.scroll-lock {
+  overflow: hidden;
+  margin-right: 17px;
 }
 .recipe-detail {
   padding-top: 10px;
@@ -583,142 +678,6 @@
   grid-row: 2;
   overflow: hidden;
 }
-.bodyStyle {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 14px;
-  margin-top: 75px;
-  height: calc(100vh - 75px);
-  overflow-y: scroll;
-}
-.app-default-font {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-.header {
-  cursor: pointer;
-  border: solid 1px #f2f2f2;
-  padding: 15px 5px;
-  background-color: #001a33;
-  color: #fff;
-}
-.content {
-  cursor: pointer;
-  border-left: solid 1px #f2f2f2;
-  border-right: solid 1px #f2f2f2;
-  border-bottom: solid 1px #f2f2f2;
-  border-radius: 0 0 5px 5px;
-  padding: 5px;
-  font-size: 14px;
-}
-.double-collapsible-panel {
-  display: grid;
-  width: 100%;
-  margin: auto;
-  grid-template-columns: 50% 50%;
-}
-.double-collapsible-panel-left-column {
-  grid-column: 1;
-}
-.double-collapsible-panel-right-column {
-  grid-column: 2;
-}
-.fabStyling {
-  position: 'float';
-  bottom: 5px;
-  right: 5px;
-  height: 35;
-  width: 35;
-}
-.fabStyling:focus {
-  outline: none;
-}
-.water-profile-name {
-  color: '@primaryColour';
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-.water-profile-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  column-gap: 5px;
-}
-.water-profile-container > div::before {
-  content: '';
-  padding-bottom: 15%;
-  display: block;
-}
-.expander-top-right {
-  float: right;
-}
-.water-profile-summary-container {
-  padding-left: 5px;
-}
-.water-profile-summary-name {
-  margin-top: 10px;
-}
-._hide-visual {
-  border: 0 !important;
-  clip: rect(0 0 0 0) !important;
-  height: 1px !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  position: absolute !important;
-  width: 1px !important;
-  white-space: nowrap !important;
-}
-.scroll-lock {
-  overflow: hidden;
-  margin-right: 17px;
-}
-.brew-summary-mobile-item-grid {
-  display: grid;
-  grid-template-columns: 100px 1fr 100px;
-  grid-template-rows: auto auto auto 75px auto;
-  margin-bottom: 5px;
-}
-.brew-summary-mobile-item-grid-title {
-  grid-column: 1 / span 2;
-  grid-row: 1;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.brew-summary-mobile-item-grid-rating {
-  grid-column: 3;
-  grid-row: 1;
-  margin-top: 5px;
-  display: flex;
-  justify-content: flex-end;
-}
-.brew-summary-mobile-item-grid-type {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-  margin-bottom: 5px;
-}
-.brew-summary-mobile-item-grid-brewdate {
-  grid-column: 3;
-  grid-row: 2;
-  text-align: right;
-  margin-right: 2px;
-  margin-top: 5px;
-}
-.brew-summary-mobile-item-grid-image {
-  grid-column: 1;
-  grid-row: 4;
-}
-.brew-summary-mobile-item-grid-image-size {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-}
-.brew-summary-mobile-item-grid-description {
-  grid-column: 2 / span 2;
-  grid-row: 4;
-}
-.brew-summary-mobile-item-grid-notes {
-  grid-column: 1 / span 3;
-  grid-row: 5;
-}
 .recipe-summary-mobile-item-grid {
   display: grid;
   grid-template-columns: 1fr 55px;
@@ -746,4 +705,32 @@
   grid-column: 1 / span 2;
   grid-row: 3;
   margin-bottom: 25px;
+}
+.water-profile-name {
+  color: '@primaryColour';
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.water-profile-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  column-gap: 5px;
+}
+.water-profile-container > div::before {
+  content: '';
+  padding-bottom: 15%;
+  display: block;
+}
+.water-profile-summary-container {
+  padding-left: 5px;
+}
+.water-profile-summary-name {
+  margin-top: 10px;
+}
+.bodyStyle {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+  margin-top: 75px;
+  height: calc(100vh - 75px);
+  overflow-y: scroll;
 }
