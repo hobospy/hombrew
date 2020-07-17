@@ -6,7 +6,7 @@ import FocusLock from 'react-focus-lock';
 import AddBrew from './BrewAdd';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
-export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, onChange, brew, baseUrl, title, addingNewRecipe }) => {
+export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeModal, onSubmit, baseUrl, title, onUpdateNewRecipeID }) => {
   const [recipeList, setRecipeList] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -44,11 +44,9 @@ export const Modal = ({ onClickOutside, onKeyDown, modalRef, buttonRef, closeMod
               {recipeList !== null ? (
                 <AddBrew
                   onSubmit={onSubmit}
-                  onChange={onChange}
-                  brew={brew}
+                  onUpdateNewRecipeID={onUpdateNewRecipeID}
                   recipes={recipeList}
                   baseUrl={baseUrl}
-                  addingNewRecipe={addingNewRecipe}
                 />
               ) : (
                 <LoadingIndicator />

@@ -27,6 +27,7 @@ class AddBrew extends Component {
 
     this.state = {
       hasLoaded: false,
+      selectedRecipe: -1,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,15 +37,7 @@ class AddBrew extends Component {
   get brewButton() {
     return (
       <StyledButton id="submitButton" variant="outlined" onClick={this.props.onSubmit}>
-        Brew
-      </StyledButton>
-    );
-  }
-
-  get cancelButton() {
-    return (
-      <StyledButton id="nextButton" variant="outlined" onClick={this._next}>
-        Cancel
+        Submit
       </StyledButton>
     );
   }
@@ -63,6 +56,14 @@ class AddBrew extends Component {
     this.setState({ hasLoaded: true });
   }
 
+  updateNewRecipeID = (recipeID) => (event) => {
+    event.preventDefault();
+
+    this.state.selectedRecipe = recipeID;
+
+    this.props.onUpdateNewRecipeID(recipeID)(event);
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -71,15 +72,14 @@ class AddBrew extends Component {
             <div className="brew-add-menu">
               <MenuList keepMounted>
                 {this.props.recipes.map((r) => (
-                  <StyledMenuItem disableGutters>
+                  <StyledMenuItem disableGutters onClick={this.updateNewRecipeID(r.id)}>
                     <BrewAddItem key={r.id} recipe={r} />
                   </StyledMenuItem>
                 ))}
               </MenuList>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               {this.brewButton}
-              {this.cancelButton}
             </div>
           </div>
         </form>

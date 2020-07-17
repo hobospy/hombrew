@@ -39,8 +39,8 @@ function BrewSummary(props) {
   const [brews, setBrewValues] = useState([]);
   const largeScreenSize = useMediaQuery('(min-width:600px)');
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [brewAdd, setBrewAdd] = useState();
   const [modalShown, setModalShown] = useState(false);
+  const [newRecipeID, setNewRecipeID] = useState(-1);
 
   var closeButton = React.useRef();
   var modalForm = React.useRef(null);
@@ -73,6 +73,31 @@ function BrewSummary(props) {
   const onSubmit = async (event) => {
     event.preventDefault();
     closeModal();
+
+    var myHeaders = new Headers();
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Content-Type', 'application/json-patch+json');
+
+    var rawObject = {
+      RecipeID: newRecipeID,
+    };
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(rawObject),
+      redirect: 'follow',
+      mode: 'cors',
+    };
+
+    let updateURL = props.baseUrl + 'brew/';
+    console.log(updateURL);
+
+    fetch(updateURL, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        setBrewValues(brews.concat(data));
+      });
   };
 
   const handleChange = (event) => {
@@ -80,17 +105,11 @@ function BrewSummary(props) {
   };
 
   const addBrew = () => {
-    // setBrewAdd({
-    //   name: '',
-    //   description: '',
-    //   expectedABV: 0,
-    //   ingredients: [],
-    //   steps: [],
-    // });
-    // setWaterProfileID('');
-    // setRecipeIngredients([]);
-    // setRecipeSteps([]);
     showModal();
+  };
+
+  const updateNewRecipeID = (recipeID) => (event) => {
+    setNewRecipeID(recipeID);
   };
 
   const onKeyDown = (event) => {
@@ -135,12 +154,11 @@ function BrewSummary(props) {
               buttonRef={closeButton}
               onSubmit={onSubmit}
               onChange={handleChange}
+              onUpdateNewRecipeID={updateNewRecipeID}
               closeModal={closeModal}
               onKeyDown={onKeyDown}
-              brew={brewAdd}
               baseUrl={props.baseUrl}
               title="Brew Beer"
-              addingNewRecipe="true"
             />
           ) : null}
         </React.Fragment>
