@@ -1,0 +1,53 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+@import 'extend';
+
+.brew-add-menu {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.brew-add-grid {
+  display: grid;
+  grid-template-columns: 1fr 65px 55px;
+  grid-template-rows: auto auto auto;
+  margin-bottom: 20px;
+  margin-right: 5px;
+}
+
+.brew-add-title {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.brew-add-favourite {
+  grid-column: 3;
+  grid-row: 1;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.brew-add-type {
+  grid-column: 1;
+  grid-row: 2;
+  margin-bottom: 8px;
+}
+
+.brew-add-expected-abv {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  margin-bottom: 8px;
+  text-align: right;
+}
+
+.brew-add-description {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+  height: auto;
+  white-space: normal;
+  word-wrap: break-word;
+}
