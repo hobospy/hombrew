@@ -32,7 +32,7 @@ function BrewSummaryItem(props) {
           <img className="recipe-summary-beer-image-size" src={blankBeerPhoto} alt="Capture that beer" />
         </div>
         <TextTruncate className="grid-brew-summary-description-text" line={3} truncateText=" ..." text={brew.recipe.description} />
-        <TextTruncate className="grid-brew-summary-tastingNotes-text" line={3} truncateText=" ..." text={brew.tastingNotes} />
+        <TextTruncate className="grid-brew-summary-tastingNotes-text" line={3} truncateText=" ..." text={brew.tastingNotes.note} />
       </div>
     </div>
   );

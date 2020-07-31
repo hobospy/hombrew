@@ -41,6 +41,8 @@ function BrewSummary(props) {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [modalShown, setModalShown] = useState(false);
   const [newRecipeID, setNewRecipeID] = useState(-1);
+  const [newBrewName, setNewBrewName] = useState('');
+  const [brewDate, setBrewDate] = useState(new Date());
 
   var closeButton = React.useRef();
   var modalForm = React.useRef(null);
@@ -79,7 +81,9 @@ function BrewSummary(props) {
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
     var rawObject = {
+      Name: newBrewName,
       RecipeID: newRecipeID,
+      BrewDate: brewDate,
     };
 
     var requestOptions = {
@@ -102,6 +106,16 @@ function BrewSummary(props) {
 
   const handleChange = (event) => {
     event.preventDefault();
+
+    const { name, value } = event.target;
+
+    if (name === 'name') {
+      setNewBrewName(value);
+    }
+  };
+
+  const updateBrewDate = (newBrewDate) => {
+    setBrewDate(newBrewDate.toDate());
   };
 
   const addBrew = () => {
@@ -159,6 +173,9 @@ function BrewSummary(props) {
               onKeyDown={onKeyDown}
               baseUrl={props.baseUrl}
               title="Brew Beer"
+              brewName={newBrewName}
+              brewDate={brewDate}
+              updateBrewDate={updateBrewDate}
             />
           ) : null}
         </React.Fragment>

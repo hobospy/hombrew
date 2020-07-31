@@ -95,3 +95,67 @@
 .brewed-beer-ingredient-item {
   margin-top: 5px;
 }
+
+.brewed-beer-tasting-note-details-container {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  grid-template-rows: auto;
+}
+
+.brewed-beer-tasting-note-details-container-note {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.brewed-beer-tasting-note-details-container-delete {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.brewed-beer-tasting-note-new {
+  color: @secondaryColour;
+  float: right;
+  padding-right: 5px;
+  padding-top: 10px;
+}
+
+.brewed-beer-tasting-note-date {
+  font-size: @subFontSize;
+  margin-right: 5px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.brewed-beer-tasting-notes {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.brewed-beer-add-tasting-note-container {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  grid-template-rows: auto auto;
+}
+
+.brewed-beer-add-tasting-note-note {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.brewed-beer-add-tasting-note-date {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.brewed-beer-add-tasting-note-buttons {
+  display: flex;
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.button-style {
+  min-width: 75;
+  padding-left: 10px;
+}

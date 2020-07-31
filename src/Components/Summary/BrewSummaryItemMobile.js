@@ -32,7 +32,7 @@ function BrewSummaryItemMobile(props) {
         <TextTruncate line={3} truncateText=" ..." text={brew.recipe.description} />
       </div>
       <div className="brew-summary-mobile-item-grid-notes">
-        <TextTruncate line={3} truncateText=" ..." text={brew.tastingNotes} />
+        <TextTruncate line={3} truncateText=" ..." text={brew.tastingNotes.note} />
       </div>
     </div>
   );

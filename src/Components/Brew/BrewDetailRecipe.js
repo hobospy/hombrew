@@ -40,6 +40,7 @@ class BrewDetail_Recipe extends Component {
       hasLoadedRecipe: false,
       recipe: this.props.recipe,
       detailsExpanded: this.props.detailsExpanded,
+      hideBrewingSteps: this.props.hideBrewingSteps,
     };
   }
 
@@ -93,32 +94,34 @@ class BrewDetail_Recipe extends Component {
                 open={detailsExpanded}
               />
             </div>
-            <div className="brewed-beer-recipe-steps">
-              <CollapsiblePanel
-                title="Brewing steps"
-                children={
-                  <div>
-                    {recipe.steps.length === 0 || recipe.steps === undefined ? (
-                      <div>No steps defined</div>
-                    ) : (
-                      <div>
-                        {recipe.steps.map((s, i) => (
-                          <div className="recipe-grid-container">
-                            <div className="recipe-grid-container-step">{'Step ' + (i + 1)}</div>
-                            <div className="recipe-grid-container-description">{s.description}</div>
-                            <div className="recipe-grid-container-timer">
-                              {s.timer}
-                              {s.timer === 1 ? ' min' : ' mins'}
+            {this.state.hideBrewingSteps === null || this.state.hideBrewingSteps === false ? (
+              <div className="brewed-beer-recipe-steps">
+                <CollapsiblePanel
+                  title="Brewing steps"
+                  children={
+                    <div>
+                      {recipe.steps.length === 0 || recipe.steps === undefined ? (
+                        <div>No steps defined</div>
+                      ) : (
+                        <div>
+                          {recipe.steps.map((s, i) => (
+                            <div className="recipe-grid-container">
+                              <div className="recipe-grid-container-step">{'Step ' + (i + 1)}</div>
+                              <div className="recipe-grid-container-description">{s.description}</div>
+                              <div className="recipe-grid-container-timer">
+                                {s.timer}
+                                {s.timer === 1 ? ' min' : ' mins'}
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                }
-                open={true}
-              />
-            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  }
+                  open={true}
+                />
+              </div>
+            ) : null}
           </div>
         ) : (
           <LoadingIndicator />

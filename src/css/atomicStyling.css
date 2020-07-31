@@ -8,6 +8,12 @@
   transform: translate(-50%, -50%);
   color: #001a33 !important;
 }
+.plain-header {
+  border: solid 1px #f2f2f2;
+  padding: 15px 5px;
+  background-color: #001a33;
+  color: #fff;
+}
 .brew-add-menu {
   max-height: 500px;
   overflow-y: auto;
@@ -15,7 +21,7 @@
 }
 .brew-add-grid {
   display: grid;
-  grid-template-columns: 1fr 65px 55px;
+  grid-template-columns: 1fr 85px 55px;
   grid-template-rows: auto auto auto;
   margin-bottom: 20px;
   margin-right: 5px;
@@ -128,6 +134,59 @@
 }
 .brewed-beer-ingredient-item {
   margin-top: 5px;
+}
+.brewed-beer-tasting-note-details-container {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  grid-template-rows: auto;
+}
+.brewed-beer-tasting-note-details-container-note {
+  grid-column: 1;
+  grid-row: 1;
+}
+.brewed-beer-tasting-note-details-container-delete {
+  grid-column: 2;
+  grid-row: 1;
+}
+.brewed-beer-tasting-note-new {
+  color: white;
+  float: right;
+  padding-right: 5px;
+  padding-top: 10px;
+}
+.brewed-beer-tasting-note-date {
+  font-size: 10px;
+  margin-right: 5px;
+  margin-top: 10px;
+  text-align: right;
+}
+.brewed-beer-tasting-notes {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.brewed-beer-add-tasting-note-container {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  grid-template-rows: auto auto;
+}
+.brewed-beer-add-tasting-note-note {
+  grid-column: 1;
+  grid-row: 1;
+}
+.brewed-beer-add-tasting-note-date {
+  grid-column: 2;
+  grid-row: 1;
+}
+.brewed-beer-add-tasting-note-buttons {
+  display: flex;
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+.button-style {
+  min-width: 75;
+  padding-left: 10px;
 }
 .grid-brew-summary-link-indicator a {
   color: black;
@@ -405,6 +464,7 @@
 }
 .modal-body {
   padding: 5px 5px 5px 5px;
+  white-space: pre-wrap;
 }
 ._hide-visual {
   border: 0 !important;
@@ -420,6 +480,23 @@
 .scroll-lock {
   overflow: hidden;
   margin-right: 17px;
+}
+.progressBarBase {
+  position: relative;
+  height: 32px;
+  border: 3px solid black;
+  margin: 16px 0 8px;
+}
+.progressBarProgress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 10%;
+  background: #001a33;
+  z-index: -1;
+}
+.progressBarText {
+  margin-left: 15px;
 }
 .recipe-detail {
   padding-top: 10px;
