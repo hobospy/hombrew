@@ -56,9 +56,28 @@ class RecipeNewStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Description: '',
-      Ingredients: [],
+      description: '',
+      ingredients: [],
+      durationType: '',
+      durationValue: '',
+
+      editIngredientID: '',
+      editIngredientName: '',
+      editIngredientAmount: '',
+      editIngredientUnit: '',
+      editIngredientType: '',
     };
+
+    this.cancelAddIngredient = this.cancelAddIngredient.bind(this);
+    this.AddIngredient = this.AddIngredient.bind(this);
+  }
+
+  cancelAddIngredient() {
+    console.log("Cancel adding an ingredient");
+  }
+
+  addIngredient(newIngredient) {
+    console.log("Adding new ingredient to the list");
   }
 
   render() {
@@ -71,8 +90,10 @@ class RecipeNewStep extends Component {
             InputProps={{ disableUnderline: true }}
             id="Ingredient"
             placeholder="Description"
-            value={this.state.newStepDescription}
-            onChange={this.updateNewStepDescription}
+            value={this.state.description}
+            onChange={ (e) => {
+              this.setState({ description: e.target.value });
+            }}
           />
         </div>
         <div className="step-new-ingredients">

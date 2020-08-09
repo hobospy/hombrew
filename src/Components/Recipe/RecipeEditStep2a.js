@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
+import RecipeEditIngredient from './RecipeEditIngredient';
 
 import DurationIcon from '../../resources/durationIcon';
 
@@ -122,6 +123,8 @@ class RecipeEdit_Step2a extends Component {
     this.updateNewStepIngredientUnitTypeValue = this.updateNewStepIngredientUnitTypeValue.bind(this);
     this.updateNewStepIngredientTypeValue = this.updateNewStepIngredientTypeValue.bind(this);
     this.validateNewStepIngredient = this.validateNewStepIngredient.bind(this);
+
+    this.cancelAddItemToIngredientList = this.cancelAddItemToIngredientList.bind(this);
   }
 
   componentDidMount() {
@@ -199,31 +202,36 @@ class RecipeEdit_Step2a extends Component {
     console.log('Changed drop down list, new value');
   }
 
-  addItemToIngredientList(event) {
-    var tempIngredientList = this.state.newStepIngredients;
-    const newIngredient = {
-      id: this.state.newIngredientID,
-      type: this.state.newIngredientType,
-      name: this.state.newIngredient,
-      amount: this.state.newIngredientAmount,
-      unit: this.state.newIngredientUnit,
-      recipeStepID: -1,
-    };
-    tempIngredientList = tempIngredientList.concat(newIngredient);
+  addItemToIngredientList(newIngredient) {
+    console.log("Adding ingredient");
+    // var tempIngredientList = this.state.newStepIngredients;
+    // const newIngredient = {
+    //   id: this.state.newIngredientID,
+    //   type: this.state.newIngredientType,
+    //   name: this.state.newIngredient,
+    //   amount: this.state.newIngredientAmount,
+    //   unit: this.state.newIngredientUnit,
+    //   recipeStepID: -1,
+    // };
+    // tempIngredientList = tempIngredientList.concat(newIngredient);
 
-    var newID = this.state.newIngredientID - 1;
+    // var newID = this.state.newIngredientID - 1;
 
-    this.setState({ newStepIngredients: tempIngredientList });
-    this.setState({ newIngredient: '' });
-    this.setState({ newIngredientType: 'Grains' });
-    this.setState({ newIngredientVolume: '0' });
-    this.setState({ newIngredientUnit: 'kg' });
-    this.setState({ newIngredientID: newID });
+    // this.setState({ newStepIngredients: tempIngredientList });
+    // this.setState({ newIngredient: '' });
+    // this.setState({ newIngredientType: 'Grains' });
+    // this.setState({ newIngredientVolume: '0' });
+    // this.setState({ newIngredientUnit: 'kg' });
+    // this.setState({ newIngredientID: newID });
 
     // var ingEvent = event;
     // ingEvent.target.name = 'AddIngredient';
     // ingEvent.target.value = newIngredient;
     // this.props.handleChange(ingEvent);
+  }
+
+  cancelAddItemToIngredientList() {
+    console.log("Cancel adding an ingredient");
   }
 
   updateEditIngredientValue(event) {
@@ -489,7 +497,7 @@ class RecipeEdit_Step2a extends Component {
                   />
                 </div>
                 <div className="step-new-ingredients">
-                  <div className="step-new-ingredient-container">
+                  {/* <div className="step-new-ingredient-container">
                     {this.state.newStepIngredients.map((ingredient, index) => (
                       <div className="step-new-ingredient-values">
                         <CssTextField
@@ -566,7 +574,8 @@ class RecipeEdit_Step2a extends Component {
                     <CssButton disabled={!this.state.addNewIngredientAvailable} onClick={this.addItemToIngredientList} variant="outlined">
                       Add ingredient
                     </CssButton>
-                  </div>
+                          </div> */}
+                          <RecipeEditIngredient ingredientID={this.state.newIngredientID} units={this.props.units} types={this.props.ingredientTypes} submitText="Add" submit={this.addItemToIngredientList(newIngredient)} cancel={this.cancelAddItemToIngredientList()}/>
                 </div>
                 <div className="step-new-duration">
                   <CssTextField
