@@ -6,6 +6,7 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 import RecipeEditStep1 from './RecipeEditStep1';
 import RecipeEditStep2 from './RecipeEditStep2';
+import RecipeEditStep2a from './RecipeEditStep2a';
 import RecipeEditStep3 from './RecipeEditStep3';
 
 const StyledButton = withStyles({
@@ -152,11 +153,21 @@ class RecipeEdit extends Component {
             abv={this.props.recipe.abv}
             addingNewRecipe={this.props.addingNewRecipe}
           />
-          <RecipeEditStep2
+          {/* <RecipeEditStep2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             onDeleteIngredient={this.props.onDeleteIngredient}
             ingredients={this.state.recipeDetail.ingredients}
+            ingredientTypes={this.props.ingredientTypes}
+            recipeID={this.props.recipe.recipeID}
+            unitTypes={this.props.unitTypes}
+          /> */}
+          <RecipeEditStep2a
+            currentStep={this.state.currentStep}
+            handleChange={this.handleChange}
+            onDeleteIngredient={this.props.onDeleteIngredient}
+            ingredients={this.state.recipeDetail.ingredients}
+            steps={this.state.recipeDetail.steps}
             ingredientTypes={this.props.ingredientTypes}
             recipeID={this.props.recipe.recipeID}
             unitTypes={this.props.unitTypes}

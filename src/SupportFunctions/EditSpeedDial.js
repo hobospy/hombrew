@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -23,54 +23,38 @@ const editSpeedDialStyles = makeStyles((theme) => ({
   },
 }));
 
-const actions = [
-  { icon: <EditIcon />, name: 'Edit', action: null },
-  { icon: <DeleteIcon />, name: 'Delete', action: null },
-];
-
 export default function EditSpeedDial(props) {
   const classes = editSpeedDialStyles();
   const direction = 'up';
   const [open, setOpen] = useState(false);
   const hidden = false;
-  const [hasLoaded, setHasLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!hasLoaded) {
-      actions[0].action = () => {
+  const actions = [
+    {
+      icon: <EditIcon />,
+      name: 'Edit',
+      action: function () {
         setOpen(false);
         props.editItemAction();
-      };
-
-      actions[1].action = () => {
+      },
+    },
+    {
+      icon: <DeleteIcon />,
+      name: 'Delete',
+      action: function () {
         setOpen(false);
         props.deleteItemAction();
-      };
-
-      if (props.startBrewingAction) {
-        if (actions.length === 2) {
-          var startBrewingItem = {
-            icon: <PlayArrowIcon />,
-            name: 'Brew',
-            action: function () {
-              setOpen(false);
-              props.startBrewingAction();
-            },
-          };
-
-          actions.unshift(startBrewingItem);
-        }
-      } else {
-        var actionIndex = actions.findIndex((e) => e.name === 'Brew');
-
-        if (actionIndex !== -1) {
-          actions.splice(actionIndex, 1);
-        }
-      }
-
-      setHasLoaded(true);
-    }
-  }, [hasLoaded, props]);
+      },
+    },
+    {
+      icon: <PlayArrowIcon />,
+      name: 'Brew',
+      action: function () {
+        setOpen(false);
+        props.startBrewingAction();
+      },
+    },
+  ];
 
   const handleClose = () => {
     setOpen(false);
@@ -79,6 +63,9 @@ export default function EditSpeedDial(props) {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  const numberItemsToShow = props.startBrewingAction ? 3 : 2;
+  const actionsToDisplay = actions.slice(0, numberItemsToShow);
 
   return (
     <div className={classes.root}>
@@ -93,7 +80,7 @@ export default function EditSpeedDial(props) {
         open={open}
         direction={direction}
       >
-        {actions.map((action) => (
+        {actionsToDisplay.map((action) => (
           <SpeedDialAction
             key={action.name}
             icon={action.icon}

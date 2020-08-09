@@ -44,9 +44,16 @@
   border: solid 1px @borderColour;
 };
 
-.plain-header {
+.narrow-plain-header {
   border: solid 1px #f2f2f2;
-  padding: 15px 5px;
   background-color: @primaryColour;
   color: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.plain-header {
+  .narrow-plain-header;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }

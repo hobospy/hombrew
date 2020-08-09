@@ -128,7 +128,7 @@ class AddBrew extends Component {
   updateNewRecipeID = (recipeID) => (event) => {
     event.preventDefault();
 
-    this.state.selectedRecipe = recipeID;
+    this.setState({ selectedRecipe: recipeID });
 
     this.props.onUpdateNewRecipeID(recipeID)(event);
   };

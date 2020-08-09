@@ -1,0 +1,143 @@
+// main: ./atomicStyling.less
+
+@import 'colours';
+@import 'extend';
+
+.step-edit-readonly-container {
+  display: grid;
+  grid-template-columns: auto 1fr 45px 35px;
+  grid-template-rows: auto auto auto;
+  margin-bottom: 3px;
+}
+
+.step-edit-readonly-index {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+
+.step-edit-readonly-description {
+  grid-column: 2 / span 2;
+  grid-row: 1;
+}
+
+.step-edit-readonly-delete {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.step-edit-readonly-duration {
+  grid-column: 3 / span 2;
+  grid-row: 2;
+}
+
+.step-edit-readonly-duration-container {
+  display: grid;
+  grid-template-columns: 1fr 60px 18px;
+  grid-template-rows: auto;
+}
+
+.step-edit-readonly-duration-value {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 14px;
+  color: darkgrey;
+  margin-top: 3px;
+}
+
+.step-edit-readonly-duration-icon {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.step-edit-readonly-ingredients {
+  grid-column: 2 / span 2;
+  grid-row: 3;
+}
+
+.step-edit-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto auto auto;
+  column-gap: 3px;
+  margin-bottom: 3px;
+}
+.step-edit-index {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+
+.step-edit-description {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.step-edit-ingredients {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.step-edit-duration-container {
+  grid-column: 2;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: auto 1fr 90px;
+  grid-template-rows: auto;
+}
+
+.step-edit-buttons {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.step-edit-ingredients-container {
+  display: grid;
+  grid-template-columns: 1fr 70px 70px 70px auto;
+  grid-template-rows: auto;
+  margin: 0px 0px 5px 0px;
+}
+
+.step-edit-ingredients-name-readonly {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+  min-height: auto;
+  line-height: 32px;
+}
+
+.step-edit-ingredients-name {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.step-edit-ingredients-amount {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.step-edit-ingredients-unit {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.step-edit-ingredients-type {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.step-edit-ingredients-delete {
+  grid-column: 5;
+  grid-row: 1;
+}
+
+.step-edit-duration-type {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.grid-edit-duration-value {
+  grid-column: 3;
+  grid-row: 1;
+}

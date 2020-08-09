@@ -15,8 +15,11 @@ class CountdownButton extends Component {
       endTime: 0,
       duration: this.props.duration,
       range: this.props.duration,
+      completionText: this.props.completionText,
       countdownRunning: false,
       countdownFinished: false,
+      countdownTime: '',
+      countdownBarWidth: '',
     };
 
     this.updateCountdown = this.updateCountdown.bind(this);
@@ -50,18 +53,28 @@ class CountdownButton extends Component {
 
   updateCountdownTimeText(timeDiff) {
     var totalSeconds = timeDiff / 1000;
-    const hours = Math.floor(totalSeconds / 3600);
-    totalSeconds %= 3600;
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = Math.ceil(totalSeconds % 60);
+    var displayedText = '';
 
-    const progressBarText = document.getElementById('progressText');
-    progressBarText.innerText = `${`00${hours}`.slice(-2)}:${`00${minutes}`.slice(-2)}:${`00${seconds}`.slice(-2)}`;
+    if (totalSeconds > 0) {
+      const hours = Math.floor(totalSeconds / 3600);
+      totalSeconds %= 3600;
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+
+      displayedText = `${`00${hours}`.slice(-2)}:${`00${minutes}`.slice(-2)}:${`00${seconds}`.slice(-2)}`;
+    } else {
+      if (this.state.completionText !== undefined && this.state.completionText !== '') {
+        displayedText = this.state.completionText;
+      } else {
+        displayedText = '00:00:00';
+      }
+    }
+
+    this.setState({ countdownTime: displayedText });
   }
 
   updateCountdownTimeBar(timeDiff) {
-    const progressBar = document.getElementById('progressBar');
-    progressBar.style.width = `${(100 * timeDiff) / this.state.range}%`;
+    this.setState({ countdownBarWidth: `${(100 * timeDiff) / this.state.range}%` });
   }
 
   updateCountdown() {
@@ -84,10 +97,39 @@ class CountdownButton extends Component {
     return (
       <div>
         {this.state.hasLoaded ? (
-          <Button onClick={this.updateRunningState} variant="outlined">
-            {this.state.countdownFinished ? <DoneIcon /> : this.state.countdownRunning ? <PauseIcon /> : <PlayArrowIcon />}
-            <div className="progressBarText" id="progressText" />
-            <div className="progressBarProgress" id="progressBar" />
+          <Button
+            onClick={this.updateRunningState}
+            variant="outlined"
+            style={
+              this.state.countdownFinished && this.state.completionText !== undefined && this.state.completionText !== ''
+                ? { backgroundColor: 'green' }
+                : { backgroundColor: '#FFBF00' }
+            }
+          >
+            {this.state.countdownFinished ? (
+              this.state.completionText === undefined || this.state.completionText === '' ? (
+                <DoneIcon />
+              ) : null
+            ) : this.state.countdownRunning ? (
+              <PauseIcon />
+            ) : (
+              <PlayArrowIcon />
+            )}
+            <div
+              // className="progressBarText"
+              // style={{
+              //   marginLeft:
+              //     this.state.countdownFinished && this.state.completionText !== undefined && this.state.completionText !== '' ? '0px' : '15px',
+              // }}
+              style={
+                this.state.countdownFinished && this.state.completionText !== undefined && this.state.completionText !== ''
+                  ? { marginLeft: '4px', marginRight: '4px' }
+                  : { marginLeft: '15px' }
+              }
+            >
+              {this.state.countdownTime}
+            </div>
+            <div className="progressBarProgress" style={{ width: this.state.countdownBarWidth }} />
           </Button>
         ) : null}
       </div>

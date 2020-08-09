@@ -172,7 +172,7 @@ function BrewSummary(props) {
               closeModal={closeModal}
               onKeyDown={onKeyDown}
               baseUrl={props.baseUrl}
-              title="Brew Beer"
+              title="Add Brew"
               brewName={newBrewName}
               brewDate={brewDate}
               updateBrewDate={updateBrewDate}
