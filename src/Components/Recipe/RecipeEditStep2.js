@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 import RecipeEditStep from './RecipeEditStep';
 
-import DurationIcon from '../../resources/durationIcon';
+import DurationIcon from '../SVGResources/durationIcon';
 
 const CssTextField = withStyles({
   root: {
