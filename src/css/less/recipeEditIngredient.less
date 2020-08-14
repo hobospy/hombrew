@@ -4,46 +4,47 @@
 @import 'extend';
 
 .edit-ingredient-values {
-    display: grid;
-    grid-template-columns: 1fr 60px 45px 90px;
-    grid-template-rows: auto auto;
-    column-gap: 3px;
-  }
-  
-  .edit-ingredient-value-name {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  
-  .edit-ingredient-value-amount {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  
-  .edit-ingredient-value-unit {
-    grid-column: 3;
-    grid-row: 1;
-  }
-  
-  .edit-ingredient-value-type {
-    grid-column: 4;
-    grid-row: 1;
-  }
+  display: grid;
+  grid-template-columns: 1fr 60px 45px 90px;
+  grid-template-rows: auto auto;
+  column-gap: 3px;
+  margin-right: 3px;
+}
 
-  .edit-ingredient-value-buttons-container {
-      grid-column: 1 / span 4;
-      grid-row: 2;
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      grid-template-rows: auto;
-  }
+.edit-ingredient-value-name {
+  grid-column: 1;
+  grid-row: 1;
+}
 
-  .edit-ingredient-value-buttons-cancel {
-      grid-column: 2;
-      grid-row: 1;
-  }
+.edit-ingredient-value-amount {
+  grid-column: 2;
+  grid-row: 1;
+}
 
-  .edit-ingredient-value-buttons-submit {
-    grid-column: 3;
-    grid-row: 1;
+.edit-ingredient-value-unit {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.edit-ingredient-value-type {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.edit-ingredient-value-buttons-container {
+  grid-column: 1 / span 4;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto;
+}
+
+.edit-ingredient-value-buttons-cancel {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.edit-ingredient-value-buttons-submit {
+  grid-column: 3;
+  grid-row: 1;
 }

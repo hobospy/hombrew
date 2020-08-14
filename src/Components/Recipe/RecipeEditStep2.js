@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { TextField } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
+import RecipeEditStep from './RecipeEditStep';
+
+import DurationIcon from '../../resources/durationIcon';
 
 const CssTextField = withStyles({
   root: {
@@ -46,195 +47,139 @@ class RecipeEdit_Step2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      ingredients: [],
+      durationTypes: ['No duration', 'Independent', 'Before flameout', 'After flameout'],
+      editingStep: false,
       hasLoaded: false,
-      newIngredient: '',
-      newIngredientType: 'Grains',
-      newIngredientVolume: '',
-      newIngredientUnit: 'kg',
-      newIngredientID: -1,
-      editIngredient: '',
-      editIngredientType: '',
-      editIngredientVolume: '',
-      editIngredientUnit: '',
-      editingIngredient: false,
-
-      ingredientUpdate: null,
+      newStepID: -1,
+      steps: [],
     };
 
-    this.addItemToIngredientList = this.addItemToIngredientList.bind(this);
-
-    this.updateEditIngredientValue = this.updateEditIngredientValue.bind(this);
-    this.updateEditIngredientTypeValue = this.updateEditIngredientTypeValue.bind(this);
-    this.updateEditIngredientVolume = this.updateEditIngredientVolume.bind(this);
-    this.updateEditUnitTypeValue = this.updateEditUnitTypeValue.bind(this);
-
-    this.updateNewIngredientValue = this.updateNewIngredientValue.bind(this);
-    this.updateIngredientTypeValue = this.updateIngredientTypeValue.bind(this);
-    this.updateNewIngredientVolume = this.updateNewIngredientVolume.bind(this);
-    this.updateUnitTypeValue = this.updateUnitTypeValue.bind(this);
-
-    this.deleteIngredient = this.deleteIngredient.bind(this);
-    this.editIngredient = this.editIngredient.bind(this);
-    this.cancelEdit = this.cancelEdit.bind(this);
-    this.updateIngredient = this.updateIngredient.bind(this);
+    this.updateStep = this.updateStep.bind(this);
+    this.cancelUpdateStep = this.cancelUpdateStep.bind(this);
+    this.addStep = this.addStep.bind(this);
+    this.deleteStep = this.deleteStep.bind(this);
   }
 
   componentDidMount() {
-    var ingList = [];
+    var stepList = [];
 
-    if (this.props.ingredients !== undefined) {
-      this.props.ingredients.forEach(function (arrayItem) {
+    if (this.props.steps !== undefined) {
+      this.props.steps.forEach(function (arrayItem) {
         const obj = {
           id: arrayItem.id,
-          name: arrayItem.name,
-          type: arrayItem.type,
-          amount: arrayItem.amount,
-          unit: arrayItem.unit,
+          description: arrayItem.description,
+          ingredients: arrayItem.ingredients,
+          timer: arrayItem.timer,
+          timerDisplayValue: '',
           recipeID: arrayItem.recipeID,
           inEdit: false,
         };
 
-        ingList.push(obj);
+        if (arrayItem.timer !== null) {
+          var valInSec = arrayItem.timer.duration;
+
+          if (valInSec > 0) {
+            const hours = Math.floor(valInSec / 3600);
+            valInSec %= 3600;
+            const minutes = Math.floor(valInSec / 60);
+            const seconds = Math.floor(valInSec % 60);
+
+            obj.timerDisplayValue = `${`00${hours}`.slice(-2)}:${`00${minutes}`.slice(-2)}:${`00${seconds}`.slice(-2)}`;
+          } else {
+            obj.timerDisplayValue = '00:00:00';
+          }
+        }
+
+        stepList.push(obj);
       });
     }
 
-    this.setState({ ingredients: ingList });
-    this.setState({ hasLoaded: true });
+    this.setState({ steps: stepList, hasLoaded: true });
   }
 
-  changingItem() {
-    console.log('Output here - water profile');
+  editStep = (stepID) => (event) => {
+    if (!this.state.editingStep) {
+      var array = [...this.state.steps];
+      var stepIndex = array.findIndex((e) => e.id === stepID);
+
+      if (stepIndex !== -1) {
+        let editStep = { ...array[stepIndex], inEdit: true };
+        array[stepIndex] = editStep;
+
+        this.setState({ steps: array, editingStep: true });
+      }
+    }
+  };
+
+  updateStep(updatedStep) {
+    var array = [...this.state.steps];
+    var stepIndex = array.findIndex((e) => e.id === updatedStep.id);
+
+    if (stepIndex !== -1) {
+      var updatedStepItem = {
+        id: updatedStep.id,
+        description: updatedStep.description,
+        ingredients: updatedStep.ingredients,
+        timer: updatedStep.timer,
+        recipeID: updatedStep.recipeID,
+        timerDisplayValue: updatedStep.timerDisplayValue,
+        inEdit: false,
+      };
+
+      array[stepIndex] = updatedStepItem;
+
+      this.setState({ steps: array });
+    }
+
+    this.setState({ editingStep: false });
   }
 
-  handleChange(e) {
-    console.log('Changed drop down list, new value');
+  cancelUpdateStep() {
+    var array = [...this.state.steps];
+    var stepIndex = array.findIndex((e) => e.inEdit === true);
+
+    if (stepIndex !== -1) {
+      let editStep = { ...array[stepIndex], inEdit: false };
+      array[stepIndex] = editStep;
+
+      this.setState({ steps: array, editingStep: false });
+    }
   }
 
-  addItemToIngredientList(event) {
-    const newIngredient = {
-      id: this.state.newIngredientID,
-      type: this.state.newIngredientType,
-      name: this.state.newIngredient,
-      amount: this.state.newIngredientVolume,
-      unit: this.state.newIngredientUnit,
-      recipeID: this.props.recipeID,
+  addStep(newStep) {
+    var tempStepList = this.state.steps;
+
+    var newStepItem = {
+      id: newStep.id,
+      description: newStep.description,
+      ingredients: newStep.ingredients,
+      timer: newStep.timer,
+      recipeID: newStep.recipeID,
+      timerDisplayValue: newStep.timerDisplayValue,
       inEdit: false,
     };
 
-    this.setState({ ingredients: this.state.ingredients.concat(newIngredient) });
-    this.setState({ newIngredient: '' });
-    this.setState({ newIngredientType: 'Grains' });
-    this.setState({ newIngredientVolume: '0' });
-    this.setState({ newIngredientUnit: 'kg' });
-    this.setState({ newIngredientID: this.state.newIngredientID - 1 });
+    tempStepList = tempStepList.concat(newStepItem);
 
-    var ingEvent = event;
-    ingEvent.target.name = 'AddIngredient';
-    ingEvent.target.value = newIngredient;
-    this.props.handleChange(ingEvent);
+    var newID = this.state.newStepID - 1;
+
+    this.setState({ steps: tempStepList, newStepID: newID });
   }
 
-  updateEditIngredientValue(event) {
-    this.setState({ editIngredient: event.target.value });
-  }
+  deleteStep = (stepID) => (event) => {
+    var array = [...this.state.steps];
+    var stepIndex = array.findIndex((e) => e.id === stepID);
+    var editingItem = false;
 
-  updateEditIngredientTypeValue(event) {
-    this.setState({ editIngredientType: event.target.value });
-  }
+    if (stepIndex !== -1) {
+      editingItem = array[stepIndex].inEdit;
+      array.splice(stepIndex, 1);
 
-  updateEditIngredientVolume(event) {
-    this.setState({ editIngredientVolume: event.target.value });
-  }
-
-  updateEditUnitTypeValue(event) {
-    this.setState({ editIngredientUnit: event.target.value });
-  }
-
-  updateNewIngredientValue(event) {
-    this.setState({ newIngredient: event.target.value });
-  }
-
-  updateIngredientTypeValue(event) {
-    this.setState({ newIngredientType: event.target.value });
-  }
-
-  updateNewIngredientVolume(event) {
-    this.setState({ newIngredientVolume: event.target.value });
-  }
-
-  updateUnitTypeValue(event) {
-    this.setState({ newIngredientUnit: event.target.value });
-  }
-
-  deleteIngredient = (ingredientID) => (event) => {
-    event.preventDefault();
-
-    var array = [...this.state.ingredients];
-    var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
-
-    if (ingredientIndex !== -1) {
-      array.splice(ingredientIndex, 1);
-      this.setState({ ingredients: array });
+      this.setState({ steps: array });
     }
 
-    this.props.onDeleteIngredient(ingredientID)(event);
-
-    document.getElementById('nextButton').focus();
-  };
-
-  editIngredient = (ingredientID) => (event) => {
-    var array = [...this.state.ingredients];
-    var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
-
-    if (ingredientIndex !== -1) {
-      let editIngredient = { ...array[ingredientIndex], inEdit: true };
-      array[ingredientIndex] = editIngredient;
-
-      this.setState({ editIngredient: editIngredient.name });
-      this.setState({ editIngredientType: editIngredient.type });
-      this.setState({ editIngredientVolume: editIngredient.amount });
-      this.setState({ editIngredientUnit: editIngredient.unit });
-
-      this.setState({ ingredients: array });
-      this.setState({ editingIngredient: true });
-    }
-  };
-
-  cancelEdit = (ingredientID) => (event) => {
-    var array = [...this.state.ingredients];
-    var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
-
-    if (ingredientIndex !== -1) {
-      let editIngredient = { ...array[ingredientIndex], inEdit: false };
-      array[ingredientIndex] = editIngredient;
-      this.setState({ ingredients: array });
-      this.setState({ editingIngredient: false });
-    }
-  };
-
-  updateIngredient = (ingredientID) => (event) => {
-    var array = [...this.state.ingredients];
-    var ingredientIndex = array.findIndex((e) => e.id === ingredientID);
-
-    if (ingredientIndex !== -1) {
-      let editIngredient = {
-        ...array[ingredientIndex],
-        inEdit: false,
-        name: this.state.editIngredient,
-        type: this.state.editIngredientType,
-        amount: this.state.editIngredientVolume,
-        unit: this.state.editIngredientUnit,
-      };
-      array[ingredientIndex] = editIngredient;
-      this.setState({ ingredients: array });
-      this.setState({ editingIngredient: false });
-
-      var ingEvent = event;
-      ingEvent.target.name = 'UpdateIngredient';
-      ingEvent.target.value = editIngredient;
-      this.props.handleChange(ingEvent);
+    if (editingItem) {
+      this.setState({ editingStep: false });
     }
   };
 
@@ -243,180 +188,116 @@ class RecipeEdit_Step2 extends Component {
       return null;
     }
 
+    const ColoredLine = ({ color }) => (
+      <hr
+        style={{
+          color: color,
+          background: color,
+          height: 0.3,
+        }}
+      />
+    );
+
     return (
       <div>
         {this.state.hasLoaded ? (
           <div>
             <div className="edit-page-container-item, useStyles.root">
-              <div className="edit-page-recipe-title-container">Ingredients</div>
-              <div style={{ marginTop: 15, marginLeft: 10 }}>
-                {this.state.ingredients.map((i) => (
+              <div className="edit-page-recipe-title-container">Directions</div>
+              <div
+                style={{
+                  marginTop: 15,
+                  marginLeft: 10,
+                  maxHeight: this.state.editingStep ? 550 : 300,
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                  marginBottom: 5,
+                }}
+              >
+                {this.state.steps.map((step, index) => (
                   <div>
-                    {i.inEdit === false ? (
-                      <div className="edit-page-recipe-ingredient-container">
-                        <div className="edit-page-recipe-ingredient">
-                          {/* <FloatingLabelInput id={i.id} key={i.id} label={i.name} onChange={this.changingItem} value={String(i.amount) + i.unit} /> */}
-                          <CssTextField
-                            fullWidth
-                            InputProps={{ disableUnderline: true }}
-                            id={i.id}
-                            key={i.id}
-                            value={i.amount.toString() + i.unit + ' ' + i.name}
-                            onFocus={this.editIngredient(i.id)}
-                          />
+                    {step.inEdit === false ? (
+                      <div>
+                        <div className="step-edit-readonly-container">
+                          <div className="step-edit-readonly-index" onClick={this.editStep(step.id)}>
+                            {index + 1}.
+                          </div>
+                          <div className="step-edit-readonly-description" onClick={this.editStep(step.id)}>
+                            <CssTextField
+                              fullWidth
+                              InputProps={{ disableUnderline: true }}
+                              id={step.id}
+                              key={step.id}
+                              multiline
+                              value={step.description}
+                            />
+                          </div>
+                          <div className="step-edit-readonly-duration" onClick={this.editStep(step.id)}>
+                            {step.timer !== null ? (
+                              <div className="step-edit-readonly-duration-container">
+                                <div className="step-edit-readonly-duration-value">{step.timerDisplayValue}</div>
+                                {step.timer.type !== 'Independent' ? (
+                                  <div className="step-edit-readonly-duration-icon">
+                                    {step.timer.type === 'Before flameout' ? (
+                                      <DurationIcon name="beforeFlameout" fill="darkgrey" width={16} height={16} />
+                                    ) : (
+                                      <DurationIcon name="afterFlameout" fill="darkgrey" width={16} height={16} />
+                                    )}
+                                  </div>
+                                ) : null}
+                              </div>
+                            ) : null}
+                          </div>
+                          <div className="step-edit-readonly-ingredients" onClick={this.editStep(step.id)}>
+                            {step.ingredients.map((ingredient) => (
+                              <div style={{ marginLeft: '30px' }}>
+                                {ingredient.amount}
+                                {ingredient.unit} - {ingredient.name}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="step-edit-readonly-delete" onClick={this.deleteStep(step.id)}>
+                            <CSSIconButton arial-label="delete">
+                              <DeleteIcon fontSize="small" />
+                            </CSSIconButton>
+                          </div>
                         </div>
-                        <div className="ingredient-cancel-button" onClick={this.deleteIngredient(i.id)}>
-                          <CSSIconButton arial-label="delete">
-                            <DeleteIcon fontSize="small" />
-                          </CSSIconButton>
-                        </div>
+                        <ColoredLine color="lightgray" />
                       </div>
                     ) : (
-                      <div className="edit-ingredient-container">
-                        <div className="inline-edit-recipe-container">
-                          <div className="inline-edit-recipe-name">
-                            <CssTextField
-                              autoComplete="off"
-                              InputProps={{ disableUnderline: true }}
-                              id="editIngredient"
-                              label="Ingredient"
-                              value={this.state.editIngredient}
-                              onChange={this.updateEditIngredientValue}
-                            />
-                          </div>
-                          <div className="inline-edit-recipe-amount">
-                            <CssTextField
-                              autoComplete="off"
-                              InputProps={{ disableUnderline: true }}
-                              id="editVolume"
-                              label="Volume"
-                              value={this.state.editIngredientVolume.toString()}
-                              onChange={this.updateEditIngredientVolume}
-                            />
-                          </div>
-                          <div className="inline-edit-recipe-unit">
-                            <CssTextField
-                              InputProps={{ disableUnderline: true }}
-                              labelId="edit-ut-label"
-                              id="ut-select"
-                              label="Unit"
-                              select
-                              value={this.state.editIngredientUnit}
-                              onChange={this.updateEditUnitTypeValue}
-                            >
-                              {this.props.unitTypes.map((ut, i) => (
-                                <MenuItem value={ut} key={i}>
-                                  <div>
-                                    <div>{ut}</div>
-                                  </div>
-                                </MenuItem>
-                              ))}
-                            </CssTextField>
-                          </div>
-                        </div>
-                        <div className="inline-edit-recipe-type">
-                          <CssTextField
-                            InputProps={{ disableUnderline: true }}
-                            labelId="it-label"
-                            id="edit-it-select"
-                            label="Type"
-                            select
-                            value={this.state.editIngredientType}
-                            onChange={this.updateEditIngredientTypeValue}
-                          >
-                            {this.props.ingredientTypes.map((it, i) => (
-                              <MenuItem value={it} key={i}>
-                                <div>
-                                  <div>{it}</div>
-                                </div>
-                              </MenuItem>
-                            ))}
-                          </CssTextField>
-                        </div>
-                        <div className="inline-edit-button-container">
-                          <Button className="inline-edit-button" onClick={this.updateIngredient(i.id)}>
-                            Update
-                          </Button>
-                          <Button className="inline-edit-button" onClick={this.cancelEdit(i.id)}>
-                            Cancel
-                          </Button>
-                        </div>
+                      <div>
+                        <RecipeEditStep
+                          cancel={this.cancelUpdateStep}
+                          description={step.description}
+                          ingredients={step.ingredients}
+                          ingredientTypes={this.props.ingredientTypes}
+                          unitTypes={this.props.unitTypes}
+                          stepID={step.id}
+                          recipeID={this.props.recipeID}
+                          showCancel={true}
+                          submit={this.updateStep}
+                          submitText="Update"
+                          timer={step.timer}
+                        />
+                        <ColoredLine color="lightgray" />
                       </div>
                     )}
                   </div>
                 ))}
               </div>
             </div>
-            {this.state.editingIngredient === false ? (
-              <div className="test-group-container">
-                <label className="test-group-container-header">New</label>
-                <div className="new-ingredient-container">
-                  <div className="inline-edit-recipe-container">
-                    <div className="inline-edit-recipe-name">
-                      <CssTextField
-                        autoComplete="off"
-                        InputProps={{ disableUnderline: true }}
-                        id="Ingredient"
-                        label="Ingredient"
-                        value={this.state.newIngredient}
-                        onChange={this.updateNewIngredientValue}
-                      />
-                    </div>
-                    <div className="inline-edit-recipe-amount">
-                      <CssTextField
-                        autoComplete="off"
-                        InputProps={{ disableUnderline: true }}
-                        id="Volume"
-                        label="Volume"
-                        value={this.state.newIngredientVolume.toString()}
-                        onChange={this.updateNewIngredientVolume}
-                      />
-                    </div>
-                    <div className="inline-edit-recipe-unit">
-                      <CssTextField
-                        InputProps={{ disableUnderline: true }}
-                        select
-                        labelId="edit-ut-label"
-                        label="Unit"
-                        id="ut-select"
-                        value={this.state.newIngredientUnit}
-                        onChange={this.updateUnitTypeValue}
-                      >
-                        {this.props.unitTypes.map((ut, i) => (
-                          <MenuItem value={ut} key={i}>
-                            <div>
-                              <div>{ut}</div>
-                            </div>
-                          </MenuItem>
-                        ))}
-                      </CssTextField>
-                    </div>
-                  </div>
-                  <div className="inline-edit-recipe-type">
-                    <CssTextField
-                      InputProps={{ disableUnderline: true }}
-                      select
-                      labelId="it-label"
-                      label="Type"
-                      id="edit-it-select"
-                      value={this.state.newIngredientType}
-                      onChange={this.updateIngredientTypeValue}
-                    >
-                      {this.props.ingredientTypes.map((it, i) => (
-                        <MenuItem value={it} key={i}>
-                          <div>
-                            <div>{it}</div>
-                          </div>
-                        </MenuItem>
-                      ))}
-                    </CssTextField>
-                  </div>
-                  <div className="inline-edit-button-container">
-                    <Button className="inline-edit-button" onClick={this.addItemToIngredientList}>
-                      Add
-                    </Button>
-                  </div>
-                </div>
+            {this.state.editingStep === false ? (
+              <div className="step-new-container-surround">
+                <label className="step-new-container-header">New step</label>
+                <RecipeEditStep
+                  ingredientTypes={this.props.ingredientTypes}
+                  unitTypes={this.props.unitTypes}
+                  stepID={this.state.newStepID}
+                  recipeID={this.props.recipeID}
+                  showCancel={true}
+                  submit={this.addStep}
+                  submitText="Add"
+                />
               </div>
             ) : null}
           </div>

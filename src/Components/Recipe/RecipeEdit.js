@@ -6,8 +6,6 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 import RecipeEditStep1 from './RecipeEditStep1';
 import RecipeEditStep2 from './RecipeEditStep2';
-import RecipeEditStep2a from './RecipeEditStep2a';
-import RecipeEditStep3 from './RecipeEditStep3';
 
 const StyledButton = withStyles({
   outlined: {
@@ -36,7 +34,7 @@ class RecipeEdit extends Component {
   _next() {
     let cStep = this.state.currentStep;
 
-    cStep = cStep >= 2 ? 3 : cStep + 1;
+    cStep = cStep >= 1 ? 2 : cStep + 1;
 
     this.setState({
       currentStep: cStep,
@@ -74,7 +72,7 @@ class RecipeEdit extends Component {
   get nextButton() {
     let currentStep = this.state.currentStep;
 
-    if (currentStep < 3) {
+    if (currentStep < 2) {
       return (
         <StyledButton id="nextButton" variant="outlined" onClick={this._next}>
           Next
@@ -88,7 +86,7 @@ class RecipeEdit extends Component {
   get submitButton() {
     let currentStep = this.state.currentStep;
 
-    if (currentStep === 3) {
+    if (currentStep === 2) {
       return (
         <StyledButton id="submitButton" variant="outlined" onClick={this.props.onSubmit}>
           Submit
@@ -153,16 +151,7 @@ class RecipeEdit extends Component {
             abv={this.props.recipe.abv}
             addingNewRecipe={this.props.addingNewRecipe}
           />
-          {/* <RecipeEditStep2
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            onDeleteIngredient={this.props.onDeleteIngredient}
-            ingredients={this.state.recipeDetail.ingredients}
-            ingredientTypes={this.props.ingredientTypes}
-            recipeID={this.props.recipe.recipeID}
-            unitTypes={this.props.unitTypes}
-          /> */}
-          <RecipeEditStep2a
+          <RecipeEditStep2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             onDeleteIngredient={this.props.onDeleteIngredient}
@@ -171,12 +160,6 @@ class RecipeEdit extends Component {
             ingredientTypes={this.props.ingredientTypes}
             recipeID={this.props.recipe.recipeID}
             unitTypes={this.props.unitTypes}
-          />
-          <RecipeEditStep3
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            onDeleteStep={this.props.onDeleteStep}
-            steps={this.state.recipeDetail.steps}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {this.previousButton}
@@ -191,10 +174,6 @@ class RecipeEdit extends Component {
             <div className="edit-page-indicator-page2">
               <RadioButtonCheckedIcon style={{ display: this.state.currentStep === 2 ? 'inline' : 'none' }} />
               <RadioButtonUncheckedIcon style={{ display: this.state.currentStep === 2 ? 'none' : 'inline' }} />
-            </div>
-            <div className="edit-page-indicator-page3">
-              <RadioButtonCheckedIcon style={{ display: this.state.currentStep === 3 ? 'inline' : 'none' }} />
-              <RadioButtonUncheckedIcon style={{ display: this.state.currentStep === 3 ? 'none' : 'inline' }} />
             </div>
           </div>
         </form>

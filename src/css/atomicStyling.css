@@ -803,6 +803,44 @@
   text-align: right;
   margin-right: 5px;
 }
+.edit-ingredient-values {
+  display: grid;
+  grid-template-columns: 1fr 60px 45px 90px;
+  grid-template-rows: auto auto;
+  column-gap: 3px;
+  margin-right: 3px;
+}
+.edit-ingredient-value-name {
+  grid-column: 1;
+  grid-row: 1;
+}
+.edit-ingredient-value-amount {
+  grid-column: 2;
+  grid-row: 1;
+}
+.edit-ingredient-value-unit {
+  grid-column: 3;
+  grid-row: 1;
+}
+.edit-ingredient-value-type {
+  grid-column: 4;
+  grid-row: 1;
+}
+.edit-ingredient-value-buttons-container {
+  grid-column: 1 / span 4;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto;
+}
+.edit-ingredient-value-buttons-cancel {
+  grid-column: 2;
+  grid-row: 1;
+}
+.edit-ingredient-value-buttons-submit {
+  grid-column: 3;
+  grid-row: 1;
+}
 .step-edit-readonly-container {
   display: grid;
   grid-template-columns: auto 1fr 45px 35px;
@@ -923,6 +961,8 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto auto auto;
+}
+.step-new-container-surround {
   border-collapse: separate;
   border: solid 1px #b4b4b4;
   border-radius: 6px;
@@ -933,8 +973,6 @@
   padding-left: 5px;
 }
 .step-new-container-header {
-  margin-top: -17px;
-  margin-left: -348px;
   margin-bottom: 0px;
   background-color: white;
   padding-left: 3px;
@@ -953,44 +991,30 @@
   grid-column: 1 / span 2;
   grid-row: 2;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   grid-template-rows: auto auto;
 }
 .step-new-ingredient-container {
-  grid-column: 1 / span 2;
-  grid-row: 1;
-}
-.step-new-ingredient-values {
-  display: grid;
-  grid-template-columns: 1fr 60px 45px 90px auto;
-  grid-template-rows: auto;
-  column-gap: 3px;
-  margin: 0px 3px 3px 15px;
-}
-.step-new-ingredient-value-name {
   grid-column: 1;
   grid-row: 1;
 }
-.step-new-ingredient-value-amount {
+.step-new-ingredient-display {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  margin: 0px 3px 3px 15px;
+}
+.step-new-ingredient-display-details {
+  grid-column: 1;
+  grid-row: 1;
+}
+.step-new-ingredient-display-delete {
   grid-column: 2;
   grid-row: 1;
 }
-.step-new-ingredient-value-unit {
-  grid-column: 3;
-  grid-row: 1;
-}
-.step-new-ingredient-value-type {
-  grid-column: 4;
-  grid-row: 1;
-}
-.step-new-ingredient-value-delete {
-  grid-column: 5;
-  grid-row: 1;
-}
-.step-new-ingredient-button {
-  grid-column: 2;
+.step-new-ingredient-add {
+  grid-column: 1;
   grid-row: 2;
-  margin-right: 3px;
 }
 .step-new-duration {
   grid-column: 1;
