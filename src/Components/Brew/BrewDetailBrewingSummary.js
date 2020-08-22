@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import BrewDetailBrewedNotes from './BrewDetailBrewedNotes';
 import CountdownButton from '../SupportComponents/CountdownButton';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
@@ -9,7 +11,7 @@ class BrewDetailBrewingSummary extends Component {
     super(props);
     this.state = {
       steps: [],
-      notes: this.props.notes,
+      brewingNotes: this.props.brewingNotes,
       hasLoaded: false,
     };
   }
@@ -56,59 +58,95 @@ class BrewDetailBrewingSummary extends Component {
       />
     );
 
+    const largeScreenSize = window.innerWidth > 600; // useMediaQuery('(min-width:600px)');
+
     return (
       <div>
         {this.state.hasLoaded ? (
           <Fragment>
             <div className="brewing-summary-container">
               <div className="brew-summary-container-steps">
-                Brewing Steps
-                {this.state.steps.map((step) => (
+                {largeScreenSize ? (
                   <div>
-                    <div className="brew-summary-steps-container">
-                      <div className="brew-summary-completion-step">
-                        <div>{step.description}</div>
-                        {step.ingredients.map((ingredient, ingedientID) => (
-                          <div style={{ marginLeft: '50px' }}>
-                            {ingredient.amount}
-                            {ingredient.unit} - {ingredient.name}
-                          </div>
-                        ))}
-
-                        {/* {step.ingredients !== undefined ? (
-                          <div>
+                    <div className="brewed-beer-tasting-note-title plain-header">Brewing Steps</div>
+                    {this.state.steps.map((step) => (
+                      <div>
+                        <div className="brew-summary-steps-container">
+                          <div className="brew-summary-completion-step">
+                            <div>{step.description}</div>
                             {step.ingredients.map((ingredient, ingedientID) => (
-                              <span>{ingredient.name}</span>
+                              <div style={{ marginLeft: '50px' }}>
+                                {ingredient.amount}
+                                {ingredient.unit} - {ingredient.name}
+                              </div>
                             ))}
                           </div>
-                        ) : (
-                          <span>No ingredients</span>
-                        )} */}
+                          <div className="brew-summary-completion-button">
+                            {step.timer !== 0 ? (
+                              <CountdownButton
+                                className="brew-summary-completion-button"
+                                duration={step.timer.duration * 1000}
+                                completionText="Completed"
+                              />
+                            ) : (
+                              <Button
+                                className="brew-summary-completion-button"
+                                variant="outlined"
+                                style={{ backgroundColor: step.completed ? 'green' : '#FFBF00' }}
+                                onClick={this.stepCompleted(step.id)}
+                              >
+                                {step.completed ? <span>Completed</span> : <span>Complete</span>}
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                        <ColoredLine color="lightgray" />
                       </div>
-                      <div className="brew-summary-completion-button">
-                        {step.timer !== 0 ? (
-                          <CountdownButton
-                            className="brew-summary-completion-button"
-                            duration={step.timer.duration * 1000}
-                            completionText="Completed"
-                          />
-                        ) : (
-                          <Button
-                            className="brew-summary-completion-button"
-                            variant="outlined"
-                            style={{ backgroundColor: step.completed ? 'green' : '#FFBF00' }}
-                            onClick={this.stepCompleted(step.id)}
-                          >
-                            {step.completed ? <span>Completed</span> : <span>Complete</span>}
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                    <ColoredLine color="lightgray" />
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <div>
+                    <div className="brewed-beer-tasting-note-title plain-header">Brewing Steps</div>
+                    {this.state.steps.map((step) => (
+                      <div>
+                        <div className="brew-summary-steps-container-mobile">
+                          <div className="brew-summary-completion-step-mobile">
+                            <div>{step.description}</div>
+                            {step.ingredients.map((ingredient, ingedientID) => (
+                              <div style={{ marginLeft: '50px' }}>
+                                {ingredient.amount}
+                                {ingredient.unit} - {ingredient.name}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="brew-summary-completion-button-mobile">
+                            {step.timer !== 0 ? (
+                              <CountdownButton
+                                className="brew-summary-completion-button"
+                                duration={step.timer.duration * 1000}
+                                completionText="Completed"
+                              />
+                            ) : (
+                              <Button
+                                className="brew-summary-completion-button"
+                                variant="outlined"
+                                style={{ backgroundColor: step.completed ? 'green' : '#FFBF00' }}
+                                onClick={this.stepCompleted(step.id)}
+                              >
+                                {step.completed ? <span>Completed</span> : <span>Complete</span>}
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                        <ColoredLine color="lightgray" />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div className="brew-summary-container-notes">Brewing notes</div>
+              <div className="brew-summary-container-notes">
+                <BrewDetailBrewedNotes baseUrl={this.props.baseUrl} brewingNotes={this.state.brewingNotes} url={this.state.url} />
+              </div>
             </div>
           </Fragment>
         ) : (

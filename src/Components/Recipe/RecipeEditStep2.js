@@ -4,10 +4,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
+import AfterFlameout from '../../resources/AfterFlameout.png';
+import BeforeFlameout from '../../resources/BeforeFlameout.png';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 import RecipeEditStep from './RecipeEditStep';
-
-import DurationIcon from '../SVGResources/durationIcon';
 
 const CssTextField = withStyles({
   root: {
@@ -132,6 +132,8 @@ class RecipeEdit_Step2 extends Component {
     }
 
     this.setState({ editingStep: false });
+
+    this.props.onUpdateStep(updatedStep);
   }
 
   cancelUpdateStep() {
@@ -164,6 +166,8 @@ class RecipeEdit_Step2 extends Component {
     var newID = this.state.newStepID - 1;
 
     this.setState({ steps: tempStepList, newStepID: newID });
+
+    this.props.onAddStep(newStepItem);
   }
 
   deleteStep = (stepID) => (event) => {
@@ -181,6 +185,8 @@ class RecipeEdit_Step2 extends Component {
     if (editingItem) {
       this.setState({ editingStep: false });
     }
+
+    this.props.onDeleteStep(stepID)(event);
   };
 
   render() {
@@ -238,11 +244,7 @@ class RecipeEdit_Step2 extends Component {
                                 <div className="step-edit-readonly-duration-value">{step.timerDisplayValue}</div>
                                 {step.timer.type !== 'Independent' ? (
                                   <div className="step-edit-readonly-duration-icon">
-                                    {step.timer.type === 'Before flameout' ? (
-                                      <DurationIcon name="beforeFlameout" fill="darkgrey" width={16} height={16} />
-                                    ) : (
-                                      <DurationIcon name="afterFlameout" fill="darkgrey" width={16} height={16} />
-                                    )}
+                                    {step.timer.type === 'Before flameout' ? <img src={BeforeFlameout} alt="" /> : <img src={AfterFlameout} alt="" />}
                                   </div>
                                 ) : null}
                               </div>

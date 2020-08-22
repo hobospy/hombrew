@@ -44,7 +44,7 @@ class BrewDetail extends Component {
       id: this.props.match.params.id,
       editModalShown: false,
       deleteConfirmationModalShown: false,
-      brewedState: 2,
+      brewedState: 0,
     };
 
     this.showDeleteModal = this.showDeleteModal.bind(this);
@@ -58,8 +58,8 @@ class BrewDetail extends Component {
       .get(this.state.url)
       .then((response) => response.data)
       .then((data) => {
-        this.setState({ brewDetail: data });
-        this.setState({ hasLoaded: true });
+        this.setState({ brewDetail: data, brewedState: data.brewedState, hasLoaded: true });
+        console.log('Brewed state: ' + data.brewedState);
       });
   }
 
@@ -122,14 +122,14 @@ class BrewDetail extends Component {
                   <CollapsiblePanel
                     title={'Recipe - ' + brew.recipe.name}
                     children={<BrewDetailRecipe recipe={brew.recipe} detailsExpanded={false} hideBrewingSteps={false} />}
-                    open={false}
+                    open={this.state.brewedState === 0}
                   />
                 ) : (
-                  <BrewDetailBrewingSummary steps={brew.recipe.steps} notes={brew.brewingNotes} />
+                  <BrewDetailBrewingSummary steps={brew.recipe.steps} brewingNotes={brew.brewingNotes} />
                 )}
                 {this.state.brewedState === 2 ? (
                   <div>
-                    <BrewDetailBrewedNotes baseUrl={this.props.baseUrl} brewDetail={brew} url={this.state.url} />
+                    <BrewDetailBrewedNotes baseUrl={this.props.baseUrl} brewingNotes={brew.brewingNotes} url={this.state.url} />
                     <BrewDetailTastingNotes baseUrl={this.props.baseUrl} brewDetail={brew} url={this.state.url} />
                   </div>
                 ) : null}

@@ -15,6 +15,8 @@ export const Modal = ({
   onSubmit,
   onChange,
   onDeleteIngredient,
+  onAddStep,
+  onUpdateStep,
   onDeleteStep,
   recipe,
   baseUrl,
@@ -62,6 +64,8 @@ export const Modal = ({
                   onSubmit={onSubmit}
                   onChange={onChange}
                   onDeleteIngredient={onDeleteIngredient}
+                  onAddStep={onAddStep}
+                  onUpdateStep={onUpdateStep}
                   onDeleteStep={onDeleteStep}
                   recipe={recipe}
                   waterProfiles={waterProfileList}

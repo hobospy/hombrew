@@ -53,9 +53,8 @@ class BrewDetailBrewedNotes extends Component {
     super(props);
     this.state = {
       url: this.props.url,
-      brewDetail: this.props.brewDetail,
       editBrewingNotes: false,
-      editableBrewingNotes: '',
+      editableBrewingNotes: this.props.brewingNotes,
     };
 
     this.displayEditBrewingNotes = this.displayEditBrewingNotes.bind(this);
@@ -63,9 +62,7 @@ class BrewDetailBrewedNotes extends Component {
     this.hideBrewingNoteButtons = this.hideBrewingNoteButtons.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ editableBrewingNotes: this.state.brewDetail.brewingNotes });
-  }
+  componentDidMount() {}
 
   toggleScrollLock = () => {
     document.querySelector('html').classList.toggle('scroll-lock');
@@ -76,7 +73,7 @@ class BrewDetailBrewedNotes extends Component {
   };
 
   hideBrewingNoteButtons = () => {
-    this.setState({ editableBrewingNotes: this.state.brewDetail.brewingNotes === null ? '' : this.state.brewDetail.brewingNotes });
+    this.setState({ editableBrewingNotes: this.state.brewingNotes === null ? '' : this.state.brewingNotes });
     this.setState({ editBrewingNotes: false });
   };
 
@@ -105,7 +102,7 @@ class BrewDetailBrewedNotes extends Component {
     if (response.ok) {
       var data = response.json();
       this.setState({
-        brewDetail: data,
+        editableBrewingNotes: data.brewingNotes,
       });
     }
   };
@@ -136,13 +133,13 @@ class BrewDetailBrewedNotes extends Component {
           />
           {this.state.editBrewingNotes ? (
             <div className="brewed-beer-add-tasting-note-buttons">
-              <StyledButton className="button-style" id="okButton" style={{ minWidth: '100px' }} variant="outlined" onClick={this.updateBrewingNotes}>
+              <StyledButton className="button-style" id="okButton" style={{ minWidth: '75px' }} variant="outlined" onClick={this.updateBrewingNotes}>
                 OK
               </StyledButton>
               <StyledButton
                 className="button-style"
                 id="cancelButton"
-                style={{ minWidth: '100px' }}
+                style={{ minWidth: '75px' }}
                 variant="outlined"
                 onClick={this.hideBrewingNoteButtons}
               >

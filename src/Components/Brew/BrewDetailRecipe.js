@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, MenuList } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import AfterFlameout from '../../resources/AfterFlameout.png';
+import BeforeFlameout from '../../resources/BeforeFlameout.png';
 import BrewDetailWaterProfile from './BrewDetailWaterProfile';
 import BrewDetailIngredients from './BrewDetailIngredients';
 import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
@@ -39,17 +41,97 @@ class BrewDetail_Recipe extends Component {
     this.state = {
       hasLoadedRecipe: false,
       recipe: this.props.recipe,
+      ingredients: [],
       detailsExpanded: this.props.detailsExpanded,
       hideBrewingSteps: this.props.hideBrewingSteps,
+      steps: [],
     };
+
+    this.updateIngredientList = this.updateIngredientList.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ hasLoadedRecipe: true });
+    var stepList = [];
+
+    if (this.props.recipe !== undefined && this.props.recipe.steps !== undefined) {
+      this.props.recipe.steps.forEach(function (arrayItem) {
+        const obj = {
+          id: arrayItem.id,
+          description: arrayItem.description,
+          ingredients: arrayItem.ingredients,
+          timer: arrayItem.timer,
+          timerDisplayValue: '',
+          recipeID: arrayItem.recipeID,
+        };
+
+        if (arrayItem.timer !== null) {
+          var valInSec = arrayItem.timer.duration;
+
+          if (valInSec > 0) {
+            const hours = Math.floor(valInSec / 3600);
+            valInSec %= 3600;
+            const minutes = Math.floor(valInSec / 60);
+            const seconds = Math.floor(valInSec % 60);
+
+            obj.timerDisplayValue = `${`00${hours}`.slice(-2)}:${`00${minutes}`.slice(-2)}:${`00${seconds}`.slice(-2)}`;
+          } else {
+            obj.timerDisplayValue = '00:00:00';
+          }
+        }
+
+        stepList.push(obj);
+      });
+    }
+
+    this.updateIngredientList();
+    this.setState({ steps: stepList, hasLoadedRecipe: true });
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({ recipe: newProps.recipe });
+    this.setState({ recipe: newProps.recipe }, this.updateIngredientList);
+  }
+
+  updateIngredientList() {
+    // Loop through the ingrdietns in the recipe steps and group together
+    // Ignore case differences
+
+    if (this.state.recipe !== undefined && this.state.recipe !== null && this.state.recipe.steps !== undefined && this.state.recipe.steps !== null) {
+      var sortedIngredients = [];
+      this.state.recipe.steps.forEach((step) => {
+        if (step.ingredients !== undefined && step.ingredients !== null && step.ingredients.length > 0) {
+          step.ingredients.forEach((ingredient) => {
+            var multiplier = 1;
+            var unit = ingredient.unit;
+            if (unit === 'kg' || unit === 'l') {
+              multiplier = 1000;
+              unit = unit === 'kg' ? 'g' : 'ml';
+            }
+
+            var ingIndex = sortedIngredients.findIndex(
+              (ing) => ing.name.toLowerCase() === ingredient.name.toLowerCase() && ing.type === ingredient.type && ing.unit === unit
+            );
+
+            if (ingIndex === -1) {
+              // Ingredient doesn't exist in the array, add it
+              sortedIngredients.push({ name: ingredient.name, type: ingredient.type, unit: unit, amount: ingredient.amount * multiplier });
+            } else {
+              // Ingredient exists in the array, add volume to the existing item checking units match
+              var newAmount = sortedIngredients[ingIndex].amount + ingredient.amount;
+              sortedIngredients[ingIndex].amount = newAmount;
+            }
+          });
+        }
+      });
+
+      sortedIngredients.forEach((ingredient) => {
+        if ((ingredient.unit === 'g' || ingredient.unit === 'ml') && ingredient.amount >= 1000) {
+          ingredient.amount = ingredient.amount / 1000;
+          ingredient.unit = ingredient.unit === 'g' ? 'kg' : 'l';
+        }
+      });
+
+      this.setState({ ingredients: sortedIngredients });
+    }
   }
 
   render() {
@@ -88,7 +170,7 @@ class BrewDetail_Recipe extends Component {
             <div className="brewed-beer-recipe-ingredients-water-profile">
               <DoubleCollapsiblePanel
                 leftTitle="Ingredients"
-                leftChild={<BrewDetailIngredients ingredients={recipe.ingredients} />}
+                leftChild={<BrewDetailIngredients ingredients={this.state.ingredients} />}
                 rightTitle="Water profile"
                 rightChild={<BrewDetailWaterProfile waterProfile={recipe.waterProfile} />}
                 open={detailsExpanded}
@@ -99,19 +181,22 @@ class BrewDetail_Recipe extends Component {
                 <CollapsiblePanel
                   title="Brewing steps"
                   children={
-                    <div>
-                      {recipe.steps.length === 0 || recipe.steps === undefined ? (
+                    <div style={{ marginBottom: '45px' }}>
+                      {this.state.steps === null || this.state.steps === undefined || this.state.steps.length === 0 ? (
                         <div>No steps defined</div>
                       ) : (
                         <div>
-                          {recipe.steps.map((s, i) => (
+                          {this.state.steps.map((step, i) => (
                             <div className="recipe-grid-container">
                               <div className="recipe-grid-container-step">{'Step ' + (i + 1)}</div>
-                              <div className="recipe-grid-container-description">{s.description}</div>
-                              <div className="recipe-grid-container-timer">
-                                {s.timer}
-                                {s.timer === 1 ? ' min' : ' mins'}
-                              </div>
+                              <div className="recipe-grid-container-description">{step.description}</div>
+
+                              <div className="recipe-grid-container-timer">{step.timerDisplayValue}</div>
+                              {step.timer !== null && step.timer.type !== 'Independent' ? (
+                                <div className="recipe-grid-container-timer-icon">
+                                  {step.timer.type === 'Before flameout' ? <img src={BeforeFlameout} alt="" /> : <img src={AfterFlameout} alt="" />}
+                                </div>
+                              ) : null}
                             </div>
                           ))}
                         </div>

@@ -35,6 +35,8 @@ class RecipeDetail extends Component {
     this.showErrorModal = this.showErrorModal.bind(this);
 
     this.deleteRecipeIngredient = this.deleteRecipeIngredient.bind(this);
+    this.addRecipeStep = this.addRecipeStep.bind(this);
+    this.updateRecipeStep = this.updateRecipeStep.bind(this);
     this.deleteRecipeStep = this.deleteRecipeStep.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -45,12 +47,13 @@ class RecipeDetail extends Component {
       .get(this.state.url)
       .then((response) => response.data)
       .then((data) => {
-        this.setState({ recipeDetail: data });
-        this.setState({ recipeTypeEdit: data.type });
-        this.setState({ waterProfileID: data.waterProfile.id });
-        this.setState({ recipeIngredients: data.ingredients });
-        this.setState({ recipeSteps: data.steps });
-        this.setState({ hasLoaded: true });
+        this.setState({
+          recipeDetail: data,
+          recipeTypeEdit: data.type,
+          waterProfileID: data.waterProfile.id,
+          recipeSteps: data.steps,
+          hasLoaded: true,
+        });
       });
   }
 
@@ -181,6 +184,26 @@ class RecipeDetail extends Component {
     }
   };
 
+  addRecipeStep(newStepItem) {
+    this.setState({ recipeSteps: this.state.recipeSteps.concat(newStepItem) });
+  }
+
+  updateRecipeStep(updatedStepItem) {
+    var stepArray = [...this.state.recipeSteps];
+    var stepIndex = stepArray.findIndex((e) => e.id === updatedStepItem.id);
+
+    if (stepIndex !== -1) {
+      let editStep = {
+        ...stepArray[stepIndex],
+        description: updatedStepItem.description,
+        timer: updatedStepItem.timer,
+        ingredients: updatedStepItem.ingredients,
+      };
+      stepArray[stepIndex] = editStep;
+      this.setState({ recipeSteps: stepArray });
+    }
+  }
+
   deleteRecipeStep = (stepID) => (event) => {
     var array = [...this.state.recipeSteps];
     var stepIndex = array.findIndex((e) => e.id === stepID);
@@ -205,7 +228,6 @@ class RecipeDetail extends Component {
       Type: this.state.recipeTypeEdit,
       Description: this.state.recipeEdit.description,
       WaterProfileID: this.state.waterProfileID,
-      Ingredients: this.state.recipeIngredients,
       ExpectedABV: this.state.recipeEdit.expectedABV,
       Steps: this.state.recipeSteps,
     };
@@ -221,7 +243,7 @@ class RecipeDetail extends Component {
     fetch(this.state.url, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ recipeDetail: data });
+        this.setState({ recipeDetail: data, recipeSteps: data.steps });
       });
   };
 
@@ -285,7 +307,7 @@ class RecipeDetail extends Component {
                   <Favourite favourite={recipe.favourite} />
                 </div>
               </div>
-              <BrewDetailRecipe recipe={recipe} detailsExpanded={true} />
+              <BrewDetailRecipe recipe={recipe} detailsExpanded={true} hideBrewingSteps={false} />
               <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
                 <EditSpeedDial editItemAction={this.editItem} deleteItemAction={this.showDeleteModal} />
               </div>
@@ -297,6 +319,8 @@ class RecipeDetail extends Component {
                 onSubmit={this.onSubmit}
                 onChange={this.handleChange}
                 onDeleteIngredient={this.deleteRecipeIngredient}
+                onAddStep={this.addRecipeStep}
+                onUpdateStep={this.updateRecipeStep}
                 onDeleteStep={this.deleteRecipeStep}
                 closeModal={this.closeEditModal}
                 onKeyDown={this.onKeyDown}

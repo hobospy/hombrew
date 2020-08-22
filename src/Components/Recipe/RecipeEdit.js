@@ -154,6 +154,9 @@ class RecipeEdit extends Component {
           <RecipeEditStep2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
+            onAddStep={this.props.onAddStep}
+            onUpdateStep={this.props.onUpdateStep}
+            onDeleteStep={this.props.onDeleteStep}
             onDeleteIngredient={this.props.onDeleteIngredient}
             ingredients={this.state.recipeDetail.ingredients}
             steps={this.state.recipeDetail.steps}
