@@ -18,7 +18,6 @@ import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
 import ConfirmationModalForm from '../SupportComponents/ConfirmationModalForm';
 import EditSpeedDial from '../../SupportFunctions/EditSpeedDial';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
-import CountdownButton from '../SupportComponents/CountdownButton';
 
 const styles = (theme) => ({
   fab: {
@@ -50,6 +49,7 @@ class BrewDetail extends Component {
     this.showDeleteModal = this.showDeleteModal.bind(this);
     this.editItem = this.editItem.bind(this);
     this.showBrewing = this.showBrewing.bind(this);
+    this.startBrewing = this.startBrewing.bind(this);
   }
 
   componentDidMount() {
@@ -104,8 +104,38 @@ class BrewDetail extends Component {
     this.showEditModal();
   };
 
+  startBrewing = () => {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json-patch+json');
+
+    var data = [
+      {
+        op: 'replace',
+        path: '/BrewedState',
+        value: 1,
+      },
+    ];
+    var raw = JSON.stringify(data);
+
+    var requestOptions = {
+      method: 'PATCH',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(this.state.url, requestOptions)
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({
+          brewDetail: response,
+          brewedState: response.brewedState,
+        });
+      });
+  };
+
   showBrewing = () => {
-    alert('Show brewing page');
+    return this.state.brewedState === 0;
   };
 
   render() {
@@ -134,7 +164,12 @@ class BrewDetail extends Component {
                   </div>
                 ) : null}
                 <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
-                  <EditSpeedDial editItemAction={this.editItem} deleteItemAction={this.showDeleteModal} startBrewingAction={this.showBrewing} />
+                  <EditSpeedDial
+                    editItemAction={this.editItem}
+                    deleteItemAction={this.showDeleteModal}
+                    startBrewingAction={this.startBrewing}
+                    showBrewingAction={this.showBrewing()}
+                  />
                 </div>
               </div>
               {this.state.editModalShown ? (

@@ -4,6 +4,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import BrewDetailBrewedNotes from './BrewDetailBrewedNotes';
 import CountdownButton from '../SupportComponents/CountdownButton';
+import FlameoutStepper from '../SupportComponents/FlameoutStepper';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 class BrewDetailBrewingSummary extends Component {
@@ -12,15 +13,20 @@ class BrewDetailBrewingSummary extends Component {
     this.state = {
       steps: [],
       brewingNotes: this.props.brewingNotes,
+      flameoutSteps: [],
       hasLoaded: false,
     };
   }
 
   componentDidMount() {
     var stepList = [];
+    var flameoutStepList = [];
+
+    console.log("About to output the timer types:");
+
     if (this.props.steps !== undefined) {
       this.props.steps.forEach(function (arrayItem) {
-        const obj = {
+        const stepObj = {
           description: arrayItem.description,
           id: arrayItem.id,
           timer: arrayItem.timer,
@@ -28,11 +34,22 @@ class BrewDetailBrewingSummary extends Component {
           completed: false,
         };
 
-        stepList.push(obj);
+        console.log(arrayItem.timer.type);
+
+        stepList.push(stepObj);
+
+        if (arrayItem.timer.type !== 'Independent') {
+          const flameoutStepObj = {
+            displayText: arrayItem.description,
+            duration: arrayItem.timer.duration * (arrayItem.timer.type === 'Before flameout' ? -1 : 1),
+          };
+
+          flameoutStepList.push(flameoutStepObj);
+        }
       });
     }
 
-    this.setState({ steps: stepList, hasLoaded: true });
+    this.setState({ flameoutSteps: flameoutStepList, steps: stepList, hasLoaded: true });
   }
 
   stepCompleted = (stepID) => (event) => {
@@ -147,6 +164,7 @@ class BrewDetailBrewingSummary extends Component {
               <div className="brew-summary-container-notes">
                 <BrewDetailBrewedNotes baseUrl={this.props.baseUrl} brewingNotes={this.state.brewingNotes} url={this.state.url} />
               </div>
+              {this.state.flameoutSteps.length >= 2 ? <FlameoutStepper steps={this.state.flameoutSteps} /> : null}
             </div>
           </Fragment>
         ) : (

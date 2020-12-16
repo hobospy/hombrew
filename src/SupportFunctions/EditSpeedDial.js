@@ -64,7 +64,7 @@ export default function EditSpeedDial(props) {
     setOpen(true);
   };
 
-  const numberItemsToShow = props.startBrewingAction ? 3 : 2;
+  const numberItemsToShow = props.showBrewingAction ? 3 : 2;
   const actionsToDisplay = actions.slice(0, numberItemsToShow);
 
   return (

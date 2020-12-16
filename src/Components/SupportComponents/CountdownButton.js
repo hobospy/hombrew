@@ -116,11 +116,6 @@ class CountdownButton extends Component {
               <PlayArrowIcon />
             )}
             <div
-              // className="progressBarText"
-              // style={{
-              //   marginLeft:
-              //     this.state.countdownFinished && this.state.completionText !== undefined && this.state.completionText !== '' ? '0px' : '15px',
-              // }}
               style={
                 this.state.countdownFinished && this.state.completionText !== undefined && this.state.completionText !== ''
                   ? { marginLeft: '4px', marginRight: '4px' }
