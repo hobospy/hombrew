@@ -12,7 +12,7 @@ import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 
 import './css/atomicStyling.css';
 
-const API_URL = process.env.NODE_ENV === 'production' ? 'https://13.239.136.38/' : 'https://localhost:44363/';
+const API_URL = process.env.NODE_ENV === 'production' ? 'https://www.thehomebrewapi.com/' : 'https://localhost:44363/';
 
 class DebugRouter extends Router {
   constructor(props) {
