@@ -38,7 +38,9 @@ class BrewDetailBrewingSummary extends Component {
 
         if (arrayItem.timer !== undefined && arrayItem.timer !== null)
         {
+          console.log("About to output timer type");
           console.log(arrayItem.timer.type);        
+          console.log("Timer type outputted");
           if (arrayItem.timer.type !== 'Independent') {
             const flameoutStepObj = {
               displayText: arrayItem.description,
