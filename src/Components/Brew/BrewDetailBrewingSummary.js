@@ -34,17 +34,19 @@ class BrewDetailBrewingSummary extends Component {
           completed: false,
         };
 
-        console.log(arrayItem.timer.type);
-
         stepList.push(stepObj);
 
-        if (arrayItem.timer.type !== 'Independent') {
-          const flameoutStepObj = {
-            displayText: arrayItem.description,
-            duration: arrayItem.timer.duration * (arrayItem.timer.type === 'Before flameout' ? -1 : 1),
-          };
+        if (arrayItem.timer !== undefined && arrayItem.timer !== null)
+        {
+          console.log(arrayItem.timer.type);        
+          if (arrayItem.timer.type !== 'Independent') {
+            const flameoutStepObj = {
+              displayText: arrayItem.description,
+              duration: arrayItem.timer.duration * (arrayItem.timer.type === 'Before flameout' ? -1 : 1),
+            };
 
-          flameoutStepList.push(flameoutStepObj);
+            flameoutStepList.push(flameoutStepObj);
+          }
         }
       });
     }
@@ -99,7 +101,7 @@ class BrewDetailBrewingSummary extends Component {
                             ))}
                           </div>
                           <div className="brew-summary-completion-button">
-                            {step.timer !== 0 ? (
+                            {step.timer !== null && step.timer !== undefined && step.timer !== 0 ? (
                               <CountdownButton
                                 className="brew-summary-completion-button"
                                 duration={step.timer.duration * 1000}
@@ -137,7 +139,7 @@ class BrewDetailBrewingSummary extends Component {
                             ))}
                           </div>
                           <div className="brew-summary-completion-button-mobile">
-                            {step.timer !== 0 ? (
+                            {step.timer !== null && step.timer !== undefined && step.timer !== 0 ? (
                               <CountdownButton
                                 className="brew-summary-completion-button"
                                 duration={step.timer.duration * 1000}
