@@ -39,11 +39,11 @@ class RecipeEditIngredient extends Component {
       defaultIngredientUnit:
         this.props.ingredient !== null && this.props.ingredient !== undefined
           ? this.props.ingredient.unit
-          : this.props.unitTypes !== null &&
-            this.props.unitTypes !== undefined &&
-            Array.isArray(this.props.unitTypes) &&
-            this.props.unitTypes.length > 0
-          ? this.props.unitTypes[0]
+          : this.props.unitsOfMeasure !== null &&
+            this.props.unitsOfMeasure !== undefined &&
+            Array.isArray(this.props.unitsOfMeasure) &&
+            this.props.unitsOfMeasure.length > 0
+          ? this.props.unitsOfMeasure[0].value
           : '',
       defaultIngredientType:
         this.props.ingredient !== null && this.props.ingredient !== undefined
@@ -150,10 +150,10 @@ class RecipeEditIngredient extends Component {
             this.setState({ editIngredientUnit: e.target.value });
           }}
         >
-          {this.props.unitTypes.map((ut, i) => (
-            <MenuItem value={ut} key={i}>
+          {this.props.unitsOfMeasure.map((unit) => (
+            <MenuItem value={unit.value} key={unit.value}>
               <div>
-                <div>{ut}</div>
+                <div>{unit.description}</div>
               </div>
             </MenuItem>
           ))}

@@ -48,7 +48,7 @@ function BrewSummary(props) {
   var modalForm = React.useRef(null);
 
   useEffect(() => {
-    const url = `${props.baseUrl}brew/summary`;
+    const url = `${props.baseUrl}brews?includeAdditionalInfo=true`;
     axios
       .get(url)
       .then((response) => response.data)
@@ -83,7 +83,7 @@ function BrewSummary(props) {
     var rawObject = {
       Name: newBrewName,
       RecipeID: newRecipeID,
-      BrewDate: brewDate,
+      BrewDate: brewDate
     };
 
     var requestOptions = {
@@ -94,7 +94,7 @@ function BrewSummary(props) {
       mode: 'cors',
     };
 
-    let updateURL = props.baseUrl + 'brew/';
+    let updateURL = props.baseUrl + 'brews/';
     console.log(updateURL);
 
     fetch(updateURL, requestOptions)
@@ -119,10 +119,16 @@ function BrewSummary(props) {
   };
 
   const addBrew = () => {
+    setNewBrewName('');
+    setBrewDate(new Date());
     showModal();
   };
 
-  const updateNewRecipeID = (recipeID) => (event) => {
+  // const updateNewRecipeID = (recipeID) => (event) => {
+  //   setNewRecipeID(recipeID);
+  // };
+
+  const updateNewRecipeID = (recipeID) => {
     setNewRecipeID(recipeID);
   };
 

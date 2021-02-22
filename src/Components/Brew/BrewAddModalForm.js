@@ -25,7 +25,7 @@ export const Modal = ({
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    const url = `${baseUrl}recipe/summary`;
+    const url = `${baseUrl}recipes`;
     if (hasLoaded !== true) {
       console.log(url);
       axios

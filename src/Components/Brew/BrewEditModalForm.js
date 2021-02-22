@@ -19,13 +19,16 @@ export const Modal = ({
   onUpdateNewRecipeID,
   brewName,
   brewDate,
+  brewedState,
+  actualABV,
+  brewRecipe,
   updateBrewDate,
 }) => {
   const [recipeList, setRecipeList] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    const url = `${baseUrl}recipe/summary`;
+    const url = `${baseUrl}recipes`;
     if (hasLoaded !== true) {
       console.log(url);
       axios
@@ -64,6 +67,10 @@ export const Modal = ({
                   baseUrl={baseUrl}
                   brewName={brewName}
                   brewDate={brewDate}
+                  showActualABV={brewedState === 2}
+                  actualABV={actualABV}
+                  brewRecipeEditable={brewedState <= 1}
+                  brewRecipe={brewRecipe}
                   updateBrewDate={updateBrewDate}
                 />
               ) : (

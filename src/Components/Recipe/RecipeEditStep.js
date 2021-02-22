@@ -55,7 +55,8 @@ class RecipeEditStep extends Component {
       description: '',
       durationID: -1,
       durationType: '',
-      durationTypes: ['No duration', 'Independent', 'Before flameout', 'After flameout'],
+      //durationTypes: ['No duration', 'Independent', 'Before flameout', 'After flameout'],
+      durationTypes: props.durationTypes,
       durationValue: '',
       durationVisible: false,
       editingExistingIngredient: false,
@@ -86,7 +87,7 @@ class RecipeEditStep extends Component {
   componentDidMount() {
     var ingredientList = [];
     var desc = this.props.description !== undefined ? this.props.description : '';
-    var durType = this.state.durationTypes[0];
+    var durType = this.state.durationTypes[0].value;
     var showDuration = false;
     var timerDisplayValue = '';
 
@@ -159,7 +160,7 @@ class RecipeEditStep extends Component {
 
     isAvailable = isAvailable && this.state.description !== '';
 
-    if (isAvailable && this.state.durationType !== 'No duration') {
+    if (isAvailable && this.state.durationType !== 0) {
       if (this.state.durationValue !== '') {
         var durationRegEx = /^[0-9]{2}:[0-9]{2}:[0-9]{2}$/;
         var isValid = durationRegEx.test(this.state.durationValue);
@@ -254,16 +255,21 @@ class RecipeEditStep extends Component {
       description: this.state.description,
       ingredients: this.state.ingredients,
       timer:
-        this.state.durationType === null || this.state.durationType === 'No duration'
+        this.state.durationType === null || this.state.durationType === 0
           ? null
-          : { type: this.state.durationType, duration: duration, id: this.state.durationID, recipeStepID: this.props.stepID },
+          : {
+              type: this.state.durationType,
+              duration: duration,
+              id: this.state.durationID,
+              recipeStepID: this.props.stepID
+            },
       timerDisplayValue: this.state.durationValue,
       recipeID: this.props.recipeID,
     };
 
     this.setState({
       description: '',
-      durationType: this.state.durationTypes[0],
+      durationType: this.state.durationTypes[0].value,
       durationValue: '',
       durationVisible: false,
       ingredients: [],
@@ -299,7 +305,7 @@ class RecipeEditStep extends Component {
                     ingredientTypes={this.props.ingredientTypes}
                     stepID={this.props.stepID}
                     submitText="Update"
-                    types={this.props.ingredientTypes}
+                    unitsOfMeasure={this.props.unitsOfMeasure}
                     unitTypes={this.props.unitTypes}
                     cancel={this.cancelUpdateIngredient}
                     submit={this.updateIngredient}
@@ -308,7 +314,7 @@ class RecipeEditStep extends Component {
                   <div className="step-new-ingredient-display">
                     <div className="step-new-ingredient-display-details" onClick={this.editIngredient(ingredient.id)}>
                       {ingredient.amount}
-                      {ingredient.unit} - {ingredient.name}
+                      {(this.props.unitsOfMeasure.find(item => item.value === ingredient.unit)).description} - {ingredient.name}
                     </div>
                     <div className="step-new-ingredient-display-delete" onClick={this.deleteIngredient(ingredient.id)}>
                       <CSSIconButton arial-label="delete">
@@ -327,9 +333,9 @@ class RecipeEditStep extends Component {
               ingredient={this.state.newIngredient}
               ingredientID={this.state.newIngredientID}
               ingredientTypes={this.props.ingredientTypes}
+              unitsOfMeasure={this.props.unitsOfMeasure}
               stepID={this.props.stepID}
               submitText="Add"
-              unitTypes={this.props.unitTypes}
               cancel={this.cancelAddIngredient}
               submit={this.addIngredient}
             />
@@ -346,13 +352,13 @@ class RecipeEditStep extends Component {
             value={this.state.durationType}
             onChange={(e) => {
               this.setState({ durationType: e.target.value }, this.validateStepObject);
-              this.setState({ durationVisible: e.target.value !== 'No duration' });
+              this.setState({ durationVisible: e.target.value !== 0 });
             }}
           >
-            {this.state.durationTypes.map((dt, i) => (
-              <MenuItem value={dt} key={i}>
+            {this.state.durationTypes.map((dt) => (
+              <MenuItem value={dt.value} key={dt.value}>
                 <div>
-                  <div>{dt}</div>
+                  <div>{dt.description}</div>
                 </div>
               </MenuItem>
             ))}

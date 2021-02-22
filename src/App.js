@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import axios from 'axios';
 
@@ -12,16 +13,16 @@ import WaterProfileSummary from './Components/Summary/WaterProfileSummary';
 
 import './css/atomicStyling.css';
 
-const API_URL = process.env.NODE_ENV === 'production' ? 'https://www.thehomebrewapi.com/' : 'https://localhost:44363/';
+const API_URL = process.env.NODE_ENV === 'production' ? 'https://thehomebrewapi.com/api/' : 'http://localhost:59607/api/';
 
-class DebugRouter extends Router {
-  constructor(props) {
-    super(props);
-    this.history.listen((location, action) => {
-      console.log(`The current URL is ${location.pathname}${location.search}${location.hash}`);
-    });
-  }
-}
+// class DebugRouter extends Router {
+//   constructor(props) {
+//     super(props);
+//     this.history.listen((location, action) => {
+//       console.log(`The current URL is ${location.pathname}${location.search}${location.hash}`);
+//     });
+//   }
+// }
 
 class App extends Component {
   constructor(props) {
@@ -33,7 +34,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = `${API_URL}brew/summary`;
+    //const url = `${API_URL}brew/summary`;
+    const url = `${API_URL}brews?includeAdditionalInfo=true`;
     axios
       .get(url)
       .then((response) => response.data)
@@ -59,7 +61,8 @@ class App extends Component {
 
   render() {
     return (
-      <DebugRouter>
+      // <DebugRouter>
+      <BrowserRouter>
         <AppBar position="fixed">
           <NavBarMenu baseUrl="/" />
         </AppBar>
@@ -73,7 +76,8 @@ class App extends Component {
             <Route exact={true} path="/*" render={(props) => <BrewSummary {...props} baseUrl={API_URL} />} />
           </Switch>
         </div>
-      </DebugRouter>
+      </BrowserRouter>
+      // </DebugRouter>
     );
   }
 }

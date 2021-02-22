@@ -5,7 +5,7 @@ export default function BrewAddItem(props) {
   const recipe = props.recipe;
 
   return (
-    <div>
+    <div style={{ width: '100%'}}>
       <div className="brew-add-grid">
         <div className="brew-add-title recipe-title-size">{recipe.name}</div>
         <div className="brew-add-favourite">

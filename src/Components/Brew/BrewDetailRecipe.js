@@ -170,7 +170,7 @@ class BrewDetail_Recipe extends Component {
             <div className="brewed-beer-recipe-ingredients-water-profile">
               <DoubleCollapsiblePanel
                 leftTitle="Ingredients"
-                leftChild={<BrewDetailIngredients ingredients={this.state.ingredients} />}
+                leftChild={<BrewDetailIngredients ingredients={this.state.ingredients} unitTypes={this.props.unitTypes}/>}
                 rightTitle="Water profile"
                 rightChild={<BrewDetailWaterProfile waterProfile={recipe.waterProfile} />}
                 open={detailsExpanded}
@@ -192,9 +192,9 @@ class BrewDetail_Recipe extends Component {
                               <div className="recipe-grid-container-description">{step.description}</div>
 
                               <div className="recipe-grid-container-timer">{step.timerDisplayValue}</div>
-                              {step.timer !== null && step.timer.type !== 'Independent' ? (
+                              {step.timer !== null && step.timer.type > 1 ? (
                                 <div className="recipe-grid-container-timer-icon">
-                                  {step.timer.type === 'Before flameout' ? <img src={BeforeFlameout} alt="" /> : <img src={AfterFlameout} alt="" />}
+                                  {step.timer.type === 2 ? <img src={BeforeFlameout} alt="" /> : <img src={AfterFlameout} alt="" />}
                                 </div>
                               ) : null}
                             </div>

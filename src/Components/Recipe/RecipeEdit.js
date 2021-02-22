@@ -145,6 +145,7 @@ class RecipeEdit extends Component {
             name={this.props.recipe.name}
             description={this.props.recipe.description}
             recipeType={this.props.recipe.type}
+            recipeTypeEnums={this.props.recipeTypeEnums}
             expectedABV={this.props.recipe.expectedABV}
             waterProfiles={this.props.waterProfiles}
             currentWaterProfile={this.props.recipe.waterProfile}
@@ -161,8 +162,9 @@ class RecipeEdit extends Component {
             ingredients={this.state.recipeDetail.ingredients}
             steps={this.state.recipeDetail.steps}
             ingredientTypes={this.props.ingredientTypes}
+            unitsOfMeasure={this.props.unitsOfMeasure}
+            durationTypes={this.props.durationTypes}
             recipeID={this.props.recipe.recipeID}
-            unitTypes={this.props.unitTypes}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {this.previousButton}

@@ -96,6 +96,7 @@ class AddBrew extends Component {
     this.state = {
       hasLoaded: false,
       selectedRecipe: -1,
+      selectedIndex: 0,
       brewDate: new Date(),
     };
 
@@ -122,18 +123,28 @@ class AddBrew extends Component {
   };
 
   componentDidMount() {
+    if(this.props.recipes !== undefined && this.props.recipes.length > 0)
+    {
+      this.props.onUpdateNewRecipeID(this.props.recipes[0].id)
+    }
+
     this.setState({ hasLoaded: true });
   }
 
-  updateNewRecipeID = (recipeID) => (event) => {
+  updateNewRecipeID = (recipeID, index) => (event) => {
     event.preventDefault();
 
-    this.setState({ selectedRecipe: recipeID });
+    this.setState({ selectedRecipe: recipeID, selectedIndex: index });
 
-    this.props.onUpdateNewRecipeID(recipeID)(event);
+    this.props.onUpdateNewRecipeID(recipeID);//(event);
   };
 
   render() {
+    var recipeUsed = null;
+    if (this.props.brewRecipe !== undefined) {
+      recipeUsed = this.props.recipes.find((element)=> {return element.name === this.props.brewRecipe});
+    }
+
     const CssDatePicker = (props) => (
       <CssTextField
         autoComplete="off"
@@ -164,29 +175,60 @@ class AddBrew extends Component {
                 />
               </div>
               <div>
-                <ThemeProvider theme={materialTheme}>
-                  <DatePicker
+                <div style={{width: "50%", float: "left"}}>
+                  <ThemeProvider theme={materialTheme}>
+                    <DatePicker
+                      fullWidth
+                      format="DD/MM/YYYY"
+                      id="date"
+                      label="Brewing date"
+                      name="date"
+                      value={this.props.brewDate}
+                      onChange={(date) => this.props.updateBrewDate(date)}
+                      animateYearScrolling
+                      TextFieldComponent={CssDatePicker}
+                    />
+                  </ThemeProvider>
+                </div>
+                <div style={{width: "50%", float: "left"}}>
+                {(this.props.showActualABV !== undefined && this.props.showActualABV === true) ? (
+                  <CssTextField
+                    autoComplete="off"
                     fullWidth
-                    format="DD/MM/YYYY"
-                    id="date"
-                    label="Brewing date"
-                    name="date"
-                    value={this.props.brewDate}
-                    onChange={(date) => this.props.updateBrewDate(date)}
-                    animateYearScrolling
-                    TextFieldComponent={CssDatePicker}
+                    id="actualABV"
+                    label="Actual ABV"
+                    InputProps={{ disableUnderline: true }}
+                    name="actualABV"
+                    onChange={this.props.onChange}
+                    value={this.props.actualABV}
                   />
-                </ThemeProvider>
+                ) : null }
+                </div>
               </div>
-              <div className="edit-page-recipe-title-container">Available recipes</div>
-              <div className="brew-add-menu">
-                <MenuList>
-                  {this.props.recipes.map((r) => (
-                    <StyledMenuItem disableGutters onClick={this.updateNewRecipeID(r.id)}>
-                      <BrewAddItem key={r.id} recipe={r} />
-                    </StyledMenuItem>
-                  ))}
-                </MenuList>
+              <div>
+                {(this.props.brewRecipeEditable === undefined || this.props.brewRecipeEditable === true) ? (
+                  <div>
+                <div className="edit-page-recipe-title-container">Available recipes</div>
+                <div className="brew-add-menu">
+                  <MenuList>
+                    {this.props.recipes.map((r, index) => (
+                      <StyledMenuItem
+                        disableGutters
+                        onClick={this.updateNewRecipeID(r.id, index)}
+                        selected={index === this.state.selectedIndex}
+                      >
+                        <BrewAddItem key={r.id} recipe={r} />
+                      </StyledMenuItem>
+                    ))}
+                  </MenuList>
+                </div>
+                </div>
+                ) : (
+                  <div>
+                    <div className="edit-page-recipe-title-container">Recipe used</div>
+                    {recipeUsed !== null ? <BrewAddItem recipe={recipeUsed}/> : null}
+                  </div>
+                )}
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>{this.brewButton}</div>
             </div>

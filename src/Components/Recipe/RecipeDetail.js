@@ -20,7 +20,11 @@ class RecipeDetail extends Component {
       waterProfileID: '',
       recipeIngredients: [],
       recipeSteps: [],
-      url: `${this.props.baseUrl}recipe/${this.props.match.params.id}`,
+      recipeTypes: [],
+      unitTypes: [],
+      durationTypes: [],
+      url: `${this.props.baseUrl}recipes/${this.props.match.params.id}`,
+      fullURL: `${this.props.baseUrl}recipes/${this.props.match.params.id}?includeSteps=true`,
       id: this.props.match.params.id,
       editModalShown: false,
       deleteConfirmationModalShown: false,
@@ -41,20 +45,40 @@ class RecipeDetail extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {
-    console.log(this.state.url);
-    axios
-      .get(this.state.url)
-      .then((response) => response.data)
-      .then((data) => {
-        this.setState({
-          recipeDetail: data,
-          recipeTypeEdit: data.type,
-          waterProfileID: data.waterProfile.id,
-          recipeSteps: data.steps,
-          hasLoaded: true,
-        });
-      });
+  async componentDidMount() {
+    console.log(this.state.fullURL);
+
+    var response = await axios.get(this.state.fullURL);
+    var currentRecipeType = response.data.type;
+    this.setState({
+      recipeDetail: response.data,
+      waterProfileID: response.data.waterProfile.id,
+      recipeSteps: response.data.steps,
+    });
+
+    const typeOfBeerEnumsURL = `${this.props.baseUrl}enums/ETypeOfBeer`;
+    var typeEnumResponse = await axios.get(typeOfBeerEnumsURL);
+    this.setState({
+      recipeTypes: typeEnumResponse.data,
+    }, () => {
+      var recipeType = this.state.recipeTypes.find((type) => {return type.description === currentRecipeType});
+      this.setState({
+        recipeTypeEdit: recipeType !== undefined ? recipeType.value : this.state.recipeTypes[0].value,
+      })
+    });
+
+    const typeOfDurationEnumsURL = `${this.props.baseUrl}enums/ETypeOfDuration`;
+    var typeDurationResponse = await axios.get(typeOfDurationEnumsURL);
+    this.setState({
+      durationTypes: typeDurationResponse.data,
+    });
+
+    const unitsOfMeasureEnumsURL = `${this.props.baseUrl}enums/EUnitOfMeasure`;
+    var unitEnumResponse = await axios.get(unitsOfMeasureEnumsURL);
+    this.setState({
+      unitTypes: unitEnumResponse.data,
+      hasLoaded: true,
+    });
   }
 
   updateFavourite = async (event) => {
@@ -62,11 +86,12 @@ class RecipeDetail extends Component {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
+    var newValue = !this.state.recipeDetail.favourite;
     var data = [
       {
         op: 'replace',
         path: '/Favourite',
-        value: !this.state.recipeDetail.favourite,
+        value: newValue,
       },
     ];
     var raw = JSON.stringify(data);
@@ -78,13 +103,24 @@ class RecipeDetail extends Component {
       redirect: 'follow',
     };
 
-    fetch(this.state.url, requestOptions)
-      .then((response) => response.json())
-      .then((response) => {
+    var response = await fetch(this.state.url, requestOptions);
+    if (response.ok) {
+      if (response.json.length > 0) {
+        var data = response.json();
+
         this.setState({
           recipeDetail: response,
         });
-      });
+      }
+      else {
+        var updatedRecipeDetail = this.state.recipeDetail;
+        updatedRecipeDetail.favourite = newValue;
+
+        this.setState({
+          recipeDetail: updatedRecipeDetail,
+        });
+      }
+    }
   };
 
   showEditModal = () => {
@@ -214,7 +250,7 @@ class RecipeDetail extends Component {
     }
   };
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     event.preventDefault();
 
     this.closeEditModal();
@@ -230,6 +266,7 @@ class RecipeDetail extends Component {
       WaterProfileID: this.state.waterProfileID,
       ExpectedABV: this.state.recipeEdit.expectedABV,
       Steps: this.state.recipeSteps,
+      Favourite: this.state.recipeDetail.favourite,
     };
 
     var requestOptions = {
@@ -240,11 +277,20 @@ class RecipeDetail extends Component {
       mode: 'cors',
     };
 
-    fetch(this.state.url, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ recipeDetail: data, recipeSteps: data.steps });
-      });
+    var response = await fetch(this.state.url, requestOptions);
+    if (response.ok)
+    {
+      var updatedRecipeResponse = await axios.get(this.state.fullURL);
+      if (updatedRecipeResponse.status === 200 && updatedRecipeResponse.data !== undefined)
+      {
+        this.setState(
+          {
+            recipeDetail: updatedRecipeResponse.data,
+            recipeSteps: updatedRecipeResponse.data.steps
+          }
+        );
+      }
+    }
   };
 
   onClickOutside = (event) => {
@@ -271,7 +317,7 @@ class RecipeDetail extends Component {
 
     var myHeaders = new Headers();
     myHeaders.append('Accept', 'application/json');
-    myHeaders.append('Content-Type', 'application/json-patch+json');
+    myHeaders.append('Content-Type', 'text/plain');
 
     var rawObject = '';
 
@@ -307,7 +353,7 @@ class RecipeDetail extends Component {
                   <Favourite favourite={recipe.favourite} />
                 </div>
               </div>
-              <BrewDetailRecipe recipe={recipe} detailsExpanded={true} hideBrewingSteps={false} />
+              <BrewDetailRecipe recipe={recipe} detailsExpanded={true} hideBrewingSteps={false} unitTypes={this.state.unitTypes} />
               <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
                 <EditSpeedDial editItemAction={this.editItem} deleteItemAction={this.showDeleteModal} />
               </div>
@@ -325,6 +371,9 @@ class RecipeDetail extends Component {
                 closeModal={this.closeEditModal}
                 onKeyDown={this.onKeyDown}
                 recipe={this.state.recipeEdit}
+                recipeTypeEnums={this.state.recipeTypes}
+                unitsOfMeasure={this.state.unitTypes}
+                durationTypes={this.state.durationTypes}
                 baseUrl={this.props.baseUrl}
                 title="Edit Recipe"
                 addingNewRecipe="false"

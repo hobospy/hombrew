@@ -18,6 +18,9 @@ export const Modal = ({
   onAddStep,
   onUpdateStep,
   onDeleteStep,
+  recipeTypeEnums,
+  unitsOfMeasure,
+  durationTypes,
   recipe,
   baseUrl,
   title,
@@ -26,10 +29,9 @@ export const Modal = ({
   const [waterProfileList, setWaterProfileList] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const ingredientTypes = ['Grains', 'Hops', 'Adjuncts'];
-  const unitTypes = ['kg', 'g', 'l', 'ml'];
 
   useEffect(() => {
-    const url = `${baseUrl}waterprofile/summary`;
+    const url = `${baseUrl}waterprofiles`;
     if (hasLoaded !== true) {
       console.log(url);
       axios
@@ -68,9 +70,11 @@ export const Modal = ({
                   onUpdateStep={onUpdateStep}
                   onDeleteStep={onDeleteStep}
                   recipe={recipe}
+                  recipeTypeEnums={recipeTypeEnums}
                   waterProfiles={waterProfileList}
                   ingredientTypes={ingredientTypes}
-                  unitTypes={unitTypes}
+                  unitsOfMeasure={unitsOfMeasure}
+                  durationTypes={durationTypes}
                   baseUrl={baseUrl}
                   addingNewRecipe={addingNewRecipe}
                 />

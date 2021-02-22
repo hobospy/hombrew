@@ -47,7 +47,6 @@ class RecipeEdit_Step2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      durationTypes: ['No duration', 'Independent', 'Before flameout', 'After flameout'],
       editingStep: false,
       hasLoaded: false,
       newStepID: -1,
@@ -251,12 +250,19 @@ class RecipeEdit_Step2 extends Component {
                             ) : null}
                           </div>
                           <div className="step-edit-readonly-ingredients" onClick={this.editStep(step.id)}>
-                            {step.ingredients.map((ingredient) => (
+                            {step.ingredients.map(function (ingredient) {
+                              var ingUnit = "";
+                              if (this.props.unitsOfMeasure !== undefined) {
+                                var unit = this.props.unitsOfMeasure.find((ut) => { return ut.value === ingredient.unit});
+                                ingUnit = unit.description;
+                              }
+
+                              return (
                               <div style={{ marginLeft: '30px' }}>
                                 {ingredient.amount}
-                                {ingredient.unit} - {ingredient.name}
-                              </div>
-                            ))}
+                                {ingUnit} - {ingredient.name}
+                              </div>)
+                            }, this)}
                           </div>
                           <div className="step-edit-readonly-delete" onClick={this.deleteStep(step.id)}>
                             <CSSIconButton arial-label="delete">
@@ -273,7 +279,9 @@ class RecipeEdit_Step2 extends Component {
                           description={step.description}
                           ingredients={step.ingredients}
                           ingredientTypes={this.props.ingredientTypes}
+                          unitsOfMeasure={this.props.unitsOfMeasure}
                           unitTypes={this.props.unitTypes}
+                          durationTypes={this.props.durationTypes}
                           stepID={step.id}
                           recipeID={this.props.recipeID}
                           showCancel={true}
@@ -293,7 +301,8 @@ class RecipeEdit_Step2 extends Component {
                 <label className="step-new-container-header">New step</label>
                 <RecipeEditStep
                   ingredientTypes={this.props.ingredientTypes}
-                  unitTypes={this.props.unitTypes}
+                  unitsOfMeasure={this.props.unitsOfMeasure}
+                  durationTypes={this.props.durationTypes}
                   stepID={this.state.newStepID}
                   recipeID={this.props.recipeID}
                   showCancel={true}

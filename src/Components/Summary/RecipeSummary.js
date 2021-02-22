@@ -43,6 +43,9 @@ function RecipeSummary(props) {
   const [waterProfileID, setWaterProfileID] = useState();
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeSteps, setRecipeSteps] = useState([]);
+  const [recipeTypes, setRecipeTypes] = useState([]);
+  const [unitsOfMeasure, setUnitsOfMeasure] = useState([]);
+  const [durationTypes, setDurationTypes] = useState([]);
   const [modalShown, setModalShown] = useState(false);
   const largeScreenSize = useMediaQuery('(min-width:600px)');
 
@@ -50,14 +53,43 @@ function RecipeSummary(props) {
   var modalForm = React.useRef(null);
 
   useEffect(() => {
-    const url = `${props.baseUrl}recipe/summary`;
+    async function fetchData(baseUrl) {
+    const recipesURL = `${baseUrl}recipes`;
     axios
-      .get(url)
+      .get(recipesURL)
       .then((response) => response.data)
       .then((data) => {
         setRecipes(data);
-        setHasLoaded(true);
       });
+    
+    const typeOfBeerEnumsURL = `${baseUrl}enums/ETypeOfBeer`;
+    axios
+      .get(typeOfBeerEnumsURL)
+      .then((response) => response.data)
+      .then((data) => {
+        setRecipeTypes(data);
+      });
+
+    const typeOfDurationEnumsURL = `${baseUrl}enums/ETypeOfDuration`;
+    var typeDurationResponse = await fetch(typeOfDurationEnumsURL);
+    if (typeDurationResponse.ok) {
+      var typeDurationData = await typeDurationResponse.json();
+      setDurationTypes(typeDurationData);
+    }
+
+    const unitsOfMeasureEnumsURL = `${baseUrl}enums/EUnitOfMeasure`;
+    var response = await fetch(unitsOfMeasureEnumsURL);
+    if (response.ok)
+    {
+      var unitsOfMeasureData = await response.json();
+      setUnitsOfMeasure(unitsOfMeasureData);
+    }
+
+    setHasLoaded(true);
+  }
+
+  fetchData(props.baseUrl);
+
   }, [props.baseUrl]);
 
   const toggleScrollLock = () => {
@@ -87,7 +119,7 @@ function RecipeSummary(props) {
       Type: recipeType,
       Description: recipeAdd.description,
       WaterProfileID: waterProfileID,
-      Ingredients: recipeIngredients,
+      // Ingredients: recipeIngredients,
       ExpectedABV: recipeAdd.expectedABV,
       Steps: recipeSteps,
     };
@@ -96,18 +128,25 @@ function RecipeSummary(props) {
       method: 'POST',
       headers: myHeaders,
       body: JSON.stringify(rawObject),
-      redirect: 'follow',
+      // redirect: 'follow',
       mode: 'cors',
     };
 
-    let updateURL = props.baseUrl + 'recipe/';
+    let updateURL = props.baseUrl + 'recipes/';
     console.log(updateURL);
 
-    fetch(updateURL, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setRecipes(recipes.concat(data));
+    var response = await fetch(updateURL, requestOptions);
+
+    if (response.ok)
+    {
+      const recipesURL = `${props.baseUrl}recipes`;
+      axios
+        .get(recipesURL)
+        .then((response) => response.data)
+        .then((data) => {
+          setRecipes(data);
       });
+    }
   };
 
   const handleChange = (event) => {
@@ -117,8 +156,8 @@ function RecipeSummary(props) {
 
     if (name === 'waterProfile.name') {
       setWaterProfileID(value);
-    } else if (name === 'AddIngredient') {
-      setRecipeIngredients(recipeIngredients.concat(value));
+    // } else if (name === 'AddIngredient') {
+    //   setRecipeIngredients(recipeIngredients.concat(value));
     } else if (name === 'UpdateIngredient') {
       var array = [...recipeIngredients];
       var ingredientIndex = array.findIndex((e) => e.id === value.id);
@@ -128,8 +167,8 @@ function RecipeSummary(props) {
         array[ingredientIndex] = editIngredient;
         setRecipeIngredients(array);
       }
-    } else if (name === 'AddStep') {
-      setRecipeSteps(recipeSteps.concat(value));
+    // } else if (name === 'AddStep') {
+    //   setRecipeSteps(recipeSteps.concat(value));
     } else if (name === 'UpdateStep') {
       var stepArray = [...recipeSteps];
       var stepIndex = stepArray.findIndex((e) => e.id === value.id);
@@ -157,6 +196,10 @@ function RecipeSummary(props) {
       array.splice(ingredientIndex, 1);
       setRecipeIngredients(array);
     }
+  };
+
+  const addRecipeStep = (step) => {
+    setRecipeSteps(recipeSteps.concat(step));
   };
 
   const deleteRecipeStep = (stepID) => (event) => {
@@ -228,10 +271,14 @@ function RecipeSummary(props) {
               onSubmit={onSubmit}
               onChange={handleChange}
               onDeleteIngredient={deleteRecipeIngredient}
+              onAddStep={addRecipeStep}
               onDeleteStep={deleteRecipeStep}
               closeModal={closeModal}
               onKeyDown={onKeyDown}
               recipe={recipeAdd}
+              recipeTypeEnums={recipeTypes}
+              unitsOfMeasure={unitsOfMeasure}
+              durationTypes={durationTypes}
               baseUrl={props.baseUrl}
               title="Add Recipe"
               addingNewRecipe="true"

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import axios from 'axios';
 import dayjs from 'dayjs';
 import { TextField, createMuiTheme } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
@@ -147,7 +148,6 @@ class BrewDetailTastingNotes extends Component {
           id: arrayItem.id,
           note: arrayItem.note,
           date: arrayItem.date,
-          brewID: arrayItem.brewID,
           inEdit: false,
         };
 
@@ -196,16 +196,18 @@ class BrewDetailTastingNotes extends Component {
     this.setState({ addNote: false });
   };
 
-  addNewTastingNote() {
+  async addNewTastingNote() {
     var myHeaders = new Headers();
     myHeaders.append('Accept', 'application/json');
     myHeaders.append('Content-Type', 'application/json-patch+json');
+    myHeaders.append('Access-Control-Expose-Headers', 'Location');
 
+    var timeOffset = new Date().getTimezoneOffset() * -1;
+    var offsetTime = moment(this.state.newTastingNoteDate.toDate()).add(timeOffset, 'm').toDate();
     var rawObject = {
       Note: this.state.newTastingNoteDetails,
-      Date: this.state.newTastingNoteDate,
-      BrewID: this.state.id,
-    };
+      Date: offsetTime
+    }
 
     var requestOptions = {
       method: 'POST',
@@ -215,15 +217,21 @@ class BrewDetailTastingNotes extends Component {
       mode: 'cors',
     };
 
-    fetch(`${this.props.baseUrl}tastingNote/`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
+    var addTastingNoteUrl = `${this.state.url}/tastingNotes/`;
+    var response = await fetch(addTastingNoteUrl, requestOptions);
+
+    if (response.ok)
+    {
+      this.setState({ newTastingNoteDetails: '' });
+      this.setState({ newTastingNoteDate: dayjs() });
+
+      if (response.json.length > 0)
+      {
+        var data = await response.json();
+
         if (data !== null) {
           var newTastingNotes = this.state.tastingNotes.slice();
           newTastingNotes.push(data);
-
-          this.setState({ newTastingNoteDetails: '' });
-          this.setState({ newTastingNoteDate: dayjs() });
 
           var tastingNoteList = [];
           if (newTastingNotes !== undefined) {
@@ -232,7 +240,6 @@ class BrewDetailTastingNotes extends Component {
                 id: arrayItem.id,
                 note: arrayItem.note,
                 date: arrayItem.date,
-                brewID: arrayItem.brewID,
                 inEdit: false,
               };
 
@@ -248,16 +255,68 @@ class BrewDetailTastingNotes extends Component {
           });
 
           this.setState({ tastingNotes: tastingNoteList });
-        } else {
-          console.log('Error in response: ');
         }
-      });
+      }
+      else {
+        var location = response.headers.get('Location');
+
+        // var myNewNoteHeaders = new Headers();
+        // myHeaders.append('Accept', 'application/json');
+    
+        // var newNoteRequestOptions = {
+        //   method: 'GET',
+        //   headers: myNewNoteHeaders,
+        //   redirect: 'follow',
+        //   mode: 'cors',
+        // };
+
+        // var newNoteResponse = await fetch(location, newNoteRequestOptions);
+
+        var newNoteResponse = await axios.get(location);
+
+        if (newNoteResponse.status === 200 && newNoteResponse.data !== undefined)
+        {
+          var tastingNoteList = [];
+          if (this.state.tastingNotes !== undefined) {
+            this.state.tastingNotes.forEach(function (arrayItem) {
+              const obj = {
+                id: arrayItem.id,
+                note: arrayItem.note,
+                date: arrayItem.date,
+                inEdit: false,
+              };
+
+              tastingNoteList.push(obj);
+            });
+          }
+
+          var newNote = 
+          {
+            id: newNoteResponse.data.id,
+            note: newNoteResponse.data.note,
+            date: newNoteResponse.data.date,
+            inEdit: false,
+          };
+          tastingNoteList.push(newNote);
+
+          tastingNoteList.sort(function compare(a, b) {
+            var dateA = new Date(a.date);
+            var dateB = new Date(b.date);
+
+            return dateA - dateB;
+          });
+
+          this.setState({ tastingNotes: tastingNoteList });
+        }
+      }
+    }
 
     this.hideAddTastingNote();
   }
 
   showDeleteTastingNoteModal = (tastingNoteID) => (event) => {
-    var array = [...this.state.brewDetail.tastingNotes];
+    //var array = [...this.state.brewDetail.tastingNotes];
+    var array = [...this.state.tastingNotes];
     var tastingNoteIndex = array.findIndex((e) => e.id === tastingNoteID);
 
     if (tastingNoteIndex !== -1) {
@@ -299,10 +358,13 @@ class BrewDetailTastingNotes extends Component {
     myHeaders.append('Accept', 'application/json');
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
+    var offsetTime = (this.state.editTastingNoteDate instanceof String || typeof this.state.editTastingNoteDate === 'string') ? 
+                            this.state.editTastingNoteDate : 
+                            moment(this.state.editTastingNoteDate.toDate());
+
     var rawObject = {
       Note: this.state.editTastingNote,
-      Date: this.state.editTastingNoteDate,
-      BrewID: this.state.brewDetail.id,
+      Date: offsetTime,
     };
 
     var requestOptions = {
@@ -313,49 +375,43 @@ class BrewDetailTastingNotes extends Component {
       mode: 'cors',
     };
 
-    var updateTastingNoteURL = `${this.props.baseUrl}tastingNote/` + this.state.editTastingNoteID;
+    var updateTastingNoteURL = `${this.state.url}/tastingNotes/` + this.state.editTastingNoteID;
     var response = await fetch(updateTastingNoteURL, requestOptions);
     if (response.ok) {
-      var data = await response.json();
-      if (data !== null) {
-        var array = this.state.tastingNotes;
-        var tastingNoteIndex = array.findIndex((e) => e.id === this.state.editTastingNoteID);
+      var array = this.state.tastingNotes;
+      var tastingNoteIndex = array.findIndex((e) => e.id === this.state.editTastingNoteID);
 
-        if (tastingNoteIndex !== -1) {
+      if (tastingNoteIndex !== -1) {
+        if (response.json.length > 0) {
+          var data = await response.json();
           array[tastingNoteIndex].note = data.note;
           array[tastingNoteIndex].date = data.date;
         }
+        else {
+          array[tastingNoteIndex].note = rawObject.Note;
+          array[tastingNoteIndex].date = rawObject.Date;
+        }
+
+        array[tastingNoteIndex].inEdit = false;
 
         this.setState({ editTastingNote: '' });
         this.setState({ editTastingNoteDate: '' });
         this.setState({ editTastingNoteID: '' });
 
-        var tastingNoteList = [];
-        if (array !== undefined) {
-          array.forEach(function (arrayItem) {
-            const obj = {
-              id: arrayItem.id,
-              note: arrayItem.note,
-              date: arrayItem.date,
-              brewID: arrayItem.brewID,
-              inEdit: false,
-            };
-
-            tastingNoteList.push(obj);
-          });
-        }
-
-        tastingNoteList.sort(function compare(a, b) {
+        array.sort(function compare(a, b) {
           var dateA = new Date(a.date);
           var dateB = new Date(b.date);
 
           return dateA - dateB;
         });
 
-        this.setState({ tastingNotes: tastingNoteList });
+        this.setState({ tastingNotes: array });
       } else {
-        console.log('Error in response: ');
+        console.log('Unable to locate edited note with index {this.state.editTastingNoteID}');
       }
+    }
+    else {
+      console.log('Tasting note update rejected by server');
     }
 
     this.setState({ editingTastingNote: false });
@@ -378,7 +434,7 @@ class BrewDetailTastingNotes extends Component {
       mode: 'cors',
     };
 
-    var deleteURL = `${this.props.baseUrl}tastingNote/` + this.state.deleteTastingNoteID;
+    var deleteURL = `${this.state.url}/tastingNotes/` + this.state.deleteTastingNoteID;
     var response = await fetch(deleteURL, requestOptions);
     if (response.ok) {
       var newTastingNotes = this.state.tastingNotes;

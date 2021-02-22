@@ -33,32 +33,7 @@ class RecipeEdit_Step1 extends Component {
     this.state = {
       waterProfileName: '',
       hasLoaded: false,
-      availableTypes: [
-        'Light lager',
-        'Pilsner',
-        'European amber lager',
-        'Dark lager',
-        'Bock',
-        'Light hybrid beer',
-        'Amber hybrid beer',
-        'English pale ale',
-        'Scottish and Irish ale',
-        'American ale',
-        'English brown ale',
-        'Porter',
-        'Stout',
-        'India pale ale (IPA)',
-        'German wheat and rye beer',
-        'Belgian and French ale',
-        'Sour ale',
-        'Belgian strong ale',
-        'Strong ale',
-        'Fruit beer',
-        'Spice/herb/vegetable beer',
-        'Smoke flavoured and wood-aged beer',
-        'Speciality beer',
-        'Kolsch and altbier',
-      ],
+      availableTypes: [],
       thisType: '',
     };
 
@@ -67,7 +42,7 @@ class RecipeEdit_Step1 extends Component {
   }
 
   componentDidMount() {
-    this.setState({ hasLoaded: true });
+    this.setState({ availableTypes: this.props.recipeTypeEnums });
 
     if (this.props.addingNewRecipe === 'true') {
       this.setState({ waterProfileName: this.props.waterProfiles[0].name });
@@ -81,15 +56,29 @@ class RecipeEdit_Step1 extends Component {
     }
 
     if (this.props.addingNewRecipe === 'true') {
-      this.setState({ thisType: this.state.availableTypes[0] });
+      this.setState({ thisType: this.props.recipeTypeEnums !== undefined && this.props.recipeTypeEnums.length > 0 ?
+                                this.props.recipeTypeEnums[0].value :
+                                ''});
 
       var addingRecipeEvent = new CustomEvent('DefaultType');
       addingRecipeEvent.recipeTarget = { name: 'recipeType', value: this.state.availableTypes[0] };
 
       this.props.handleChange(addingRecipeEvent);
     } else {
-      this.setState({ thisType: this.props.recipeType === undefined ? '' : this.props.recipeType });
+      if (this.props.recipeTypeEnums !== undefined && this.props.recipeTypeEnums.length > 0) {
+        var recipeType = this.props.recipeTypeEnums[0];
+        if (this.props.recipeType !== undefined) {
+          recipeType = this.props.recipeTypeEnums.find((type) => { return type.description === this.props.recipeType });
+        }
+
+        this.setState({thisType: recipeType !== undefined ? recipeType.value : this.props.recipeTypeEnums[0].value})
+      }
+      else {
+        this.setState({thisType: ''});
+      }
     }
+
+    this.setState({hasLoaded: true});
   }
 
   updateRecipeTypeValue(event) {
@@ -130,9 +119,9 @@ class RecipeEdit_Step1 extends Component {
         </MenuItem>
       ));
 
-      typeList = this.state.availableTypes.map((type, id) => (
-        <MenuItem value={type} key={id}>
-          <div>{type}</div>
+      typeList = this.state.availableTypes.map((type) => (
+        <MenuItem value={type.value} key={type.value}>
+          <div>{type.description}</div>
         </MenuItem>
       ));
     }

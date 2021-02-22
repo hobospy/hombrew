@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import LoadingIndicator from '../SupportComponents/LoadingIndicator';
 
 const CssTextField = withStyles({
   root: {
@@ -33,6 +34,7 @@ class BrewDetail_Ingredients extends Component {
     this.state = {
       hasLoadedIngredients: false,
       ingredients: this.props.ingredients,
+      unitTypes: this.props.unitTypes,
     };
   }
 
@@ -41,7 +43,9 @@ class BrewDetail_Ingredients extends Component {
   }
 
   componentDidMount() {
-    this.setState({ hasLoadedWaterProfile: true });
+    this.setState({
+      hasLoadedIngredients: true
+    });
   }
 
   render() {
@@ -51,7 +55,14 @@ class BrewDetail_Ingredients extends Component {
     if (ingredients && ingredients.length > 0) {
       return (
         <div>
-          {ingredients.map((i) => (
+          {ingredients.map(function(i) {
+            var ingUnit = "";
+            if (this.state.unitTypes !== undefined) {
+              var unit = this.state.unitTypes.find((ut) => { return ut.value === i.unit});
+              ingUnit = unit.description;
+            }
+
+            return (
             <div className="brewed-beer-ingredient-item">
               <CssTextField
                 disabled
@@ -59,10 +70,10 @@ class BrewDetail_Ingredients extends Component {
                 InputProps={{ disableUnderline: true }}
                 key={i.id}
                 label={i.name}
-                value={String(i.amount) + i.unit}
+                value={String(i.amount) + ingUnit}
               />
-            </div>
-          ))}
+            </div>)
+        }, this)}
         </div>
       );
     } else {

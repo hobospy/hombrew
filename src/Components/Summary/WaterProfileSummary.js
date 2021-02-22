@@ -15,7 +15,7 @@ class WaterProfileSummary extends Component {
   }
 
   componentDidMount() {
-    const url = `${this.state.url}waterprofile/summary`;
+    const url = `${this.state.url}waterprofiles`;
     console.log({ url });
     axios
       .get(url)

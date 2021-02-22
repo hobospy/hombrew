@@ -38,7 +38,7 @@ class FlameoutStep extends Component {
             <div style={{ width: '150px', display: 'flex', justifyContent: 'space-between' }}>
               <div></div>
               <div style={{ backgroundColor: 'white', marginLeft: '5px', marginRight: '5px' }}>
-                <AdjustOutlinedIcon fontsize="small" />
+                <AdjustOutlinedIcon fontSize="small" />
               </div>
               <div></div>
             </div>

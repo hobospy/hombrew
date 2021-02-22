@@ -30,6 +30,10 @@ class BrewDetailTitleArea extends Component {
     this.setState({ hasLoaded: true });
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ brewDetail: newProps.brewDetail });
+  }  
+
   async updateBrewRating(newvalue) {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json-patch+json');
@@ -51,10 +55,21 @@ class BrewDetailTitleArea extends Component {
 
     var response = await fetch(this.state.url, requestOptions);
     if (response.ok) {
-      var data = await response.json();
-      this.setState({
-        brewDetail: data,
-      });
+      if (response.json.length > 0) {
+        var data = await response.json();
+
+        this.setState({
+          brewDetail: data,
+        });
+      }
+      else {
+        var updatedBrewDetail = this.state.brewDetail;
+        updatedBrewDetail.rating = newvalue;
+
+        this.setState({
+          brewDetail: updatedBrewDetail,
+        });
+      }
     }
   }
 

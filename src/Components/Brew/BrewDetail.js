@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -18,6 +18,7 @@ import CollapsiblePanel from '../SupportComponents/CollapsiblePanel';
 import ConfirmationModalForm from '../SupportComponents/ConfirmationModalForm';
 import EditSpeedDial from '../../SupportFunctions/EditSpeedDial';
 import LoadingIndicator from '../SupportComponents/LoadingIndicator';
+import { useHistory, Redirect } from 'react-router-dom';
 
 const styles = (theme) => ({
   fab: {
@@ -32,79 +33,220 @@ const styles = (theme) => ({
   },
 });
 
-class BrewDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasLoaded: false,
-      // editMenuDisplayed: false,
-      brewDetail: '',
-      url: `${this.props.baseUrl}brew/${this.props.match.params.id}`,
-      id: this.props.match.params.id,
-      editModalShown: false,
-      deleteConfirmationModalShown: false,
-      brewedState: 0,
+function BrewDetail(props) {
+
+  const history = useHistory();
+
+  const[hasLoaded, setHasLoaded] = useState(false);
+  const[brewDetail, setBrewDetail] = useState('');
+  const[editBrewDetail, setEditBrewDetail] = useState('');
+  const[updateDetails, setUpdateDetails] = useState([]);
+  const[editModalShown, setEditModalShown] = useState(false);
+  const[deleteConfirmationModalShown, setDeleteConfirmationModalShown] = useState(false);
+  const[brewedState, setBrewedState] = useState(0);
+  const[unitTypes, setUnitTypes] = useState([]);
+  const url = `${props.baseUrl}brews/${props.match.params.id}`;
+  const fullURL = `${props.baseUrl}brews/${props.match.params.id}?IncludeAdditionalInfo=true`;
+  const id = props.match.params.id;
+
+  // useEffect( async () => {
+  //   console.log(fullURL);
+  //   var response = await axios.get(fullURL);
+  //   setBrewDetail(response.data);
+  //   setBrewedState(response.data.brewedState);
+    
+  //   var unitUrl = `${props.baseUrl}enums/EUnitOfMeasure`;
+  //   var unitResponse = await axios.get(unitUrl);
+  //   setUnitTypes(unitResponse.data);
+  //   setHasLoaded(true);
+  // }, [])
+
+  useEffect(() => {
+    async function fetchDetails() {
+      console.log(fullURL);
+      var response = await axios.get(fullURL);
+      setBrewDetail(response.data);
+      setBrewedState(response.data.brewedState);
+      
+      var unitUrl = `${props.baseUrl}enums/EUnitOfMeasure`;
+      var unitResponse = await axios.get(unitUrl);
+      setUnitTypes(unitResponse.data);
+      setHasLoaded(true);
+    }
+
+    fetchDetails()
+  }, [])
+
+  const showEditModal = () => {
+    setEditBrewDetail(brewDetail);
+    setEditModalShown(true);
+
+    toggleScrollLock();
+  };
+
+  const closeEditModal = () => {
+    setEditModalShown(false);
+    toggleScrollLock();
+  };
+
+  const showDeleteModal = () => {
+    setDeleteConfirmationModalShown(true);
+
+    // this.setState({ deleteConfirmationModalShown: true }, () => {
+    //   this.closeDeleteConfirmationButton.focus();
+    // });
+
+    toggleScrollLock();
+  };
+
+  const showErrorModal = () => {
+
+  }
+
+  const closeDeleteModal = () => {
+    setDeleteConfirmationModalShown(false);
+    toggleScrollLock();
+  };
+
+  const DeleteBrew = async () => {
+    closeDeleteModal();
+
+    var myHeaders = new Headers();
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Content-Type', 'text/plain');
+
+    var rawObject = '';
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: JSON.stringify(rawObject),
+      redirect: 'follow',
+      mode: 'cors',
     };
 
-    this.showDeleteModal = this.showDeleteModal.bind(this);
-    this.editItem = this.editItem.bind(this);
-    this.showBrewing = this.showBrewing.bind(this);
-    this.startBrewing = this.startBrewing.bind(this);
+    var response = await fetch(fullURL, requestOptions);
+    if (response.ok) {
+      //history.push("/brew/summary/");
+      //history.goBack();
+      //setBrewDeleted(true);
+      //useHistory().replace('/brew/summary');
+      //props.history.push('/brew/summary');
+      props.history.push('/brew/summary/');
+    } else {
+      showErrorModal();
+    }
   }
 
-  componentDidMount() {
-    console.log(this.state.url);
-    axios
-      .get(this.state.url)
-      .then((response) => response.data)
-      .then((data) => {
-        this.setState({ brewDetail: data, brewedState: data.brewedState, hasLoaded: true });
-        console.log('Brewed state: ' + data.brewedState);
-      });
-  }
+  // useEffect(() => {
+  //   useHistory().replace('/brew/summary');
+  // }, [brewDeleted])
 
-  // displayEditMenu = () => {
-  //   return this.setState({ editMenuDisplayed: !this.state.editMenuDisplayed });
-  // };
-
-  showEditModal = () => {
-    this.setState({ editModalShown: true }, () => {
-      this.closeEditButton.focus();
-    });
-
-    this.toggleScrollLock();
-  };
-
-  closeEditModal = () => {
-    this.setState({ editModalShown: false });
-    this.toggleScrollLock();
-  };
-
-  showDeleteModal = () => {
-    this.setState({ deleteConfirmationModalShown: true }, () => {
-      this.closeDeleteConfirmationButton.focus();
-    });
-
-    this.toggleScrollLock();
-  };
-
-  closeDeleteModal = () => {
-    this.setState({ deleteConfirmationModalShown: false });
-    this.toggleScrollLock();
-  };
-
-  toggleScrollLock = () => {
+  const toggleScrollLock = () => {
     document.querySelector('html').classList.toggle('scroll-lock');
   };
 
-  editItem = () => {
-    this.setState({
-      brewEdit: this.state.brewDetail,
-    });
-    this.showEditModal();
+  const editItem = () => {
+    setEditBrewDetail(brewDetail);
+    showEditModal();
   };
 
-  startBrewing = () => {
+  const handleChange = (event) => {
+    if (event.defaultPrevented !== undefined)
+    {
+      event.preventDefault();
+    }
+
+    const { name, value } = event.target;
+
+    setEditBrewDetail({...editBrewDetail, [name]: value});
+    updatePatchDetails(name, value);
+  };
+
+  const updateBrewDate = (newDate) => {
+    const brewDatePropName = "brewDate";
+    const updatedBrewDate = newDate.toDate();
+    setEditBrewDetail({...editBrewDetail, [brewDatePropName]: updatedBrewDate});
+
+    updatePatchDetails(brewDatePropName, updatedBrewDate);
+  };
+
+  const updatePatchDetails = (name, value) => {
+
+    let listUpdated = false;
+    let updatedUpdateDetails = updateDetails.map(item =>
+      {
+        if (item.name === name) {
+          listUpdated = true;
+          return {...item, value: value};
+        }
+
+        return item;
+      });
+
+    if (listUpdated) {
+      setUpdateDetails(updatedUpdateDetails);
+    }
+    else {
+      setUpdateDetails(updateDetails => [...updateDetails, { "name": name, "value": value} ] );
+    }
+  };
+
+  const onSubmit = async () => {
+    if (updateDetails !== undefined && updateDetails.length > 0)
+    {
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json-patch+json');
+
+      var patchData = [];
+      updateDetails.forEach(function (arrayItem){
+        patchData.push(
+          {
+            op: 'replace',
+            path: arrayItem.name,
+            value: arrayItem.value,
+          }
+        );
+      });
+      var rawData = JSON.stringify(patchData);
+
+      var requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: rawData,
+        redirect: 'follow',
+      };
+
+      var response = await fetch(url, requestOptions);
+      if (response.ok) {
+        if (response.json.length > 0) {
+          var data = await response.json();
+          setBrewDetail(data);
+          // this.setState({
+          //   brewDetail: data,
+          //   brewedState: data.brewedState,
+          // });
+        }
+        else {
+          //setBrewDetail({...editBrewDetail});
+          setBrewDetail({...editBrewDetail});
+          // var updatedBrewDetail = brewDetail;
+          // updatedBrewDetail.brewedState = updatedBrewState;
+
+          // this.setState({
+          //   brewDetail: updatedBrewDetail,
+          //   brewedState: updatedBrewState,
+          // })
+        }
+      }
+    }
+
+    //setEditModalShown(false);
+    closeEditModal();
+  };
+
+  const startBrewing = async () => {
+    var updatedBrewState = 1;
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json-patch+json');
 
@@ -112,7 +254,7 @@ class BrewDetail extends Component {
       {
         op: 'replace',
         path: '/BrewedState',
-        value: 1,
+        value: updatedBrewState,
       },
     ];
     var raw = JSON.stringify(data);
@@ -124,75 +266,90 @@ class BrewDetail extends Component {
       redirect: 'follow',
     };
 
-    fetch(this.state.url, requestOptions)
-      .then((response) => response.json())
-      .then((response) => {
-        this.setState({
-          brewDetail: response,
-          brewedState: response.brewedState,
-        });
-      });
+    var response = await fetch(url, requestOptions);
+    if (response.ok) {
+      if (response.json.length > 0) {
+        var data = await response.json();
+        setBrewDetail(data);
+        setBrewedState(data.brewedState);
+      }
+      else {
+        var updatedBrewDetail = brewDetail;
+        updatedBrewDetail.brewedState = updatedBrewState;
+
+        setBrewDetail(updatedBrewDetail);
+        setBrewedState(updatedBrewState);
+      }
+    }
   };
 
-  showBrewing = () => {
-    return this.state.brewedState === 0;
+  const showBrewing = () => {
+    return brewedState === 0;
   };
-
-  render() {
-    const brew = this.state.brewDetail;
 
     return (
       <MuiPickersUtilsProvider utils={DayjsUtils}>
         <div className="grid-brewed-detail">
-          {this.state.hasLoaded ? (
+          {hasLoaded ? (
             <React.Fragment>
               <div>
-                <BrewDetailTitleArea brewDetail={brew} url={this.state.url} />
-                {this.state.brewedState !== 1 ? (
+                <BrewDetailTitleArea brewDetail={brewDetail} url={url} />
+                {brewedState !== 1 ? (
                   <CollapsiblePanel
-                    title={'Recipe - ' + brew.recipe.name}
-                    children={<BrewDetailRecipe recipe={brew.recipe} detailsExpanded={false} hideBrewingSteps={false} />}
-                    open={this.state.brewedState === 0}
+                    title={'Recipe - ' + brewDetail.recipe.name}
+                    children={<BrewDetailRecipe
+                                recipe={brewDetail.recipe}
+                                detailsExpanded={false}
+                                hideBrewingSteps={false}
+                                unitTypes={unitTypes}
+                              />}
+                    open={brewedState === 0}
                   />
                 ) : (
-                  <BrewDetailBrewingSummary steps={brew.recipe.steps} brewingNotes={brew.brewingNotes} />
+                  <BrewDetailBrewingSummary steps={brewDetail.recipe.steps} brewingNotes={brewDetail.brewingNotes} />
                 )}
-                {this.state.brewedState === 2 ? (
+                {brewedState === 2 ? (
                   <div>
-                    <BrewDetailBrewedNotes baseUrl={this.props.baseUrl} brewingNotes={brew.brewingNotes} url={this.state.url} />
-                    <BrewDetailTastingNotes baseUrl={this.props.baseUrl} brewDetail={brew} url={this.state.url} />
+                    <BrewDetailBrewedNotes baseUrl={props.baseUrl} brewingNotes={brewDetail.brewingNotes} url={fullURL} />
+                    <BrewDetailTastingNotes baseUrl={props.baseUrl} brewDetail={brewDetail} url={url} />
                   </div>
                 ) : null}
                 <div style={{ position: 'fixed', bottom: '5px', right: '15px' }}>
                   <EditSpeedDial
-                    editItemAction={this.editItem}
-                    deleteItemAction={this.showDeleteModal}
-                    startBrewingAction={this.startBrewing}
-                    showBrewingAction={this.showBrewing()}
+                    editItemAction={editItem}
+                    deleteItemAction={showDeleteModal}
+                    startBrewingAction={startBrewing}
+                    showBrewingAction={showBrewing()}
                   />
                 </div>
               </div>
-              {this.state.editModalShown ? (
+              {editModalShown ? (
                 <BrewEditModalForm
-                  modalRef={(n) => (this.modalEditForm = n)}
-                  buttonRef={(n) => (this.closeEditButton = n)}
-                  // onSubmit={this.onSubmit}
-                  // onChange={this.handleChange}
-                  closeModal={this.closeEditModal}
-                  onKeyDown={this.onKeyDown}
-                  baseUrl={this.props.baseUrl}
+                  // modalRef={(n) => (modalEditForm = n)}
+                  // buttonRef={(n) => (closeEditButton = n)}
+                  onSubmit={onSubmit}
+                  onChange={handleChange}
+                  closeModal={closeEditModal}
+                  // onKeyDown={onKeyDown}
+                  baseUrl={props.baseUrl}
                   title="Edit Brew"
                   addingNewRecipe="false"
+                  brewName={editBrewDetail.name}
+                  brewDate={editBrewDetail.brewDate}
+                  brewedState={editBrewDetail.brewedState}
+                  actualABV={editBrewDetail.abv}
+                  brewRecipe={editBrewDetail.recipe.name}
+                  updateBrewDate={updateBrewDate}
                 />
               ) : null}
-              {this.state.deleteConfirmationModalShown ? (
+              {deleteConfirmationModalShown ? (
                 <ConfirmationModalForm
-                  modalRef={(n) => (this.modalDeleteConfirmationForm = n)}
-                  buttonRef={(n) => (this.closeDeleteConfirmationButton = n)}
-                  onOK={this.deleteRecipe}
-                  closeModal={this.closeDeleteModal}
-                  onKeyDown={this.onKeyDown}
-                  confirmationMessage={'Are you sure you want to delete the ' + this.state.brewDetail.name + ' brew?'}
+                  // modalRef={(n) => (modalDeleteConfirmationForm = n)}
+                  // buttonRef={(n) => (closeDeleteConfirmationButton = n)}
+                  onOK={DeleteBrew}
+                  closeModal={closeDeleteModal}
+                  // onKeyDown={onKeyDown}
+                  confirmationMessage={'Are you sure you want to delete the ' + brewDetail.name + ' brew?'}
                   title="Delete Brew"
                   showCancel="true"
                 />
@@ -204,7 +361,6 @@ class BrewDetail extends Component {
         </div>
       </MuiPickersUtilsProvider>
     );
-  }
 }
 
 export default withStyles(styles, { withTheme: true })(BrewDetail);
